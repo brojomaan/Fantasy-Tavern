@@ -6,33 +6,64 @@ namespace Components.CharacterComponents
     {
         [SerializeField] private float speedWalk = 5f;
         [SerializeField] private float speedRun = 10f;
-        [SerializeField] private float speedCrouch = 2f;
+        [SerializeField] private float speedCrouch = 3f;
         [SerializeField] private float jumpHeight = 1.5f;
+        [SerializeField] private float strafeMultiplier = 0.8f;
+        [SerializeField] private float backwardsMultiplier = 0.6f;
+        [SerializeField] private float crouchMultiplier = 0.4f;
         [SerializeField] private float gravity = -9.81f;
+        [SerializeField] private float standingHeight = 1.6f;
+        [SerializeField] private float crouchHeight = 1.1f;
+        [SerializeField] private float crouchCameraY = 0.95f;
+        [SerializeField] private float crouchTransitionSpeed = 10f;
 
         private float speedCurrent;
         private float verticalVelocity;
+        private float targetHeight;
+        private float targetCameraY;
         private CharacterController characterController;
 
-        public void Initialize(CharacterController cc)
+        public bool Initialize(CharacterController cc)
         {
-            if (cc == null) Debug.LogError("MovementComponent::Initialize(): CharacterController is null.");
+            if (cc == null)
+            {
+                Debug.LogError("MovementComponent::Initialize(): CharacterController is null.");
+                return false;
+            }
             characterController = cc;
-            
+            targetHeight = characterController.height;
+
+            return true;
         }
 
         public void OnUpdate(Vector2 moveDirection, bool sprintPressed, bool crouchPressed, bool jumpPressed)
         {
-            HandleSpeed(sprintPressed, crouchPressed);
+            HandleSpeed(sprintPressed, crouchPressed, moveDirection);
+            HandleCrouch(crouchPressed);
             HandleJump(jumpPressed);
             HandleMove(moveDirection);
         }
 
-        private void HandleSpeed(bool sprintPressed, bool crouchPressed)
+        private void HandleCrouch(bool crouchPressed)
+        {
+            targetHeight = crouchPressed ? crouchHeight : standingHeight;
+            targetCameraY = crouchPressed ? crouchCameraY : crouchTransitionSpeed;
+
+            float newHeight = Mathf.Lerp(characterController.height, targetHeight,
+                Time.deltaTime * crouchTransitionSpeed);
+            characterController.height = newHeight;
+            characterController.center = new Vector3(0f, newHeight / 2f, 0f);
+        }
+
+        private void HandleSpeed(bool sprintPressed, bool crouchPressed, Vector2 moveDirection)
         {
             speedCurrent = speedWalk;
+            
             if (sprintPressed) speedCurrent = speedRun;
             if (crouchPressed) speedCurrent = speedCrouch;
+            
+            if (moveDirection.y < 0) speedCurrent *= backwardsMultiplier;
+            else if (moveDirection.y == 0) speedCurrent *= strafeMultiplier;
         }
 
         private void HandleJump(bool jumpPressed)
@@ -51,5 +82,9 @@ namespace Components.CharacterComponents
             movement.y = verticalVelocity * Time.deltaTime;
             characterController.Move(movement);
         }
+
+        public float GetSpeed() => speedCurrent;
+        public float GetVelocity() => characterController.velocity.magnitude;
+        public float GetVerticalVelocity() => verticalVelocity;
     }
 }

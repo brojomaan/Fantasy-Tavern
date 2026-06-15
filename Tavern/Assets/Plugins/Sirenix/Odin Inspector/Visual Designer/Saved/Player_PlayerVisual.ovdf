@@ -1,0 +1,25 @@
+OVDF v1.1
+Player.PlayerVisual, Assembly-CSharp
+MetaGuid:dc68820c11f131544b544f11eff1df04
+
+# $3GLT2nsxQf4R4VvyWdgseF
+Position: $root:7
++ [Sirenix.OdinInspector.BoxGroupAttribute]
+	GroupName = "Transform"
+
+# $LYtxqutLixU2fL9TKZ2LT4
+Position: $root:6
++ [Sirenix.OdinInspector.BoxGroupAttribute]
+	GroupName = "Skinned Mesh Renderer"
+
+# headBone
+Position: $3GLT2nsxQf4R4VvyWdgseF:0
+
+# headAddons
+Position: $3GLT2nsxQf4R4VvyWdgseF:1
+
+# firstPerson
+Position: $LYtxqutLixU2fL9TKZ2LT4:1
+
+# thirdPerson
+Position: $LYtxqutLixU2fL9TKZ2LT4:0

@@ -2921,5 +2921,335 @@ namespace Coherence.Generated
                     $"Stopped: { System.Convert.ToString(StoppedMask, 2).PadLeft(1, '0') })";
             }
         }
+        public struct _ea2e766a6c9baae4ba4ce5024af94330_576228623474131969 : ICoherenceComponentData
+        {
+            public void ResetFrame(AbsoluteSimulationFrame frame)
+            {
+                FieldsMask |= _ea2e766a6c9baae4ba4ce5024af94330_576228623474131969.velocityMask;
+                velocitySimulationFrame = frame;
+                FieldsMask |= _ea2e766a6c9baae4ba4ce5024af94330_576228623474131969.headPitchMask;
+                headPitchSimulationFrame = frame;
+                FieldsMask |= _ea2e766a6c9baae4ba4ce5024af94330_576228623474131969.moveDirectionMask;
+                moveDirectionSimulationFrame = frame;
+                FieldsMask |= _ea2e766a6c9baae4ba4ce5024af94330_576228623474131969.isGroundedMask;
+                isGroundedSimulationFrame = frame;
+                FieldsMask |= _ea2e766a6c9baae4ba4ce5024af94330_576228623474131969.verticalVelocityMask;
+                verticalVelocitySimulationFrame = frame;
+            }
+    
+            public static uint velocityMask => 0b00000000000000000000000000000001;
+            public AbsoluteSimulationFrame velocitySimulationFrame;
+            public System.Single velocity;
+            public static uint headPitchMask => 0b00000000000000000000000000000010;
+            public AbsoluteSimulationFrame headPitchSimulationFrame;
+            public System.Single headPitch;
+            public static uint moveDirectionMask => 0b00000000000000000000000000000100;
+            public AbsoluteSimulationFrame moveDirectionSimulationFrame;
+            public Vector2 moveDirection;
+            public static uint isGroundedMask => 0b00000000000000000000000000001000;
+            public AbsoluteSimulationFrame isGroundedSimulationFrame;
+            public System.Boolean isGrounded;
+            public static uint verticalVelocityMask => 0b00000000000000000000000000010000;
+            public AbsoluteSimulationFrame verticalVelocitySimulationFrame;
+            public System.Single verticalVelocity;
+    
+            public uint FieldsMask { get; set; }
+            public uint StoppedMask { get; set; }
+            public uint GetComponentType() => 18;
+            public int PriorityLevel() => 100;
+            public const int order = 0;
+            public uint InitialFieldsMask() => 0b00000000000000000000000000011111;
+            public bool HasFields() => true;
+            public bool HasRefFields() => false;
+    
+            private long[] simulationFrames;
+    
+            public long[] GetSimulationFrames() {
+                if (simulationFrames == null)
+                {
+                    simulationFrames = new long[3];
+                }
+    
+                simulationFrames[0] = velocitySimulationFrame;
+                simulationFrames[1] = headPitchSimulationFrame;
+                simulationFrames[2] = moveDirectionSimulationFrame;
+    
+                return simulationFrames;
+            }
+    
+            public int GetFieldCount() => 5;
+    
+    
+            
+            public HashSet<Entity> GetEntityRefs()
+            {
+                return default;
+            }
+    
+            public uint ReplaceReferences(Entity fromEntity, Entity toEntity)
+            {
+                return 0;
+            }
+
+            public void ClearReferences(ISet<Entity> clearEntities) 
+            {
+            }
+            
+            public IEntityMapper.Error MapToAbsolute(IEntityMapper mapper)
+            {
+                return IEntityMapper.Error.None;
+            }
+    
+            public IEntityMapper.Error MapToRelative(IEntityMapper mapper)
+            {
+                return IEntityMapper.Error.None;
+            }
+    
+            public ICoherenceComponentData Clone() => this;
+            public int GetComponentOrder() => order;
+            public bool IsSendOrdered() => false;
+            public bool IsWorldPositionComponent() => false;
+    
+    
+            public AbsoluteSimulationFrame? GetMinSimulationFrame()
+            {
+                AbsoluteSimulationFrame? min = null;
+    
+                if ((FieldsMask & _ea2e766a6c9baae4ba4ce5024af94330_576228623474131969.velocityMask) != 0 && (min == null || this.velocitySimulationFrame < min))
+                {
+                    min = this.velocitySimulationFrame;
+                }
+                if ((FieldsMask & _ea2e766a6c9baae4ba4ce5024af94330_576228623474131969.headPitchMask) != 0 && (min == null || this.headPitchSimulationFrame < min))
+                {
+                    min = this.headPitchSimulationFrame;
+                }
+                if ((FieldsMask & _ea2e766a6c9baae4ba4ce5024af94330_576228623474131969.moveDirectionMask) != 0 && (min == null || this.moveDirectionSimulationFrame < min))
+                {
+                    min = this.moveDirectionSimulationFrame;
+                }
+    
+                return min;
+            }
+    
+            public ICoherenceComponentData MergeWith(ICoherenceComponentData data)
+            {
+                var other = (_ea2e766a6c9baae4ba4ce5024af94330_576228623474131969)data;
+                var otherMask = other.FieldsMask;
+    
+                FieldsMask |= otherMask;
+                StoppedMask &= ~(otherMask);
+    
+                if ((otherMask & 0x01) != 0)
+                {
+                    this.velocitySimulationFrame = other.velocitySimulationFrame;
+                    this.velocity = other.velocity;
+                }
+    
+                otherMask >>= 1;
+                if ((otherMask & 0x01) != 0)
+                {
+                    this.headPitchSimulationFrame = other.headPitchSimulationFrame;
+                    this.headPitch = other.headPitch;
+                }
+    
+                otherMask >>= 1;
+                if ((otherMask & 0x01) != 0)
+                {
+                    this.moveDirectionSimulationFrame = other.moveDirectionSimulationFrame;
+                    this.moveDirection = other.moveDirection;
+                }
+    
+                otherMask >>= 1;
+                if ((otherMask & 0x01) != 0)
+                {
+                    this.isGroundedSimulationFrame = other.isGroundedSimulationFrame;
+                    this.isGrounded = other.isGrounded;
+                }
+    
+                otherMask >>= 1;
+                if ((otherMask & 0x01) != 0)
+                {
+                    this.verticalVelocitySimulationFrame = other.verticalVelocitySimulationFrame;
+                    this.verticalVelocity = other.verticalVelocity;
+                }
+    
+                otherMask >>= 1;
+                StoppedMask |= other.StoppedMask;
+    
+                return this;
+            }
+    
+            public uint DiffWith(ICoherenceComponentData data)
+            {
+                throw new System.NotSupportedException($"{nameof(DiffWith)} is not supported in Unity");
+            }
+    
+            public static uint Serialize(_ea2e766a6c9baae4ba4ce5024af94330_576228623474131969 data, bool isRefSimFrameValid, AbsoluteSimulationFrame referenceSimulationFrame, IOutProtocolBitStream bitStream, Logger logger)
+            {
+                if (bitStream.WriteMask(data.StoppedMask != 0))
+                {
+                    bitStream.WriteMaskBits(data.StoppedMask, 5);
+                }
+    
+                var mask = data.FieldsMask;
+    
+                if (bitStream.WriteMask((mask & 0x01) != 0))
+                {
+                    if (isRefSimFrameValid) {
+                        var simFrameDelta = data.velocitySimulationFrame - referenceSimulationFrame;
+                        if (simFrameDelta > byte.MaxValue) {
+                            simFrameDelta = byte.MaxValue;
+                        }
+    
+                        SerializeTools.WriteFieldSimFrameDelta(bitStream, (byte)simFrameDelta);
+                    } else {
+                        SerializeTools.WriteFieldSimFrameDelta(bitStream, 0);
+                    }
+    
+    
+                    var fieldValue = data.velocity;
+    
+
+    
+                    bitStream.WriteFloat(fieldValue, FloatMeta.NoCompression());
+                }
+    
+                mask >>= 1;
+                if (bitStream.WriteMask((mask & 0x01) != 0))
+                {
+                    if (isRefSimFrameValid) {
+                        var simFrameDelta = data.headPitchSimulationFrame - referenceSimulationFrame;
+                        if (simFrameDelta > byte.MaxValue) {
+                            simFrameDelta = byte.MaxValue;
+                        }
+    
+                        SerializeTools.WriteFieldSimFrameDelta(bitStream, (byte)simFrameDelta);
+                    } else {
+                        SerializeTools.WriteFieldSimFrameDelta(bitStream, 0);
+                    }
+    
+    
+                    var fieldValue = data.headPitch;
+    
+
+    
+                    bitStream.WriteFloat(fieldValue, FloatMeta.NoCompression());
+                }
+    
+                mask >>= 1;
+                if (bitStream.WriteMask((mask & 0x01) != 0))
+                {
+                    if (isRefSimFrameValid) {
+                        var simFrameDelta = data.moveDirectionSimulationFrame - referenceSimulationFrame;
+                        if (simFrameDelta > byte.MaxValue) {
+                            simFrameDelta = byte.MaxValue;
+                        }
+    
+                        SerializeTools.WriteFieldSimFrameDelta(bitStream, (byte)simFrameDelta);
+                    } else {
+                        SerializeTools.WriteFieldSimFrameDelta(bitStream, 0);
+                    }
+    
+    
+                    var fieldValue = (data.moveDirection.ToCoreVector2());
+    
+
+    
+                    bitStream.WriteVector2(fieldValue, FloatMeta.NoCompression());
+                }
+    
+                mask >>= 1;
+                if (bitStream.WriteMask((mask & 0x01) != 0))
+                {
+    
+    
+                    var fieldValue = data.isGrounded;
+    
+
+    
+                    bitStream.WriteBool(fieldValue);
+                }
+    
+                mask >>= 1;
+                if (bitStream.WriteMask((mask & 0x01) != 0))
+                {
+    
+    
+                    var fieldValue = data.verticalVelocity;
+    
+
+    
+                    bitStream.WriteFloat(fieldValue, FloatMeta.NoCompression());
+                }
+    
+                mask >>= 1;
+    
+                return mask;
+            }
+    
+            public static _ea2e766a6c9baae4ba4ce5024af94330_576228623474131969 Deserialize(AbsoluteSimulationFrame referenceSimulationFrame, InProtocolBitStream bitStream)
+            {
+                var stoppedMask = (uint)0;
+                if (bitStream.ReadMask())
+                {
+                    stoppedMask = bitStream.ReadMaskBits(5);
+                }
+    
+                var val = new _ea2e766a6c9baae4ba4ce5024af94330_576228623474131969();
+                if (bitStream.ReadMask())
+                {
+                    val.velocitySimulationFrame = referenceSimulationFrame + DeserializerTools.ReadFieldSimFrameDelta(bitStream);
+    
+                    val.velocity = bitStream.ReadFloat(FloatMeta.NoCompression());
+                    val.FieldsMask |= _ea2e766a6c9baae4ba4ce5024af94330_576228623474131969.velocityMask;
+                }
+                if (bitStream.ReadMask())
+                {
+                    val.headPitchSimulationFrame = referenceSimulationFrame + DeserializerTools.ReadFieldSimFrameDelta(bitStream);
+    
+                    val.headPitch = bitStream.ReadFloat(FloatMeta.NoCompression());
+                    val.FieldsMask |= _ea2e766a6c9baae4ba4ce5024af94330_576228623474131969.headPitchMask;
+                }
+                if (bitStream.ReadMask())
+                {
+                    val.moveDirectionSimulationFrame = referenceSimulationFrame + DeserializerTools.ReadFieldSimFrameDelta(bitStream);
+    
+                    val.moveDirection = bitStream.ReadVector2(FloatMeta.NoCompression()).ToUnityVector2();
+                    val.FieldsMask |= _ea2e766a6c9baae4ba4ce5024af94330_576228623474131969.moveDirectionMask;
+                }
+                if (bitStream.ReadMask())
+                {
+    
+                    val.isGrounded = bitStream.ReadBool();
+                    val.FieldsMask |= _ea2e766a6c9baae4ba4ce5024af94330_576228623474131969.isGroundedMask;
+                }
+                if (bitStream.ReadMask())
+                {
+    
+                    val.verticalVelocity = bitStream.ReadFloat(FloatMeta.NoCompression());
+                    val.FieldsMask |= _ea2e766a6c9baae4ba4ce5024af94330_576228623474131969.verticalVelocityMask;
+                }
+    
+                val.StoppedMask = stoppedMask;
+    
+                return val;
+            }
+    
+    
+            public override string ToString()
+            {
+                return $"_ea2e766a6c9baae4ba4ce5024af94330_576228623474131969(" +
+                    $" velocity: { this.velocity }" +
+                    $", velocitySimFrame: { this.velocitySimulationFrame }" +
+                    $" headPitch: { this.headPitch }" +
+                    $", headPitchSimFrame: { this.headPitchSimulationFrame }" +
+                    $" moveDirection: { this.moveDirection }" +
+                    $", moveDirectionSimFrame: { this.moveDirectionSimulationFrame }" +
+                    $" isGrounded: { this.isGrounded }" +
+                    $" verticalVelocity: { this.verticalVelocity }" +
+                    $" Mask: { System.Convert.ToString(FieldsMask, 2).PadLeft(5, '0') }, " +
+                    $"Stopped: { System.Convert.ToString(StoppedMask, 2).PadLeft(5, '0') })";
+            }
+        }
 
 }

@@ -1,0 +1,7 @@
+component _ea2e766a6c9baae4ba4ce5024af94330_576228623474131969 [id "18"]
+  velocity Float [sim-frames "true", compression "None"]
+  headPitch Float [sim-frames "true", compression "None"]
+  moveDirection Vector2 [sim-frames "true", compression "None"]
+  isGrounded Bool [bits "1"]
+  verticalVelocity Float [compression "None"]
+

@@ -11,14 +11,19 @@ namespace Components.CharacterComponents
         private Transform cameraRoot;
         private float currentPitch;
 
-        public void Initialize(Transform camRoot)
+        public bool Initialize(Transform camRoot)
         {
-            if (camRoot == null) Debug.LogError("PlayerController::Initialize(): camRoot is null.");
+            if (camRoot == null)
+            {
+                Debug.LogError("PlayerController::Initialize(): camRoot is null.");
+                return false;
+            }
             cameraRoot = camRoot;
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            
+
+            return true;
         }
 
         public void OnUpdate(Vector2 lookDirection)
@@ -38,5 +43,7 @@ namespace Components.CharacterComponents
             currentPitch = Mathf.Clamp(currentPitch, pitchMin, pitchMax);
             cameraRoot.localRotation = Quaternion.Euler(currentPitch, 0f, 0f);
         }
+
+        public float GetPitch() => currentPitch;
     }
 }

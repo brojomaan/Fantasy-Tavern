@@ -3,7 +3,7 @@ Player.PlayerController, Assembly-CSharp
 MetaGuid:1d753b5208d39a7478ecf06c5ebf2fe9
 
 # $7EQTKXEGg42efo4r39bnNQ
-Position: $root:3
+Position: $root:0
 + [Sirenix.OdinInspector.FoldoutGroupAttribute]
 	GroupName = "Components"
 	expanded = False
@@ -11,19 +11,24 @@ Position: $root:3
 	AnimateVisibility = True
 
 # $RBUTfMvCLFvc3eGbbLVsbL
-Position: $root:4
+Position: $root:1
 + [Sirenix.OdinInspector.FoldoutGroupAttribute]
 	GroupName = "Visuals"
 
 # $KhABkfpq3EzEPmZCSenhLF
-Position: $root:5
+Position: $root:2
 + [Sirenix.OdinInspector.FoldoutGroupAttribute]
 	GroupName = "UI"
 
 # $LurC9nasY1EZPFUuFVMyDi
-Position: $root:6
+Position: $root:3
 + [Sirenix.OdinInspector.FoldoutGroupAttribute]
 	GroupName = "CoherenceSync"
+
+# $Sk59eQ1WdcgvA63gvy8aSk
+Position: $root:12
++ [Sirenix.OdinInspector.FoldoutGroupAttribute]
+	GroupName = "Logic"
 
 # input
 Position: $7EQTKXEGg42efo4r39bnNQ:0
@@ -35,10 +40,31 @@ Position: $KhABkfpq3EzEPmZCSenhLF:0
 Position: $RBUTfMvCLFvc3eGbbLVsbL:0
 
 # lookComponent
-Position: $7EQTKXEGg42efo4r39bnNQ:3
+Position: $7EQTKXEGg42efo4r39bnNQ:4
 
 # movementComponent
-Position: $7EQTKXEGg42efo4r39bnNQ:2
+Position: $7EQTKXEGg42efo4r39bnNQ:3
 
 # characterController
 Position: $7EQTKXEGg42efo4r39bnNQ:1
+
+# cameraController
+Position: $7EQTKXEGg42efo4r39bnNQ:2
+
+# sync
+Position: $LurC9nasY1EZPFUuFVMyDi:0
+
+# isPlayer
+Position: $Sk59eQ1WdcgvA63gvy8aSk:0
+
+# isWalking
+Position: $LurC9nasY1EZPFUuFVMyDi:1
+
+# velocity
+Position: $LurC9nasY1EZPFUuFVMyDi:2
+
+# headPitch
+Position: $LurC9nasY1EZPFUuFVMyDi:3
+
+# moveDirection
+Position: $LurC9nasY1EZPFUuFVMyDi:1
