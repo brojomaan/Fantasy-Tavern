@@ -29,6 +29,7 @@ namespace Player
         private PlayerStateMachine stateMachine = new PlayerStateMachine();
         public FreeState FreeState { get; private set; }
         public HoldingState HoldingState { get; private set; }
+        public InteractingState InteractingState { get; private set; }
         
         
         //Synced Variables
@@ -48,10 +49,14 @@ namespace Player
         [OnValueSynced(nameof(OnVerticalVelocitySynced))]
         [Sync] public float verticalVelocity;
 
-        public void OnHeadPitchSynced(float previous, float current)
-        {
-            visual.SetHeadPitch(current);
-        }
+        [OnValueSynced(nameof(OnIKPositionSynced))] 
+        [Sync] public Vector3 ikTargetPosition;
+
+        [OnValueSynced(nameof(OnIKRotationSynced))] 
+        [Sync] public Quaternion ikTargetRotation;
+        
+        [OnValueSynced(nameof(OnIKWeightSynced))]
+        [Sync] public float ikWeight;
         
         public PlayerInput Input => input;
         public CharacterController CharacterController => characterController;
@@ -108,6 +113,7 @@ namespace Player
 
             FreeState = new FreeState(this);
             HoldingState = new HoldingState(this);
+            InteractingState = new InteractingState(this);
             
             stateMachine.ChangeState(FreeState);
 
@@ -117,29 +123,41 @@ namespace Player
         private void Update()
         {
             if (!hasInitialized) return;
-            if (!sync.HasStateAuthority) return;
+            if (sync.HasStateAuthority)
+            {
+                input.OnUpdate();
+                stateMachine.OnUpdate();
             
-            input.OnUpdate();
-            stateMachine.OnUpdate();
+                moveDirection = input.GetMoveDirection();
+                velocity = movementComponent.GetVelocity();
+                isGrounded = characterController.isGrounded;
+                verticalVelocity = movementComponent.GetVerticalVelocity();
+                ikTargetPosition = visual.GetIKTargetPosition();
+                ikTargetRotation = visual.GetIKTargetRotation();
+                ikWeight = visual.GetIKWeight();
+
+                visual.OnUpdate(input.GetMoveDirection(),
+                    velocity,
+                    input.GetCrouchPressed(),
+                    movementComponent.GetVerticalVelocity(),
+                    characterController.isGrounded,
+                    sync.HasStateAuthority);
+            }
+            else
+            {
+                visual.UpdateIK(false);
+            }
             
-            moveDirection = input.GetMoveDirection();
-            velocity = movementComponent.GetVelocity();
-            isGrounded = characterController.isGrounded;
-            verticalVelocity = movementComponent.GetVerticalVelocity();
-            
-            visual.OnUpdate(input.GetMoveDirection(), 
-                velocity, 
-                input.GetCrouchPressed(),
-                movementComponent.GetVerticalVelocity(),
-                characterController.isGrounded);  
         }
 
         private void LateUpdate()
         {
             if (!hasInitialized) return;
-            if (!sync.HasStateAuthority) return;
+            if (sync.HasStateAuthority)
+            {
+                stateMachine.OnLateUpdate();
+            }
             
-            stateMachine.OnLateUpdate();
             visual.OnLateUpdate();
         }
 
@@ -162,6 +180,25 @@ namespace Player
         {
             visual.AnimationComponent.SetVerticalVelocity(current);
         }
+
+        public void OnIKPositionSynced(Vector3 previous, Vector3 current)
+        {
+            visual.SetIKTargetPosition(current);
+        }
+
+        public void OnIKRotationSynced(Quaternion previous, Quaternion current)
+        {
+            visual.SetIKTargetRotation(current);
+        }
+
+        public void OnIKWeightSynced(float previous, float current)
+        {
+            visual.SetIKWeight(current);
+        }
         
+        public void OnHeadPitchSynced(float previous, float current)
+        {
+            visual.SetHeadPitch(current);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Interactables.WorldInteractable;
+using UnityEngine;
 
 namespace Player.States
 {
@@ -22,10 +23,23 @@ namespace Player.States
                 controller.Input.GetJumpPressed());
 
             controller.LookComponent.OnUpdate(controller.Input.GetLookDirection());
-            controller.InteractComponent.OnUpdate(controller.Input.GetPickupPressed());
+            controller.InteractComponent.OnUpdate();
 
             if (controller.Input.GetPickupPressed() && controller.InteractComponent.HasHover())
+            {
+                controller.InteractComponent.TryPickup();
                 controller.StateMachine.ChangeState(controller.HoldingState);
+            }
+
+            if (controller.Input.GetInteractPressed())
+            {
+                WorldInteractable worldInteractable = controller.InteractComponent.GetCurrentWorldInteractable();
+                if (worldInteractable != null)
+                {
+                    controller.InteractingState.SetInteractable(worldInteractable);
+                    controller.StateMachine.ChangeState(controller.InteractingState);
+                }
+            }
 
         }
 

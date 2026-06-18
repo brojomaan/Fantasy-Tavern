@@ -21,13 +21,21 @@ namespace Player.States
                 controller.Input.GetJumpPressed());
 
             controller.LookComponent.OnUpdate(controller.Input.GetLookDirection());
-            controller.InteractComponent.OnUpdate(false);
+            controller.InteractComponent.OnUpdate();
             controller.HoldComponent.OnUpdate();
 
             if (controller.Input.GetDropPressed())
             {
-                controller.HoldComponent.Drop();
-                controller.StateMachine.ChangeState(new FreeState(controller));
+                if (controller.InteractComponent.IsPreviewingPlacement)
+                {
+                    controller.HoldComponent.Place();
+                }
+                else
+                {
+                    controller.HoldComponent.Drop();
+                }
+                
+                controller.StateMachine.ChangeState(controller.FreeState);
             }
         }
         

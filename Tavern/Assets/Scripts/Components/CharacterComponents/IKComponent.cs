@@ -40,15 +40,35 @@ namespace Components.CharacterComponents
             rigWeightTarget = 0f;
         }
 
-        public void OnUpdate()
+        public void SetTargetPosition(Vector3 position)
+        {
+            ikTarget.position = position;
+        }
+
+        public void SetTargetRotation(Quaternion rotation)
+        {
+            ikTarget.rotation = rotation;
+        }
+
+        public void SetWeight(float weight)
+        {
+            rigWeightTarget = weight;
+        }
+        
+        public void OnUpdate(bool isAuthority)
         {
             rig.weight = Mathf.Lerp(rig.weight, rigWeightTarget, Time.deltaTime * rigWeightSpeed);
 
-            if (targetSocket != null)
+            if (isAuthority && targetSocket != null)
             {
                 ikTarget.position = targetSocket.position;
                 ikTarget.rotation = targetSocket.rotation;
             }
         }
+
+        public float GetWeight() => rig.weight;
+
+        public Vector3 GetIKTargetPosition() => ikTarget.position;
+        public Quaternion GetIKTargetRotation() => ikTarget.rotation;
     }
 }

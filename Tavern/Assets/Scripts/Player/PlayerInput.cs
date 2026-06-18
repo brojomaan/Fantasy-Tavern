@@ -9,6 +9,7 @@ namespace Player
         private Vector2 moveDirection;
         private Vector2 lookDirection;
         private bool interactPressed;
+        private bool interactHeld;
         private bool pickupPressed;
         private bool dropPressed; // This is also throwing
         private bool crouchPressed;
@@ -35,6 +36,7 @@ namespace Player
             moveDirection = actions.Player.Move.ReadValue<Vector2>();
             lookDirection = actions.Player.Look.ReadValue<Vector2>();
             interactPressed = actions.Player.Interact.WasPressedThisFrame();
+            interactHeld = actions.Player.Interact.IsPressed();
             pickupPressed = actions.Player.Pickup.WasPressedThisFrame();
             dropPressed = actions.Player.Drop.IsPressed();
             crouchPressed = actions.Player.Crouch.IsPressed();
@@ -45,6 +47,7 @@ namespace Player
         public Vector2 GetMoveDirection() => moveDirection;
         public Vector2 GetLookDirection() => lookDirection;
         public bool GetInteractPressed() => interactPressed;
+        public bool GetInteractHeld() => interactHeld;
         public bool GetPickupPressed() => pickupPressed;
         public bool GetDropPressed() => dropPressed;
         public bool GetCrouchPressed() => crouchPressed;

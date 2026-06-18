@@ -4,4 +4,19 @@ component _ea2e766a6c9baae4ba4ce5024af94330_576228623474131969 [id "18"]
   moveDirection Vector2 [sim-frames "true", compression "None"]
   isGrounded Bool [bits "1"]
   verticalVelocity Float [compression "None"]
+  ikWeight Float [compression "None"]
+  ikTargetPosition Vector3 [compression "None"]
+  ikTargetRotation Quaternion [bits "32"]
+
+component _f4c6a95abc4bf5d42b04cf35bf8a81e9_5107660060577107651 [id "19"]
+  isHeld Bool [bits "1"]
+  holderId String [bits "37"]
+
+command _f4c6a95abc4bf5d42b04cf35bf8a81e9_7d0019cd243c4334be62556af2b967a2 [id "6", routing "All"]
+
+command _f4c6a95abc4bf5d42b04cf35bf8a81e9_b309d033497c4354837e5e432e09aad7 [id "7", routing "All"]
+  playerId String 
+
+command _f4c6a95abc4bf5d42b04cf35bf8a81e9_ea183fe65c4e40faa6a260208034d65b [id "8", routing "All"]
+  position Vector3 [compression "None"]
 

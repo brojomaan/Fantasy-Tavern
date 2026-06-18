@@ -55,7 +55,7 @@ namespace Player
         {
             headPitch = pitch;
         }
-        public void OnUpdate(Vector2 input, float speed, bool crouching, float verticalVelocity, bool isGrounded)
+        public void OnUpdate(Vector2 input, float speed, bool crouching, float verticalVelocity, bool isGrounded, bool isAuthority)
         {
             animComponent.SetWalking(input);
             animComponent.SetCrouching(crouching);
@@ -63,12 +63,22 @@ namespace Player
             animComponent.SetVerticalVelocity(verticalVelocity);
             animComponent.SetGrounded(isGrounded);
             
-            ikComponent.OnUpdate();
+            ikComponent.OnUpdate(isAuthority);
         }
 
         public void SetIKTarget(Transform target)
         {
             ikComponent.SetIKTarget(target);
+        }
+
+        public void SetIKTargetPosition(Vector3 position)
+        {
+            ikComponent.SetTargetPosition(position);
+        }
+
+        public void SetIKTargetRotation(Quaternion rotation)
+        {
+            ikComponent.SetTargetRotation(rotation);
         }
 
         public void ClearIKTarget()
@@ -81,6 +91,19 @@ namespace Player
         }
         
         public Transform GetHeadBone() => headBone;
-        
+
+        public void SetIKWeight(float weight)
+        {
+            ikComponent.SetWeight(weight);
+        }
+
+        public void UpdateIK(bool isAuthority)
+        {
+            ikComponent.OnUpdate(isAuthority);
+        }
+
+        public float GetIKWeight() => ikComponent.GetWeight();
+        public Vector3 GetIKTargetPosition() => ikComponent.GetIKTargetPosition();
+        public Quaternion GetIKTargetRotation() => ikComponent.GetIKTargetRotation();
     }
 }

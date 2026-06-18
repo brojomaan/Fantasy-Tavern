@@ -5,18 +5,19 @@ namespace Interfaces
     public interface IInteractable
     {
         Transform GetHoverSocket();
-        Transform GetHeadSocket();
+        Transform GetGripSocket();
         void OnHoverEnter();
         void OnHoverExit();
         bool CanInteractWith(IHoldable heldItem);
+        void OnInteract();
+        void OnInteractRelease();
 
     }
 
     public interface IHoldable
     {
         string ItemId { get; }
-        Transform GetCarrySocket();
-        
+        Transform GetGripSocket();
         Vector3 CarryPositionOffset { get; }
         Vector3 CarryRotationOffset { get; }
 

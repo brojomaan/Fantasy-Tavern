@@ -1,5 +1,7 @@
-﻿using Interfaces;
+﻿using Interactables.WorldInteractable;
+using Interfaces;
 using Player;
+using Unity.Cinemachine;
 using UnityEngine;
 
 namespace Components.CharacterComponents
@@ -7,17 +9,24 @@ namespace Components.CharacterComponents
     public class InteractComponent : MonoBehaviour
     {
         [SerializeField] private float interactRange = 2f;
+        [SerializeField] private float placeRange = 2f;
         [SerializeField] private LayerMask interactLayer;
+        [SerializeField] private LayerMask placeableLayer;
 
         private Camera cam;
         private IInteractable currentHover;
         private PlayerVisual visual;
         private HoldComponent holdComponent;
+        
+        public bool IsPreviewingPlacement { get; private set; }
 
         //TODO uncouple player visual from component at some point
         
         public bool Initialize(PlayerVisual playerVisual, HoldComponent holdComp)
         {
+            if (playerVisual == null) { Debug.LogError("InteractComponent::Initialize(): playerVisual is null."); return false; }
+            if (holdComp == null) { Debug.LogError("InteractComponent::Initialize(): holdComp is null."); return false; }
+
             cam = Camera.main;
             visual = playerVisual;
             holdComponent = holdComp;
@@ -25,10 +34,17 @@ namespace Components.CharacterComponents
             return true;
         }
 
-        public void OnUpdate(bool pickupPressed)
+        public void OnUpdate()
         {
-            HandleHover();
-            if (pickupPressed) HandlePickup();
+            if (holdComponent.IsHolding())
+                HandleHoldingRaycast();
+            else
+                HandleHover();
+        }
+
+        public void TryPickup()
+        {
+            HandlePickup();
         }
 
         private void HandleHover()
@@ -45,12 +61,10 @@ namespace Components.CharacterComponents
                     {
                         currentHover?.OnHoverExit();
                         currentHover = interactable;
-                        currentHover?.OnHoverEnter();
+                        currentHover.OnHoverEnter();
                     }
 
-                    visual.SetIKTarget(holdComponent.IsHolding() 
-                        ? holdComponent.GetCarrySocket() 
-                        : interactable.GetHoverSocket());
+                    visual.SetIKTarget(interactable.GetHoverSocket());
                     return;
                 }
             }
@@ -61,9 +75,39 @@ namespace Components.CharacterComponents
                 currentHover = null;
             }
 
-            visual.SetIKTarget(holdComponent.IsHolding() 
-                ? holdComponent.GetCarrySocket() 
-                : null);
+            visual.SetIKTarget(null);
+        }
+        
+        private void HandleHoldingRaycast()
+        {
+            Ray ray = new Ray(cam.transform.position, cam.transform.forward);
+
+            if (Physics.Raycast(ray, out RaycastHit hit, placeRange, placeableLayer))
+            {
+                IsPreviewingPlacement = true;
+
+                Vector3 targetPosition = hit.point + 
+                                         holdComponent.GetCarrySocket().TransformDirection(holdComponent.GetHeldItem().CarryPositionOffset);
+                Quaternion targetRotation = holdComponent.GetCarrySocket().rotation * 
+                                            Quaternion.Euler(holdComponent.GetHeldItem().CarryRotationOffset);
+
+                holdComponent.SetTargetPosition(targetPosition);
+                holdComponent.SetTargetRotation(targetRotation);
+                visual.SetIKTarget(holdComponent.GetGripSocket());
+            }
+            else
+            {
+                IsPreviewingPlacement = false;
+
+                Vector3 targetPosition = holdComponent.GetCarrySocket().position + 
+                                         holdComponent.GetCarrySocket().TransformDirection(holdComponent.GetHeldItem().CarryPositionOffset);
+                Quaternion targetRotation = holdComponent.GetCarrySocket().rotation * 
+                                            Quaternion.Euler(holdComponent.GetHeldItem().CarryRotationOffset);
+
+                holdComponent.SetTargetPosition(targetPosition);
+                holdComponent.SetTargetRotation(targetRotation);
+                visual.SetIKTarget(holdComponent.GetGripSocket());
+            }
         }
 
         private void HandlePickup()
@@ -76,8 +120,15 @@ namespace Components.CharacterComponents
             if (holdable != null)
             {
                 holdComponent.PickUp(obj, holdable);
-                visual.SetIKTarget(holdComponent.GetCarrySocket());
+                currentHover.OnHoverExit();
+                currentHover = null;
+                visual.SetIKTarget(holdComponent.GetGripSocket());
             }
+        }
+
+        public WorldInteractable GetCurrentWorldInteractable()
+        {
+            return (currentHover as MonoBehaviour)?.GetComponent<WorldInteractable>();
         }
 
         public bool HasHover() => currentHover != null;
