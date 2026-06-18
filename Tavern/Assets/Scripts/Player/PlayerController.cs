@@ -1,6 +1,7 @@
 using Coherence;
 using Coherence.Toolkit;
 using Components.CharacterComponents;
+using Player.States;
 using UnityEngine;
 
 namespace Player
@@ -15,13 +16,22 @@ namespace Player
         [SerializeField] private CharacterController characterController;
         [SerializeField] private MovementComponent movementComponent;
         [SerializeField] private LookComponent lookComponent;
+        [SerializeField] private InteractComponent interactComponent;
+        [SerializeField] private HoldComponent holdComponent;
         
-        
+        //
         [SerializeField] private CoherenceSync sync;
         [SerializeField] private PlayerVisual visual;
         [SerializeField] private PlayerUI playerUI;
         [SerializeField] private CameraController cameraController;
         
+        //States
+        private PlayerStateMachine stateMachine = new PlayerStateMachine();
+        public FreeState FreeState { get; private set; }
+        public HoldingState HoldingState { get; private set; }
+        
+        
+        //Synced Variables
         [OnValueSynced(nameof(OnVelocitySynced))]
         [Sync] public float velocity;
 
@@ -42,9 +52,17 @@ namespace Player
         {
             visual.SetHeadPitch(current);
         }
+        
+        public PlayerInput Input => input;
+        public CharacterController CharacterController => characterController;
         public MovementComponent MovementComponent => movementComponent;
         public LookComponent LookComponent => lookComponent;
         public CameraController CameraController => cameraController;
+        public HoldComponent HoldComponent => holdComponent;
+        public InteractComponent InteractComponent => interactComponent;
+        public PlayerVisual Visual => visual;
+        public PlayerStateMachine StateMachine => stateMachine;
+        
 
         private bool hasInitialized = false;
 
@@ -62,7 +80,9 @@ namespace Player
             if (CameraController == null) Debug.LogError("PlayerController::Initialize(): cameraController is null.");
             if (sync == null) Debug.LogError("PlayerController::Initialize(): cameraController is null.");
             if (visual == null) Debug.LogError("PlayerController::Initialize(): visual = null.");
-
+            if (interactComponent == null) Debug.LogError("PlayerController::Initialize(): interactComponent is null.");
+            if (holdComponent == null) Debug.LogError("PlayerController::Initialize(): holdComponent is null.");
+            
             if (sync.HasStateAuthority)
             {
                 if (!CameraController.Initialize()) 
@@ -71,6 +91,10 @@ namespace Player
                     Debug.LogError("PlayerController::Initialize(): movementComponent Initialization Failed.");
                 if (!lookComponent.Initialize(CameraController.GetCamControllerRoot())) 
                     Debug.LogError("PlayerController::Initialize(): lookComponent Initialization Failed.");
+                if (!holdComponent.Initialize())
+                    Debug.LogError("PlayerController::Initialize(): holdComponent Initialization Failed.");
+                if (!interactComponent.Initialize(visual, holdComponent))
+                    Debug.LogError("PlayerController::Initialize(): interactComponent Initialization Failed.");
             }
             else
             {
@@ -82,6 +106,11 @@ namespace Player
             if (!visual.Initialize(sync.HasStateAuthority))
                 Debug.LogError("PlayerController::Initialize(): visual Initialization Failed.");
 
+            FreeState = new FreeState(this);
+            HoldingState = new HoldingState(this);
+            
+            stateMachine.ChangeState(FreeState);
+
             hasInitialized = true;
         }
 
@@ -91,15 +120,8 @@ namespace Player
             if (!sync.HasStateAuthority) return;
             
             input.OnUpdate();
+            stateMachine.OnUpdate();
             
-            movementComponent.OnUpdate(
-                input.GetMoveDirection(), 
-                input.GetSprintPressed(),
-                input.GetCrouchPressed(), 
-                input.GetJumpPressed());
-            
-            lookComponent.OnUpdate(input.GetLookDirection());
-
             moveDirection = input.GetMoveDirection();
             velocity = movementComponent.GetVelocity();
             isGrounded = characterController.isGrounded;
@@ -115,18 +137,9 @@ namespace Player
         private void LateUpdate()
         {
             if (!hasInitialized) return;
-
-            if (sync.HasStateAuthority)
-            {
-                headPitch = Mathf.Clamp(lookComponent.GetPitch(), -40f, 35f);
-                cameraController.OnLateUpdate(visual.GetHeadBone(),
-                    movementComponent.GetVelocity(),
-                    input.GetMoveDirection().x,
-                    movementComponent.GetVerticalVelocity(),
-                    input.GetSprintPressed(),
-                    characterController.isGrounded);
-            }
+            if (!sync.HasStateAuthority) return;
             
+            stateMachine.OnLateUpdate();
             visual.OnLateUpdate();
         }
 

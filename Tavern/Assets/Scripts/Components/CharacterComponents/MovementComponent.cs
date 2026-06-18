@@ -22,6 +22,7 @@ namespace Components.CharacterComponents
         private float targetHeight;
         private float targetCameraY;
         private CharacterController characterController;
+        private bool enabledMove = true;
 
         public bool Initialize(CharacterController cc)
         {
@@ -38,6 +39,8 @@ namespace Components.CharacterComponents
 
         public void OnUpdate(Vector2 moveDirection, bool sprintPressed, bool crouchPressed, bool jumpPressed)
         {
+            if (!enabledMove) return;
+            
             HandleSpeed(sprintPressed, crouchPressed, moveDirection);
             HandleCrouch(crouchPressed);
             HandleJump(jumpPressed);
@@ -86,5 +89,6 @@ namespace Components.CharacterComponents
         public float GetSpeed() => speedCurrent;
         public float GetVelocity() => characterController.velocity.magnitude;
         public float GetVerticalVelocity() => verticalVelocity;
+        public bool SetEnabled(bool value) => enabledMove = value;
     }
 }

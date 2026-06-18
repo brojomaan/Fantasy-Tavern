@@ -6,11 +6,23 @@ MetaGuid:dc68820c11f131544b544f11eff1df04
 Position: $root:7
 + [Sirenix.OdinInspector.BoxGroupAttribute]
 	GroupName = "Transform"
+	ShowLabel = True
+	CenterLabel = True
 
 # $LYtxqutLixU2fL9TKZ2LT4
 Position: $root:6
 + [Sirenix.OdinInspector.BoxGroupAttribute]
 	GroupName = "Skinned Mesh Renderer"
+	ShowLabel = True
+	CenterLabel = True
+
+# $3dSLA2JHCxXK3VqCtmfJ48
+Position: $root:5
++ [Sirenix.OdinInspector.BoxGroupAttribute]
+	GroupName = "Component Box Group"
+	ShowLabel = True
+	CenterLabel = True
+	LabelText = "Component Box Group"
 
 # headBone
 Position: $3GLT2nsxQf4R4VvyWdgseF:0
@@ -23,3 +35,9 @@ Position: $LYtxqutLixU2fL9TKZ2LT4:1
 
 # thirdPerson
 Position: $LYtxqutLixU2fL9TKZ2LT4:0
+
+# animComponent
+Position: $3dSLA2JHCxXK3VqCtmfJ48:0
+
+# ikComponent
+Position: $3dSLA2JHCxXK3VqCtmfJ48:1

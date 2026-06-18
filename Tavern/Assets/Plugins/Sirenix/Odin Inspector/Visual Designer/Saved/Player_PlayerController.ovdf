@@ -26,7 +26,7 @@ Position: $root:3
 	GroupName = "CoherenceSync"
 
 # $Sk59eQ1WdcgvA63gvy8aSk
-Position: $root:12
+Position: $root:8
 + [Sirenix.OdinInspector.FoldoutGroupAttribute]
 	GroupName = "Logic"
 
@@ -68,3 +68,15 @@ Position: $LurC9nasY1EZPFUuFVMyDi:3
 
 # moveDirection
 Position: $LurC9nasY1EZPFUuFVMyDi:1
+
+# interactComponent
+Position: $7EQTKXEGg42efo4r39bnNQ:5
+
+# isGrounded
+Position: $LurC9nasY1EZPFUuFVMyDi:5
+
+# verticalVelocity
+Position: $LurC9nasY1EZPFUuFVMyDi:4
+
+# holdComponent
+Position: $7EQTKXEGg42efo4r39bnNQ:6

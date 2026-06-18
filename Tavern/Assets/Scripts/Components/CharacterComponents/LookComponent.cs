@@ -10,6 +10,7 @@ namespace Components.CharacterComponents
 
         private Transform cameraRoot;
         private float currentPitch;
+        private bool enableLook = true;
 
         public bool Initialize(Transform camRoot)
         {
@@ -28,6 +29,7 @@ namespace Components.CharacterComponents
 
         public void OnUpdate(Vector2 lookDirection)
         {
+            if (!enableLook) return;
             HandleYaw(lookDirection.x);
             HandlePitch(lookDirection.y);
         }
@@ -45,5 +47,6 @@ namespace Components.CharacterComponents
         }
 
         public float GetPitch() => currentPitch;
+        public bool SetEnabled(bool value) => enableLook = value;
     }
 }

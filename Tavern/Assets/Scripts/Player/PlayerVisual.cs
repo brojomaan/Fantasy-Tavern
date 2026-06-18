@@ -6,6 +6,7 @@ namespace Player
     public class PlayerVisual : MonoBehaviour
     {
         [SerializeField] private AnimationComponent animComponent;
+        [SerializeField] private IKComponent ikComponent;
         [SerializeField] private Transform headBone;
         [SerializeField] private Transform headAddons;
         [SerializeField] private SkinnedMeshRenderer thirdPerson;
@@ -18,12 +19,19 @@ namespace Player
         public bool Initialize(bool isPlayer) //turn this into state authority
         {
             if (animComponent == null) {Debug.Log($"Animation component is null"); return false; }
+            if (ikComponent == null) {Debug.Log($"IKComponent is null"); return false; }
             if (headBone == null) {Debug.LogError($"Head Bone is null"); return false; }
             if (headAddons == null) {Debug.LogError($"Head Addons is null"); return false; }
             if (thirdPerson == null) {Debug.LogError($"Third Person is null"); return false; }
             if (firstPerson == null) {Debug.LogError($"First Person is null"); return false; }
             
             if (!animComponent.Initialize())  
+            {
+                Debug.LogError($"Animation component Initialize() failed.");
+                return false;
+            }
+
+            if (!ikComponent.Initialize())
             {
                 Debug.LogError($"Animation component Initialize() failed.");
                 return false;
@@ -54,8 +62,19 @@ namespace Player
             animComponent.SetSpeed(speed);
             animComponent.SetVerticalVelocity(verticalVelocity);
             animComponent.SetGrounded(isGrounded);
+            
+            ikComponent.OnUpdate();
         }
-        
+
+        public void SetIKTarget(Transform target)
+        {
+            ikComponent.SetIKTarget(target);
+        }
+
+        public void ClearIKTarget()
+        {
+            ikComponent.ClearIKTarget();
+        }
         public void OnLateUpdate()
         {
             headBone.localRotation = Quaternion.Euler(headPitch, 0f, 0f);
