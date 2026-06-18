@@ -57,49 +57,34 @@ namespace Interactables
 
         public void OnPickup()
         {
-            if (sync.HasStateAuthority)
-                CmdPickup(sync.CoherenceBridge.ClientID.ToString());
+            if (!sync.HasStateAuthority)
+                sync.RequestAuthority(AuthorityType.Full);
+
+            isHeld = true;
+            physicsComponent.SetKinematic(true);
+            physicsComponent.SetCollider(false);
+            visual.OnPickup();
         }
 
         public void OnDrop()
         {
-            if (sync.HasStateAuthority)
-                CmdDrop();
-        }
-
-        [Command(defaultRouting = MessageTarget.AuthorityOnly)]
-        public void CmdPickup(string playerId)
-        {
-            isHeld = true;
-            holderId = playerId;
-            physicsComponent.SetKinematic(true);
-            physicsComponent.SetCollider(false);
-            
-        }
-
-        [Command(defaultRouting = MessageTarget.AuthorityOnly)]
-        public void CmdDrop()
-        {
             isHeld = false;
-            holderId = string.Empty;
             physicsComponent.SetKinematic(false);
             physicsComponent.SetCollider(true);
-
+            visual.OnDrop();
         }
-
-        [Command(defaultRouting = MessageTarget.AuthorityOnly)]
-        public void CmdPlace(Vector3 position)
+        
+        public void OnPlace(Vector3 position)
         {
             isHeld = false;
-            holderId = string.Empty;
             physicsComponent.SetKinematic(false);
+            physicsComponent.SetCollider(true);
             transform.position = position;
-            physicsComponent.SetCollider(true);
+            visual.OnDrop();
         }
 
         public void OnIsHeldSynced(bool previous, bool current)
         {
-            physicsComponent.SetKinematic(current);
             if (current)
                 visual.OnPickup();
             else

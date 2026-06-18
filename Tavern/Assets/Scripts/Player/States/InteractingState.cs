@@ -32,9 +32,6 @@ namespace Player.States
         {
             interactable?.OnInteractUpdate(controller.Input.GetLookDirection());
             
-            if (interactable is BeerTapController beerTap)
-                beerTap.Drive(controller.Input.GetLookDirection().y);
-            
             if (!controller.Input.GetInteractHeld())
                 controller.StateMachine.ChangeState(controller.FreeState);
         }

@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 579f4a509fd2f994fa391c0c78ea3f11, type: 3}
-  m_Name: Interactable_Mug
+  m_Name: BeerTapController
   m_EditorClassIdentifier: Coherence.Toolkit::Coherence.Toolkit.CoherenceSyncConfig
-  id: f4c6a95abc4bf5d42b04cf35bf8a81e9
-  selfId: 31db193d114dfc04fa01bf2720df49be
-  editorTarget: {fileID: 8245631301980791593, guid: f4c6a95abc4bf5d42b04cf35bf8a81e9, type: 3}
+  id: 6380a1e0e5aed524ebc2143e629bdf47
+  selfId: 04711731f6101d64d8896f78cc5cdcab
+  editorTarget: {fileID: 6523126712014649233, guid: 6380a1e0e5aed524ebc2143e629bdf47, type: 3}
   includeInSchema: 1
   objectProvider:
-    rid: 4280311231339560960
+    rid: 4280311231339561120
   objectInstantiator:
-    rid: 5416689475977216150
+    rid: 4280311231339561121
   references:
     version: 2
     RefIds:
-    - rid: 4280311231339560960
+    - rid: 4280311231339561120
       type: {class: DirectReferenceProvider, ns: Coherence.Toolkit, asm: Coherence.Toolkit}
       data:
-        prefab: {fileID: 8245631301980791593, guid: f4c6a95abc4bf5d42b04cf35bf8a81e9, type: 3}
-    - rid: 5416689475977216150
+        prefab: {fileID: 6523126712014649233, guid: 6380a1e0e5aed524ebc2143e629bdf47, type: 3}
+    - rid: 4280311231339561121
       type: {class: DefaultInstantiator, ns: Coherence.Toolkit, asm: Coherence.Toolkit}
       data: 

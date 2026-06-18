@@ -304,7 +304,6 @@ GameObject:
   - component: {fileID: 4498254611600166495}
   - component: {fileID: 2004240041190631453}
   - component: {fileID: 9132006842074257809}
-  - component: {fileID: 8962186650712687127}
   m_Layer: 3
   m_Name: Interactable_Mug
   m_TagString: Untagged
@@ -507,8 +506,6 @@ MonoBehaviour:
       lodStepsActive: 1
     - component: {fileID: 3694011320011255253}
       lodStepsActive: 1
-    - component: {fileID: 8962186650712687127}
-      lodStepsActive: 1
     GeneratesArchetypeDefinition: 0
   interpolationLocation: 1
   RigidbodyUpdateMode: 0
@@ -521,7 +518,7 @@ MonoBehaviour:
   authorityTransferConfig: -1
   orphanedBehavior: 0
   lifetimeType: 0
-  uniquenessType: 0
+  uniquenessType: 1
   replacementStrategy: 0
   unsyncedNetworkEntityPriority: 0
   preserveChildren: 0
@@ -531,14 +528,12 @@ MonoBehaviour:
   - rid: 5416689475977216137
   - rid: 5416689475977216139
   - rid: 5416689475977216140
-  - rid: 5416689475977216141
-  - rid: 5416689475977216142
-  - rid: 5416689475977216143
   scenePrefabInstanceUUID: 
   coherenceUUID: 
   assetVersion: 
   coherenceTag: 
-  componentActions: []
+  componentActions:
+  - rid: 4280311231339561331
   floatingOriginMode: 0
   floatingOriginParentedMode: 1
   synchronizationChannel: Default
@@ -547,6 +542,12 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 4280311231339561331
+      type: {class: KinematicRigidbodyComponentAction, ns: Coherence.Toolkit.ComponentActions, asm: Coherence.Toolkit}
+      data:
+        component: {fileID: 2004240041190631453}
+        enableOnRemote: 1
+        disableOnAuthority: 0
     - rid: 5416689475977216133
       type: {class: PositionBinding, ns: Coherence.Toolkit.Bindings.TransformBindings, asm: Coherence.Toolkit}
       data:
@@ -730,66 +731,6 @@ MonoBehaviour:
         unityComponent: {fileID: 5107660060577107651}
         coherenceSync: {fileID: 9132006842074257809}
         _interpolationSettings: {fileID: 0}
-    - rid: 5416689475977216141
-      type: {class: CommandBinding, ns: Coherence.Toolkit.Bindings, asm: Coherence.Toolkit}
-      data:
-        descriptor:
-          rid: 5416689475977216146
-        routing: 1
-        syncMode: 0
-        isPredicted: 0
-        predictionMode: 0
-        guid: b309d033497c4354837e5e432e09aad7
-        archetypeData:
-          type: 0
-          minRange: 0
-          maxRange: 0
-          sampleRate: 20
-          floatCompression: 0
-          fields: []
-        unityComponent: {fileID: 5107660060577107651}
-        coherenceSync: {fileID: 9132006842074257809}
-        _interpolationSettings: {fileID: 0}
-    - rid: 5416689475977216142
-      type: {class: CommandBinding, ns: Coherence.Toolkit.Bindings, asm: Coherence.Toolkit}
-      data:
-        descriptor:
-          rid: 5416689475977216147
-        routing: 1
-        syncMode: 0
-        isPredicted: 0
-        predictionMode: 0
-        guid: 7d0019cd243c4334be62556af2b967a2
-        archetypeData:
-          type: 0
-          minRange: 0
-          maxRange: 0
-          sampleRate: 20
-          floatCompression: 0
-          fields: []
-        unityComponent: {fileID: 5107660060577107651}
-        coherenceSync: {fileID: 9132006842074257809}
-        _interpolationSettings: {fileID: 0}
-    - rid: 5416689475977216143
-      type: {class: CommandBinding, ns: Coherence.Toolkit.Bindings, asm: Coherence.Toolkit}
-      data:
-        descriptor:
-          rid: 5416689475977216148
-        routing: 1
-        syncMode: 0
-        isPredicted: 0
-        predictionMode: 0
-        guid: ea183fe65c4e40faa6a260208034d65b
-        archetypeData:
-          type: 0
-          minRange: 0
-          maxRange: 0
-          sampleRate: 20
-          floatCompression: 0
-          fields: []
-        unityComponent: {fileID: 5107660060577107651}
-        coherenceSync: {fileID: 9132006842074257809}
-        _interpolationSettings: {fileID: 0}
     - rid: 5416689475977216144
       type: {class: Descriptor, ns: Coherence.Toolkit.Bindings, asm: Coherence.Toolkit}
       data:
@@ -832,85 +773,3 @@ MonoBehaviour:
             Coherence.Toolkit, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
         oldName: 
         oldParameterAssemblyTypes: []
-    - rid: 5416689475977216146
-      type: {class: Descriptor, ns: Coherence.Toolkit.Bindings, asm: Coherence.Toolkit}
-      data:
-        name: CmdPickup
-        monoAssemblyType: 
-        required: 1
-        enforcesLODingWhenFieldsOverriden: 0
-        valueSyncCallbackName: 
-        memberType: 8
-        parameterAssemblyTypes:
-        - System.String, mscorlib
-        ownerType:
-          assemblyQualifiedName: Interactables.ItemController, Assembly-CSharp, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-        defaultSyncMode: 0
-        CustomData:
-          rid: -2
-        bindingType:
-          assemblyQualifiedName: Coherence.Toolkit.Bindings.CommandBinding, Coherence.Toolkit,
-            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-        oldName: 
-        oldParameterAssemblyTypes: []
-    - rid: 5416689475977216147
-      type: {class: Descriptor, ns: Coherence.Toolkit.Bindings, asm: Coherence.Toolkit}
-      data:
-        name: CmdDrop
-        monoAssemblyType: 
-        required: 1
-        enforcesLODingWhenFieldsOverriden: 0
-        valueSyncCallbackName: 
-        memberType: 8
-        parameterAssemblyTypes: []
-        ownerType:
-          assemblyQualifiedName: Interactables.ItemController, Assembly-CSharp, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-        defaultSyncMode: 0
-        CustomData:
-          rid: -2
-        bindingType:
-          assemblyQualifiedName: Coherence.Toolkit.Bindings.CommandBinding, Coherence.Toolkit,
-            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-        oldName: 
-        oldParameterAssemblyTypes: []
-    - rid: 5416689475977216148
-      type: {class: Descriptor, ns: Coherence.Toolkit.Bindings, asm: Coherence.Toolkit}
-      data:
-        name: CmdPlace
-        monoAssemblyType: 
-        required: 1
-        enforcesLODingWhenFieldsOverriden: 0
-        valueSyncCallbackName: 
-        memberType: 8
-        parameterAssemblyTypes:
-        - UnityEngine.Vector3, UnityEngine
-        ownerType:
-          assemblyQualifiedName: Interactables.ItemController, Assembly-CSharp, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-        defaultSyncMode: 0
-        CustomData:
-          rid: -2
-        bindingType:
-          assemblyQualifiedName: Coherence.Toolkit.Bindings.CommandBinding, Coherence.Toolkit,
-            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-        oldName: 
-        oldParameterAssemblyTypes: []
---- !u!114 &8962186650712687127
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8245631301980791593}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 330dbbf0240a4c90b622f352cff27940, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Interactables.Mug
-  hoverSocket: {fileID: 0}
-  gripSocket: {fileID: 0}
-  boxCollider: {fileID: 0}
-  carryPositionOffset: {x: 0, y: 0, z: 0}
-  carryRotationOffset: {x: 0, y: 0, z: 0}
