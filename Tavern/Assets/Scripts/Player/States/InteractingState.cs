@@ -17,6 +17,7 @@ namespace Player.States
         {
             controller.MovementComponent.SetEnabled(false);
             controller.LookComponent.SetEnabled(false);
+            controller.CameraController.SetInteracting(true);
             interactable?.OnInteract();
         }
 
@@ -26,6 +27,7 @@ namespace Player.States
             interactable = null;
             controller.MovementComponent.SetEnabled(true);
             controller.LookComponent.SetEnabled(true);
+            controller.CameraController.SetInteracting(false);
         }
 
         public override void OnUpdate()
@@ -44,7 +46,8 @@ namespace Player.States
                 0f,
                 0f,
                 false,
-                true);
+                true,
+                controller.Input.GetLookDirection().y);
         }
     }
 }

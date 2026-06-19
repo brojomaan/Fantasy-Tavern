@@ -15,6 +15,8 @@ namespace Interactables.WorldInteractable
         [SerializeField] private float driveSpeed = 15f;
         [SerializeField] private float springSpeed = 4f;
 
+        [SerializeField] private TapSpout spout;
+
         [Sync] public float syncedAngle;
         private bool isInteracting;
         private float currentAngle;
@@ -57,6 +59,8 @@ namespace Interactables.WorldInteractable
                 maxAngle);
             handle.localRotation = Quaternion.Euler(0f, 0f, -currentAngle);
             syncedAngle = currentAngle;
+            
+            spout.OnUpdate(currentAngle, maxAngle);
         }
 
         public override void OnInteractRelease()

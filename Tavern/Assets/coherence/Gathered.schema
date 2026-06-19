@@ -11,7 +11,8 @@ component _ea2e766a6c9baae4ba4ce5024af94330_576228623474131969 [id "19"]
   ikTargetPosition Vector3 [compression "None"]
   ikTargetRotation Quaternion [bits "32"]
 
-component _f4c6a95abc4bf5d42b04cf35bf8a81e9_5107660060577107651 [id "20"]
+component _f4c6a95abc4bf5d42b04cf35bf8a81e9_4491590370692874945 [id "20"]
+  fillLevel Float [compression "None"]
   isHeld Bool [bits "1"]
   holderId String [bits "37"]
 

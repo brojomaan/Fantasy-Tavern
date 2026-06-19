@@ -11,7 +11,7 @@ namespace Interactables
         [SerializeField] private ItemVisual visual;
 
         [SerializeField] private PhysicsComponent physicsComponent;
-        [SerializeField] private CoherenceSync sync;
+        [SerializeField] protected CoherenceSync sync;
 
         [SerializeField] private Transform hoverSocket;
         [SerializeField] private Transform gripSocket;
@@ -35,14 +35,14 @@ namespace Interactables
         public void OnHoverEnter() => visual.OnHoverEnter();
         public void OnHoverExit() => visual.OnHoverExit();
 
-        private bool hasInitialized = false;
+        protected bool hasInitialized = false;
 
         private void Start()
         {
             Initialize();
         }
 
-        private void Initialize()
+        public virtual void Initialize()
         {
             if (data == null) {Debug.LogError("ItemController::Initialize(): data is null");}
             if (visual == null) {Debug.LogError("ItemController::Initialize(): visual = null");}

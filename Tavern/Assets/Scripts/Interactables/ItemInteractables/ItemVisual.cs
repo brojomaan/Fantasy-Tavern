@@ -7,29 +7,29 @@ namespace Interactables
         [SerializeField] private MeshRenderer itemRenderer;
         [SerializeField] private Material material;
 
-        public bool Initialize()
+        public  virtual bool Initialize()
         {
             if (itemRenderer == null) { Debug.LogError("ItemController::Initialize(): itemRenderer = null"); return false; }
 
             return true;
         }
 
-        public void OnHoverEnter()
+        public virtual void OnHoverEnter()
         {
         
         }
 
-        public void OnHoverExit()
+        public virtual void OnHoverExit()
         {
         
         }
 
-        public void OnPickup()
+        public virtual void OnPickup()
         {
         
         }
 
-        public void OnDrop()
+        public virtual void OnDrop()
         {
         
         }

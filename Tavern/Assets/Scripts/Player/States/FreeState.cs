@@ -52,7 +52,8 @@ namespace Player.States
                 controller.Input.GetMoveDirection().x,
                 controller.MovementComponent.GetVerticalVelocity(),
                 controller.Input.GetSprintPressed(),
-                controller.CharacterController.isGrounded);
+                controller.CharacterController.isGrounded,
+                controller.Input.GetLookDirection().y);
         }
     }
 }

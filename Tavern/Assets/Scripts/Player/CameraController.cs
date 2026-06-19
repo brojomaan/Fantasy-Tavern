@@ -27,11 +27,17 @@ namespace Player
         [SerializeField] private float sprintFOVIncrease = 5f;
         [SerializeField] private float landingFOVDip = 5f;
         [SerializeField] private float fovSpeed = 8f;
+        
+        [SerializeField] private float interactionTiltAngle = 2f;
+        [SerializeField] private float interactionTiltSpeed = 6f;
+        [SerializeField] private float interactionTiltEaseOut = 3f;
+        [SerializeField] private float maxInteractionTilt = 5f;
 
         private float bobTimer;
         private float currentLean;
         private float currentDip;
         private float previousVerticalVelocity;
+        private float currentInteractionTilt;
 
         private float trauma;
         private float traumaSeed;
@@ -39,6 +45,8 @@ namespace Player
         private float targetFOV;
         private float currentFOV;
         private float fovLandingDip;
+        
+        private bool isInteracting;
         public bool Initialize()
         {
             if (controllerRoot == null) return false;
@@ -52,7 +60,7 @@ namespace Player
         public Transform GetCameraRoot() => cameraRoot;
 
         public void OnLateUpdate(Transform headBone, float speed, 
-            float strafeInput, float verticalVelocity, bool isSprinting, bool isGrounded)
+            float strafeInput, float verticalVelocity, bool isSprinting, bool isGrounded, float mouseDeltaY)
         {
             TrackHeadBone(headBone);
             HandleBob(speed, isGrounded);
@@ -60,6 +68,7 @@ namespace Player
             HandleDip(verticalVelocity);
             HandleTrauma();
             HandleFOV(isSprinting, verticalVelocity);
+            HandleInteractionTilt(mouseDeltaY);
             ApplyOffsets();
         }
 
@@ -123,6 +132,26 @@ namespace Player
             previousVerticalVelocity = verticalVelocity;
         }
 
+        private void HandleInteractionTilt(float mouseDeltaY)
+        {
+            if (isInteracting)
+            {
+                currentInteractionTilt = Mathf.Clamp(
+                    currentInteractionTilt + -mouseDeltaY * interactionTiltAngle * Time.deltaTime,
+                    -maxInteractionTilt,
+                    maxInteractionTilt);
+            }
+            else
+            {
+                currentInteractionTilt = Mathf.Lerp(currentInteractionTilt, 0f, Time.deltaTime * interactionTiltEaseOut);
+            }
+        }
+
+        public void SetInteracting(bool interacting)
+        {
+            isInteracting = interacting;
+        }
+
         private void ApplyOffsets()
         {
             float shake = trauma * trauma;
@@ -135,7 +164,7 @@ namespace Player
             float bobOffsetY = Mathf.Sin(bobTimer) * bobAmplitude;
             cameraRoot.localPosition = new Vector3(0f, bobOffsetY + currentDip, 0f);
             cameraRoot.localRotation = Quaternion.Euler(
-                traumaPitch,
+                traumaPitch + currentInteractionTilt,
                 traumaYaw,
                 currentLean + traumaRoll);
         }
