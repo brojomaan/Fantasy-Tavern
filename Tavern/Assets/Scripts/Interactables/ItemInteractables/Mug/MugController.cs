@@ -15,6 +15,7 @@ namespace Interactables.ItemInteractables.Mug
         private float currentFillRate;
 
         [Sync] public float fillLevel;
+        [Sync] public float syncedActive;
 
         public float FillLevel => fillLevel;
         public float TargetFillLevel => targetFillLevel;
@@ -39,9 +40,21 @@ namespace Interactables.ItemInteractables.Mug
         private void Update()
         {
             if (!hasInitialized) return;
-            if (!sync.HasStateAuthority) currentFillRate = 0f;
-            Debug.Log($"fill Level: {currentFillRate}");
-            mugVisual.OnUpdate(fillLevel, currentFillRate);
+            
+            if (sync.HasStateAuthority)
+            {
+                currentFillRate = Mathf.Lerp(currentFillRate, 0f, Time.deltaTime * 5f);
+        
+                // Drain excess back to max capacity when not filling
+                if (fillLevel > maxCapacity && currentFillRate < 0.01f)
+                    fillLevel = Mathf.Lerp(fillLevel, maxCapacity - 0.05f, Time.deltaTime * 3f);
+            }
+            else
+            {
+                currentFillRate = 0f;
+            }
+            
+            mugVisual.OnUpdate(fillLevel, currentFillRate, maxCapacity);
 
         }
         public void Fill(float amount)

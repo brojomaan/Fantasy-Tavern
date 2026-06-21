@@ -122,7 +122,9 @@ MonoBehaviour:
   driveSpeed: 15
   springSpeed: 5
   spout: {fileID: 2213606582889130564}
+  visual: {fileID: 3732008195406936277}
   syncedAngle: 0
+  syncedActive: 0
 --- !u!65 &476361187286177068
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -245,6 +247,8 @@ MonoBehaviour:
       lodStepsActive: 1
     - component: {fileID: 2213606582889130564}
       lodStepsActive: 1
+    - component: {fileID: 3732008195406936277}
+      lodStepsActive: 1
     GeneratesArchetypeDefinition: 0
   interpolationLocation: 1
   RigidbodyUpdateMode: 0
@@ -266,6 +270,7 @@ MonoBehaviour:
   - rid: 4280311231339561132
   - rid: 4280311231339561138
   - rid: 4280311231339561233
+  - rid: 4280311300590403719
   scenePrefabInstanceUUID: 
   coherenceUUID: 
   assetVersion: 
@@ -459,6 +464,51 @@ MonoBehaviour:
             Coherence.Toolkit, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
         oldName: 
         oldParameterAssemblyTypes: []
+    - rid: 4280311300590403719
+      type: {class: FloatBinding, ns: Coherence.Toolkit.Bindings.ValueBindings, asm: Coherence.Toolkit}
+      data:
+        descriptor:
+          rid: 4280311300590403720
+        routing: 0
+        syncMode: 0
+        isPredicted: 0
+        predictionMode: 0
+        guid: 2ec4242701434594ba4468b1e7ff2749
+        archetypeData:
+          type: 4
+          minRange: -9223372036854775808
+          maxRange: -9223372036854775808
+          sampleRate: 20
+          floatCompression: 0
+          fields:
+          - type: 4
+            bits: 32
+            precision: 0.001
+            floatCompression: 0
+        unityComponent: {fileID: 2436834872552189027}
+        coherenceSync: {fileID: 8409147540551332879}
+        _interpolationSettings: {fileID: 0}
+    - rid: 4280311300590403720
+      type: {class: Descriptor, ns: Coherence.Toolkit.Bindings, asm: Coherence.Toolkit}
+      data:
+        name: syncedActive
+        monoAssemblyType: System.Single, mscorlib
+        required: 1
+        enforcesLODingWhenFieldsOverriden: 1
+        valueSyncCallbackName: 
+        memberType: 4
+        parameterAssemblyTypes: []
+        ownerType:
+          assemblyQualifiedName: Interactables.WorldInteractable.BeerTapController,
+            Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        defaultSyncMode: 0
+        CustomData:
+          rid: -2
+        bindingType:
+          assemblyQualifiedName: Coherence.Toolkit.Bindings.ValueBindings.FloatBinding,
+            Coherence.Toolkit, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        oldName: 
+        oldParameterAssemblyTypes: []
 --- !u!1 &7626641435292771600
 GameObject:
   m_ObjectHideFlags: 0
@@ -468,6 +518,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6973447740539436837}
+  - component: {fileID: 3732008195406936277}
   m_Layer: 3
   m_Name: Visual
   m_TagString: Untagged
@@ -491,6 +542,21 @@ Transform:
   - {fileID: 112288888222468972}
   m_Father: {fileID: 2436543312768567072}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3732008195406936277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7626641435292771600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b40a8bf79881690429b8394928ffc821, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Interactables.WorldInteractable.BeerTapVisual
+  liquidStream: {fileID: 2944155265760745119}
+  activationThreshold: 5
+  transitionSpeed: 5
 --- !u!1 &7788948671284373870
 GameObject:
   m_ObjectHideFlags: 0
@@ -572,12 +638,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7427107785718424020, guid: 92581fb7460c78b4cb6858b783efc047, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 92581fb7460c78b4cb6858b783efc047, type: 3}
       propertyPath: m_Name
       value: SM_BeerTap
       objectReference: {fileID: 0}
+    - target: {fileID: 3377676385622948376, guid: 92581fb7460c78b4cb6858b783efc047, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 87432f9839fc54f4bbbb2225af955297, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

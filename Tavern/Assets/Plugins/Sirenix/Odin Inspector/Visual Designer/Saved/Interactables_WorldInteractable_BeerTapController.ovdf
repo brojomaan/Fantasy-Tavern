@@ -1,0 +1,58 @@
+OVDF v1.1
+Interactables.WorldInteractable.BeerTapController, Assembly-CSharp
+MetaGuid:0826092b90cb4fa6bc55bc3b93ebcf12
+
+# $Nfjg85hxjnhPeXrFiAWRen
+Position: $root:14
++ [Sirenix.OdinInspector.FoldoutGroupAttribute]
+	GroupName = "Components"
+	expanded = False
+	HasDefinedExpanded = True
+
+# $PM7rxrFzgXuV2xAD15zNSt
+Position: $root:15
++ [Sirenix.OdinInspector.FoldoutGroupAttribute]
+	GroupName = "Logic"
+
+# $6WB4yAAoU76UnqcUbPKQVh
+Position: $root:16
++ [Sirenix.OdinInspector.FoldoutGroupAttribute]
+	GroupName = "Transforms"
+
+# $Qwf2TZrwLiQRyBFFhuvAME
+Position: $root:13
++ [Sirenix.OdinInspector.FoldoutGroupAttribute]
+	GroupName = "Sync"
+
+# visual
+Position: $Nfjg85hxjnhPeXrFiAWRen:1
+
+# spout
+Position: $Nfjg85hxjnhPeXrFiAWRen:0
+
+# handle
+Position: $6WB4yAAoU76UnqcUbPKQVh:1
+
+# minAngle
+Position: $PM7rxrFzgXuV2xAD15zNSt:3
+
+# driveSpeed
+Position: $PM7rxrFzgXuV2xAD15zNSt:1
+
+# maxAngle
+Position: $PM7rxrFzgXuV2xAD15zNSt:2
+
+# springSpeed
+Position: $PM7rxrFzgXuV2xAD15zNSt:0
+
+# hoverSocket
+Position: $6WB4yAAoU76UnqcUbPKQVh:0
+
+# syncedActive
+Position: $Qwf2TZrwLiQRyBFFhuvAME:2
+
+# syncedAngle
+Position: $Qwf2TZrwLiQRyBFFhuvAME:1
+
+# sync
+Position: $Qwf2TZrwLiQRyBFFhuvAME:0

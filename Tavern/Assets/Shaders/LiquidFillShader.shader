@@ -73,7 +73,7 @@
 
                 // World Y fill threshold
                 float objectHeight = UNITY_MATRIX_M._m13;
-                float fillHeight = objectHeight + lerp(_MinHeight, _MaxHeight, _FillLevel);
+                float fillHeight = objectHeight + lerp(_MinHeight, _MaxHeight, _FillLevel) + wobble;
 
                 // Clip above fill height
                 clip(fillHeight - IN.positionWS.y);

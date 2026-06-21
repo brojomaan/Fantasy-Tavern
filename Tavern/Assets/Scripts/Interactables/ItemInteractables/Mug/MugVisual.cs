@@ -5,60 +5,87 @@ namespace Interactables.ItemInteractables.Mug
     public class MugVisual : ItemVisual
     {
         [SerializeField] private MeshRenderer overflowMesh;
-        [SerializeField] private Material overflowMaterial;
         [SerializeField] private MeshRenderer liquidMesh;
-        [SerializeField] private Material liquidMaterial;
+        [SerializeField] private float maxWobbleAmount = 0.05f;
         [SerializeField] private float minLiquidScale = 0f;
         [SerializeField] private float maxLiquidScale = 1f;
+        [SerializeField] private float overflowFadeDuration = 0.25f;
+        private float overflowFadeTimer;
 
         private float wobbleX;
         private float wobbleZ;
         private float wobbleAmplitude;
+        private float wobbleTime;
         
+        private Material activeLiquidMaterial;
+        private Material activeOverflowMaterial;
+        
+        //Liquid Fill Shader
         private static readonly int FillLevel = Shader.PropertyToID("_FillLevel");
         private static readonly int WobbleX = Shader.PropertyToID("_WobbleX");
         private static readonly int WobbleZ = Shader.PropertyToID("_WobbleZ");
         private static readonly int WobbleAmount = Shader.PropertyToID("_WobbleAmount");
+        
+        //liquid Stream Shader
+        private static readonly int Active = Shader.PropertyToID("_Active");
+        private static readonly int ScrollSpeed = Shader.PropertyToID("ScrollSpeed");
 
         public override bool Initialize()
         {
             base.Initialize();
             if (liquidMesh == null) { Debug.LogError("MugVisual::Initialize(): liquidMesh is null."); return false; }
             if (overflowMesh == null) { Debug.LogError("MugVisual::Initialize(): overflowMesh is null."); return false; }
-            liquidMesh.material = new Material(liquidMaterial);
             
-            
+            activeLiquidMaterial = new Material(liquidMesh.material);
+            liquidMesh.material = activeLiquidMaterial;
+
+            activeOverflowMaterial = new Material(overflowMesh.material);
+            overflowMesh.material = activeOverflowMaterial;
+            activeOverflowMaterial.SetFloat(FillLevel, 1f);
+
             overflowMesh.gameObject.SetActive(false);
+            
+            overflowFadeTimer = overflowFadeDuration;
+            
             return true;
         }
 
-        public void OnUpdate(float fillLevel, float fillRate)
+        public void OnUpdate(float fillLevel, float fillRate, float maxCapacity)
         {
-            //Wobble Decays over time
-            wobbleX = Mathf.Lerp(wobbleX, 0f, Time.deltaTime * 2f);
-            wobbleZ = Mathf.Lerp(wobbleZ, 0f, Time.deltaTime * 2f);
-            
-            //Fill rate adds wobble
-            wobbleAmplitude = Mathf.Lerp(wobbleAmplitude, fillRate * 0.5f, Time.deltaTime * 5f);
-            
-            //Animate Wobble
-            wobbleX += Time.deltaTime * 10f * wobbleAmplitude;
-            wobbleZ += Time.deltaTime * 10f * wobbleAmplitude;
+            // Fill rate drives amplitude, clamped to max
+            wobbleAmplitude = Mathf.Lerp(wobbleAmplitude, fillRate * maxWobbleAmount, Time.deltaTime * 5f);
+            wobbleAmplitude = Mathf.Clamp(wobbleAmplitude, 0f, maxWobbleAmount);
 
-            liquidMesh.material.SetFloat(FillLevel, fillLevel);
-            liquidMesh.material.SetFloat(WobbleX, wobbleX);
-            liquidMesh.material.SetFloat(WobbleZ, wobbleZ);
-            liquidMesh.material.SetFloat(WobbleAmount, wobbleAmplitude);
-        }
+            // Time just keeps ticking to animate the sine wave
+            wobbleTime += Time.deltaTime;
 
-        private void HandleLiquidScale(float fillLevel)
-        {
+            // X and Z are just offset sine inputs driven by time
+            wobbleX = wobbleTime * 10f;
+            wobbleZ = wobbleTime * 8f;
+
+            activeLiquidMaterial.SetFloat(FillLevel, fillLevel);
+            activeLiquidMaterial.SetFloat(WobbleX, wobbleX);
+            activeLiquidMaterial.SetFloat(WobbleZ, wobbleZ);
+            activeLiquidMaterial.SetFloat(WobbleAmount, wobbleAmplitude);
             
+            HandleOverflow(fillLevel, maxCapacity);
         }
 
         private void HandleOverflow(float fillLevel, float maxCapacity)
         {
-            overflowMesh.gameObject.SetActive(fillLevel > maxCapacity);
+            bool isOverflowing = fillLevel > maxCapacity;
+            overflowMesh.gameObject.SetActive(isOverflowing);
+    
+            if (isOverflowing)
+            {
+                float overflowAmount = fillLevel - maxCapacity;
+                activeOverflowMaterial.SetFloat(Active, 1f);
+                activeOverflowMaterial.SetFloat(ScrollSpeed, overflowAmount * 10f);
+            }
+            else
+            {
+                activeOverflowMaterial.SetFloat(Active, 0f);
+            }
         }
     }
 }

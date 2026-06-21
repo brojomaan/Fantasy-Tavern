@@ -21,7 +21,7 @@ namespace Coherence.Generated
     [System.Serializable]
     public class Definition : IDefinition
     {
-        public const string schemaId = "8e95c90419234162fdb7bbd612aef87b4ddb4864";
+        public const string schemaId = "398c0391cbe3dd9d96a2e66d6446413c0402c1b8";
         public const uint InternalWorldPosition = 0;
         public const uint InternalWorldOrientation = 1;
         public const uint InternalLocalUserComponent = 2;

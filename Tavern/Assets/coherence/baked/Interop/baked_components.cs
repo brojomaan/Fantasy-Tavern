@@ -2927,18 +2927,23 @@ namespace Coherence.Generated
             {
                 FieldsMask |= _6380a1e0e5aed524ebc2143e629bdf47_2436834872552189027.syncedAngleMask;
                 syncedAngleSimulationFrame = frame;
+                FieldsMask |= _6380a1e0e5aed524ebc2143e629bdf47_2436834872552189027.syncedActiveMask;
+                syncedActiveSimulationFrame = frame;
             }
     
             public static uint syncedAngleMask => 0b00000000000000000000000000000001;
             public AbsoluteSimulationFrame syncedAngleSimulationFrame;
             public System.Single syncedAngle;
+            public static uint syncedActiveMask => 0b00000000000000000000000000000010;
+            public AbsoluteSimulationFrame syncedActiveSimulationFrame;
+            public System.Single syncedActive;
     
             public uint FieldsMask { get; set; }
             public uint StoppedMask { get; set; }
             public uint GetComponentType() => 18;
             public int PriorityLevel() => 100;
             public const int order = 0;
-            public uint InitialFieldsMask() => 0b00000000000000000000000000000001;
+            public uint InitialFieldsMask() => 0b00000000000000000000000000000011;
             public bool HasFields() => true;
             public bool HasRefFields() => false;
     
@@ -2947,7 +2952,7 @@ namespace Coherence.Generated
                 return null;
             }
     
-            public int GetFieldCount() => 1;
+            public int GetFieldCount() => 2;
     
     
             
@@ -3004,6 +3009,13 @@ namespace Coherence.Generated
                 }
     
                 otherMask >>= 1;
+                if ((otherMask & 0x01) != 0)
+                {
+                    this.syncedActiveSimulationFrame = other.syncedActiveSimulationFrame;
+                    this.syncedActive = other.syncedActive;
+                }
+    
+                otherMask >>= 1;
                 StoppedMask |= other.StoppedMask;
     
                 return this;
@@ -3018,7 +3030,7 @@ namespace Coherence.Generated
             {
                 if (bitStream.WriteMask(data.StoppedMask != 0))
                 {
-                    bitStream.WriteMaskBits(data.StoppedMask, 1);
+                    bitStream.WriteMaskBits(data.StoppedMask, 2);
                 }
     
                 var mask = data.FieldsMask;
@@ -3035,6 +3047,18 @@ namespace Coherence.Generated
                 }
     
                 mask >>= 1;
+                if (bitStream.WriteMask((mask & 0x01) != 0))
+                {
+    
+    
+                    var fieldValue = data.syncedActive;
+    
+
+    
+                    bitStream.WriteFloat(fieldValue, FloatMeta.NoCompression());
+                }
+    
+                mask >>= 1;
     
                 return mask;
             }
@@ -3044,7 +3068,7 @@ namespace Coherence.Generated
                 var stoppedMask = (uint)0;
                 if (bitStream.ReadMask())
                 {
-                    stoppedMask = bitStream.ReadMaskBits(1);
+                    stoppedMask = bitStream.ReadMaskBits(2);
                 }
     
                 var val = new _6380a1e0e5aed524ebc2143e629bdf47_2436834872552189027();
@@ -3053,6 +3077,12 @@ namespace Coherence.Generated
     
                     val.syncedAngle = bitStream.ReadFloat(FloatMeta.NoCompression());
                     val.FieldsMask |= _6380a1e0e5aed524ebc2143e629bdf47_2436834872552189027.syncedAngleMask;
+                }
+                if (bitStream.ReadMask())
+                {
+    
+                    val.syncedActive = bitStream.ReadFloat(FloatMeta.NoCompression());
+                    val.FieldsMask |= _6380a1e0e5aed524ebc2143e629bdf47_2436834872552189027.syncedActiveMask;
                 }
     
                 val.StoppedMask = stoppedMask;
@@ -3065,8 +3095,9 @@ namespace Coherence.Generated
             {
                 return $"_6380a1e0e5aed524ebc2143e629bdf47_2436834872552189027(" +
                     $" syncedAngle: { this.syncedAngle }" +
-                    $" Mask: { System.Convert.ToString(FieldsMask, 2).PadLeft(1, '0') }, " +
-                    $"Stopped: { System.Convert.ToString(StoppedMask, 2).PadLeft(1, '0') })";
+                    $" syncedActive: { this.syncedActive }" +
+                    $" Mask: { System.Convert.ToString(FieldsMask, 2).PadLeft(2, '0') }, " +
+                    $"Stopped: { System.Convert.ToString(StoppedMask, 2).PadLeft(2, '0') })";
             }
         }
         public struct _ea2e766a6c9baae4ba4ce5024af94330_576228623474131969 : ICoherenceComponentData
@@ -3502,6 +3533,8 @@ namespace Coherence.Generated
                 isHeldSimulationFrame = frame;
                 FieldsMask |= _f4c6a95abc4bf5d42b04cf35bf8a81e9_4491590370692874945.holderIdMask;
                 holderIdSimulationFrame = frame;
+                FieldsMask |= _f4c6a95abc4bf5d42b04cf35bf8a81e9_4491590370692874945.syncedActiveMask;
+                syncedActiveSimulationFrame = frame;
             }
     
             public static uint fillLevelMask => 0b00000000000000000000000000000001;
@@ -3513,13 +3546,16 @@ namespace Coherence.Generated
             public static uint holderIdMask => 0b00000000000000000000000000000100;
             public AbsoluteSimulationFrame holderIdSimulationFrame;
             public System.String holderId;
+            public static uint syncedActiveMask => 0b00000000000000000000000000001000;
+            public AbsoluteSimulationFrame syncedActiveSimulationFrame;
+            public System.Single syncedActive;
     
             public uint FieldsMask { get; set; }
             public uint StoppedMask { get; set; }
             public uint GetComponentType() => 20;
             public int PriorityLevel() => 100;
             public const int order = 0;
-            public uint InitialFieldsMask() => 0b00000000000000000000000000000111;
+            public uint InitialFieldsMask() => 0b00000000000000000000000000001111;
             public bool HasFields() => true;
             public bool HasRefFields() => false;
     
@@ -3528,7 +3564,7 @@ namespace Coherence.Generated
                 return null;
             }
     
-            public int GetFieldCount() => 3;
+            public int GetFieldCount() => 4;
     
     
             
@@ -3599,6 +3635,13 @@ namespace Coherence.Generated
                 }
     
                 otherMask >>= 1;
+                if ((otherMask & 0x01) != 0)
+                {
+                    this.syncedActiveSimulationFrame = other.syncedActiveSimulationFrame;
+                    this.syncedActive = other.syncedActive;
+                }
+    
+                otherMask >>= 1;
                 StoppedMask |= other.StoppedMask;
     
                 return this;
@@ -3613,7 +3656,7 @@ namespace Coherence.Generated
             {
                 if (bitStream.WriteMask(data.StoppedMask != 0))
                 {
-                    bitStream.WriteMaskBits(data.StoppedMask, 3);
+                    bitStream.WriteMaskBits(data.StoppedMask, 4);
                 }
     
                 var mask = data.FieldsMask;
@@ -3654,6 +3697,18 @@ namespace Coherence.Generated
                 }
     
                 mask >>= 1;
+                if (bitStream.WriteMask((mask & 0x01) != 0))
+                {
+    
+    
+                    var fieldValue = data.syncedActive;
+    
+
+    
+                    bitStream.WriteFloat(fieldValue, FloatMeta.NoCompression());
+                }
+    
+                mask >>= 1;
     
                 return mask;
             }
@@ -3663,7 +3718,7 @@ namespace Coherence.Generated
                 var stoppedMask = (uint)0;
                 if (bitStream.ReadMask())
                 {
-                    stoppedMask = bitStream.ReadMaskBits(3);
+                    stoppedMask = bitStream.ReadMaskBits(4);
                 }
     
                 var val = new _f4c6a95abc4bf5d42b04cf35bf8a81e9_4491590370692874945();
@@ -3685,6 +3740,12 @@ namespace Coherence.Generated
                     val.holderId = bitStream.ReadString();
                     val.FieldsMask |= _f4c6a95abc4bf5d42b04cf35bf8a81e9_4491590370692874945.holderIdMask;
                 }
+                if (bitStream.ReadMask())
+                {
+    
+                    val.syncedActive = bitStream.ReadFloat(FloatMeta.NoCompression());
+                    val.FieldsMask |= _f4c6a95abc4bf5d42b04cf35bf8a81e9_4491590370692874945.syncedActiveMask;
+                }
     
                 val.StoppedMask = stoppedMask;
     
@@ -3698,8 +3759,9 @@ namespace Coherence.Generated
                     $" fillLevel: { this.fillLevel }" +
                     $" isHeld: { this.isHeld }" +
                     $" holderId: { this.holderId }" +
-                    $" Mask: { System.Convert.ToString(FieldsMask, 2).PadLeft(3, '0') }, " +
-                    $"Stopped: { System.Convert.ToString(StoppedMask, 2).PadLeft(3, '0') })";
+                    $" syncedActive: { this.syncedActive }" +
+                    $" Mask: { System.Convert.ToString(FieldsMask, 2).PadLeft(4, '0') }, " +
+                    $"Stopped: { System.Convert.ToString(StoppedMask, 2).PadLeft(4, '0') })";
             }
         }
 

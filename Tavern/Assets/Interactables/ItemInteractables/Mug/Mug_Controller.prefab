@@ -51,6 +51,7 @@ MonoBehaviour:
   overflowMaterial: {fileID: 2100000, guid: 48f8e27c521aa0b4d869d81acb5cff6e, type: 2}
   liquidMesh: {fileID: 2686122455430718874}
   liquidMaterial: {fileID: 2100000, guid: 69fa307d5c1fa474a911e37bf6ed29a8, type: 2}
+  maxWobbleAmount: 0.02
   minLiquidScale: 0
   maxLiquidScale: 1
 --- !u!1 &4585376017716572058
@@ -78,7 +79,7 @@ Transform:
   m_GameObject: {fileID: 4585376017716572058}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.70710677, z: -0.70710677, w: 0}
-  m_LocalPosition: {x: 0.314, y: 0.128, z: -0}
+  m_LocalPosition: {x: 0.11, y: 0.128, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -174,11 +175,13 @@ MonoBehaviour:
   gripSocket: {fileID: 7505602765222920298}
   isHeld: 0
   holderId: 
+  fillSpeed: 0.1
   targetFillLevel: 0.8
   acceptableRange: 0.15
   maxCapacity: 1
   mugVisual: {fileID: 3804677607673308288}
   fillLevel: 0
+  syncedActive: 0
 --- !u!114 &3694011320011255253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,6 +370,7 @@ MonoBehaviour:
   - rid: 4280311231339561622
   - rid: 4280311231339561623
   - rid: 4280311231339561624
+  - rid: 4280311300590403714
   scenePrefabInstanceUUID: 
   coherenceUUID: 
   assetVersion: 
@@ -519,6 +523,51 @@ MonoBehaviour:
           rid: -2
         bindingType:
           assemblyQualifiedName: Coherence.Toolkit.Bindings.ValueBindings.StringBinding,
+            Coherence.Toolkit, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        oldName: 
+        oldParameterAssemblyTypes: []
+    - rid: 4280311300590403714
+      type: {class: FloatBinding, ns: Coherence.Toolkit.Bindings.ValueBindings, asm: Coherence.Toolkit}
+      data:
+        descriptor:
+          rid: 4280311300590403715
+        routing: 0
+        syncMode: 0
+        isPredicted: 0
+        predictionMode: 0
+        guid: 649ee74c73a74dc1a3a91cc634c3e906
+        archetypeData:
+          type: 4
+          minRange: -9223372036854775808
+          maxRange: -9223372036854775808
+          sampleRate: 20
+          floatCompression: 0
+          fields:
+          - type: 4
+            bits: 32
+            precision: 0.001
+            floatCompression: 0
+        unityComponent: {fileID: 4491590370692874945}
+        coherenceSync: {fileID: 9132006842074257809}
+        _interpolationSettings: {fileID: 0}
+    - rid: 4280311300590403715
+      type: {class: Descriptor, ns: Coherence.Toolkit.Bindings, asm: Coherence.Toolkit}
+      data:
+        name: syncedActive
+        monoAssemblyType: System.Single, mscorlib
+        required: 1
+        enforcesLODingWhenFieldsOverriden: 1
+        valueSyncCallbackName: 
+        memberType: 4
+        parameterAssemblyTypes: []
+        ownerType:
+          assemblyQualifiedName: Interactables.ItemInteractables.Mug.MugController,
+            Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        defaultSyncMode: 0
+        CustomData:
+          rid: -2
+        bindingType:
+          assemblyQualifiedName: Coherence.Toolkit.Bindings.ValueBindings.FloatBinding,
             Coherence.Toolkit, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
         oldName: 
         oldParameterAssemblyTypes: []
@@ -715,8 +764,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -5925732523065649557, guid: 0c20b90f1db4ae94aa5512106cda342d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -2927881484066585778, guid: 0c20b90f1db4ae94aa5512106cda342d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 48f8e27c521aa0b4d869d81acb5cff6e, type: 2}
     - target: {fileID: -2482151322323805919, guid: 0c20b90f1db4ae94aa5512106cda342d, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
