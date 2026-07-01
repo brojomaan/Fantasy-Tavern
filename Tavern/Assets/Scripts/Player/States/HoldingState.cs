@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Interactables.ItemInteractables.Mug;
+using NPC;
+using UnityEngine;
 
 namespace Player.States
 {
@@ -8,6 +10,7 @@ namespace Player.States
 
         public override void OnEnter()
         {
+            Debug.Log($"Entered HoldingState");
             controller.MovementComponent.SetEnabled(true);
             controller.LookComponent.SetEnabled(true);
         }
@@ -36,6 +39,15 @@ namespace Player.States
                 }
                 
                 controller.StateMachine.ChangeState(controller.FreeState);
+            }
+
+            if (controller.Input.GetInteractPressed() && controller.HoldComponent.IsHolding())
+            {
+                Debug.Log($"Interact Pressed");
+                NpcController npc = controller.InteractComponent.GetCurrentNpcController();
+                Debug.Log($"Npc Interacted With {npc}");
+                MugController mug = controller.HoldComponent.GetHeldItem() as MugController;
+                Debug.Log($"Mug in Hand {mug}");
             }
         }
         

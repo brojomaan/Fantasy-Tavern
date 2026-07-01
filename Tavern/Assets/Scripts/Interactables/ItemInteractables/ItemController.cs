@@ -1,5 +1,6 @@
 using Coherence;
 using Coherence.Toolkit;
+using Interactables.ItemInteractables;
 using Interfaces;
 using UnityEngine;
 

@@ -1,3 +1,4 @@
+using Components.SharedComponents;
 using UnityEngine;
 
 namespace Interactables.ItemInteractables.Mug
@@ -10,6 +11,7 @@ namespace Interactables.ItemInteractables.Mug
         [SerializeField] private float minLiquidScale = 0f;
         [SerializeField] private float maxLiquidScale = 1f;
         [SerializeField] private float overflowFadeDuration = 0.25f;
+        [SerializeField] private VFXComponent streamVFX;
         private float overflowFadeTimer;
 
         private float wobbleX;
@@ -67,8 +69,24 @@ namespace Interactables.ItemInteractables.Mug
             activeLiquidMaterial.SetFloat(WobbleX, wobbleX);
             activeLiquidMaterial.SetFloat(WobbleZ, wobbleZ);
             activeLiquidMaterial.SetFloat(WobbleAmount, wobbleAmplitude);
+
+            HandleStreamVFX(fillRate);
             
             HandleOverflow(fillLevel, maxCapacity);
+        }
+
+        private void HandleStreamVFX(float fillRate)
+        {
+            if (fillRate >= 0.1f)
+            {
+                if (streamVFX.IsPlaying()) return;
+                streamVFX.Play();
+            }
+            else
+            {
+                if (!streamVFX.IsPlaying()) return;
+                streamVFX.Stop();
+            }
         }
 
         private void HandleOverflow(float fillLevel, float maxCapacity)

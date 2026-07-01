@@ -1,0 +1,51 @@
+OVDF v1.1
+Interactables.ItemInteractables.Mug.MugVisual, Assembly-CSharp
+MetaGuid:3c3ba59646a310e4f92df830f1dee766
+
+# $Mnr7ToiJUoQmAHg5gJtksp
+Position: $root:22
++ [Sirenix.OdinInspector.FoldoutGroupAttribute]
+	GroupName = "Logic"
+	expanded = True
+	HasDefinedExpanded = True
+
+# $Vxd1r62u6jHu26zwmNS2Tq
+Position: $root:20
++ [Sirenix.OdinInspector.FoldoutGroupAttribute]
+	GroupName = "Meshes"
+	expanded = True
+	HasDefinedExpanded = True
+
+# $Hj1c735Jio9wUQgLFoMAKr
+Position: $root:21
++ [Sirenix.OdinInspector.FoldoutGroupAttribute]
+	GroupName = "Component"
+	expanded = True
+	HasDefinedExpanded = True
+
+# maxWobbleAmount
+Position: $Mnr7ToiJUoQmAHg5gJtksp:0
+
+# minLiquidScale
+Position: $Mnr7ToiJUoQmAHg5gJtksp:1
+
+# maxLiquidScale
+Position: $Mnr7ToiJUoQmAHg5gJtksp:2
+
+# overflowFadeDuration
+Position: $Mnr7ToiJUoQmAHg5gJtksp:3
+
+# itemRenderer
+Position: $Vxd1r62u6jHu26zwmNS2Tq:0
+
+# overflowMesh
+Position: $Vxd1r62u6jHu26zwmNS2Tq:1
+
+# liquidMesh
+Position: $Vxd1r62u6jHu26zwmNS2Tq:2
+
+# material
+Position: $Vxd1r62u6jHu26zwmNS2Tq:3
+
+# streamVFX
+Position: $Hj1c735Jio9wUQgLFoMAKr:0

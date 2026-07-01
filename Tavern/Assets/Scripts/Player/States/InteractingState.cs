@@ -1,4 +1,5 @@
 ﻿using Interactables.WorldInteractable;
+using UnityEngine;
 
 namespace Player.States
 {
@@ -15,6 +16,7 @@ namespace Player.States
 
         public override void OnEnter()
         {
+            Debug.Log($"Entered InteractingState");
             controller.MovementComponent.SetEnabled(false);
             controller.LookComponent.SetEnabled(false);
             controller.CameraController.SetInteracting(true);

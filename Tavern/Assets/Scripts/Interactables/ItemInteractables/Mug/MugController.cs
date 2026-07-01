@@ -22,6 +22,7 @@ namespace Interactables.ItemInteractables.Mug
         public float AcceptableRange => acceptableRange;
         public float MaxCapacity => maxCapacity;
         public bool IsOverflowing => fillLevel > maxCapacity;
+
         public bool IsInSweetSpot => fillLevel <= targetFillLevel + acceptableRange &&
                                      fillLevel <= maxCapacity + acceptableRange;
 
@@ -55,8 +56,8 @@ namespace Interactables.ItemInteractables.Mug
             }
             
             mugVisual.OnUpdate(fillLevel, currentFillRate, maxCapacity);
-
         }
+        
         public void Fill(float amount)
         {
             if (!sync.HasStateAuthority) return;

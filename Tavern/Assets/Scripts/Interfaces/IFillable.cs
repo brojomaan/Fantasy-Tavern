@@ -7,6 +7,7 @@
         float AcceptableRange { get; }
         float MaxCapacity { get; }
         bool IsOverflowing { get; }
+
         void Fill(float amount);
     }
 }

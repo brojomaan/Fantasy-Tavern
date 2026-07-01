@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using Coherence;
+﻿using Coherence;
 using Coherence.Toolkit;
 using Interfaces;
 using UnityEngine;

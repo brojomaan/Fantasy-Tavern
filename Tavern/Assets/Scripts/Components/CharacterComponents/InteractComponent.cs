@@ -1,5 +1,6 @@
 ﻿using Interactables.WorldInteractable;
 using Interfaces;
+using NPC;
 using Player;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -59,7 +60,7 @@ namespace Components.CharacterComponents
                 {
                     if (interactable != currentHover)
                     {
-                        currentHover?.OnHoverExit();
+                        if (IsHoverValid()) currentHover.OnHoverExit();
                         currentHover = interactable;
                         currentHover.OnHoverEnter();
                     }
@@ -69,7 +70,7 @@ namespace Components.CharacterComponents
                 }
             }
 
-            if (currentHover != null)
+            if (IsHoverValid())
             {
                 currentHover.OnHoverExit();
                 currentHover = null;
@@ -82,11 +83,37 @@ namespace Components.CharacterComponents
         {
             Ray ray = new Ray(cam.transform.position, cam.transform.forward);
 
-            if (Physics.Raycast(ray, out RaycastHit hit, placeRange, placeableLayer))
+             // Check for NPC or interactable while holding
+            if (Physics.Raycast(ray, out RaycastHit interactHit, interactRange, interactLayer))
+            {
+                IInteractable interactable = interactHit.collider.GetComponentInParent<IInteractable>();
+                if (interactable != null && interactable.CanInteractWith(holdComponent.GetHeldItem()))
+                {
+                    if (interactable != currentHover)
+                    {
+                        if (IsHoverValid()) currentHover.OnHoverExit();
+                        currentHover = interactable;
+                        currentHover.OnHoverEnter();
+                    }
+                }
+                else if (IsHoverValid())
+                {
+                    currentHover.OnHoverExit();
+                    currentHover = null;
+                }
+            }
+            else if (IsHoverValid())
+            {
+                currentHover.OnHoverExit();
+                currentHover = null;
+            }
+
+            // Separately check for placement
+            if (Physics.Raycast(ray, out RaycastHit placeHit, placeRange, placeableLayer))
             {
                 IsPreviewingPlacement = true;
 
-                Vector3 targetPosition = hit.point + 
+                Vector3 targetPosition = placeHit.point + 
                                          holdComponent.GetCarrySocket().TransformDirection(holdComponent.GetHeldItem().CarryPositionOffset);
                 Quaternion targetRotation = holdComponent.GetCarrySocket().rotation * 
                                             Quaternion.Euler(holdComponent.GetHeldItem().CarryRotationOffset);
@@ -106,13 +133,13 @@ namespace Components.CharacterComponents
 
                 holdComponent.SetTargetPosition(targetPosition);
                 holdComponent.SetTargetRotation(targetRotation);
-                visual.SetIKTarget(holdComponent.GetGripSocket());
-            }
+                visual.SetIKTarget(currentHover != null ? null : holdComponent.GetGripSocket()); 
+            } 
         }
 
         private void HandlePickup()
         {
-            if (currentHover == null) return;
+            if (!IsHoverValid()) return;
 
             GameObject obj = (currentHover as MonoBehaviour)?.gameObject;
             IHoldable holdable = obj?.GetComponent<IHoldable>();
@@ -120,7 +147,7 @@ namespace Components.CharacterComponents
             if (holdable != null)
             {
                 holdComponent.PickUp(obj, holdable);
-                currentHover.OnHoverExit();
+                if (IsHoverValid())currentHover.OnHoverExit();
                 currentHover = null;
                 visual.SetIKTarget(holdComponent.GetGripSocket());
             }
@@ -129,6 +156,18 @@ namespace Components.CharacterComponents
         public WorldInteractable GetCurrentWorldInteractable()
         {
             return (currentHover as MonoBehaviour)?.GetComponent<WorldInteractable>();
+        }
+
+        public NpcController GetCurrentNpcController()
+        {
+            return (currentHover as MonoBehaviour)?.GetComponent<NpcController>();
+        }
+
+        private bool IsHoverValid()
+        {
+            if (currentHover == null) return false;
+            MonoBehaviour mb = currentHover as MonoBehaviour;
+            return mb != null && mb.gameObject != null;
         }
 
         public bool HasHover() => currentHover != null;
