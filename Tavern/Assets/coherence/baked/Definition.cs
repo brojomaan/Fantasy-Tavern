@@ -21,7 +21,7 @@ namespace Coherence.Generated
     [System.Serializable]
     public class Definition : IDefinition
     {
-        public const string schemaId = "398c0391cbe3dd9d96a2e66d6446413c0402c1b8";
+        public const string schemaId = "6bbfb32ee1c5b34d449df0fb7b747d6356ffc693";
         public const uint InternalWorldPosition = 0;
         public const uint InternalWorldOrientation = 1;
         public const uint InternalLocalUserComponent = 2;
@@ -41,8 +41,9 @@ namespace Coherence.Generated
         public const uint InternalAssetId = 16;
         public const uint InternalGenericScale = 17;
         public const uint Internal_6380a1e0e5aed524ebc2143e629bdf47_2436834872552189027 = 18;
-        public const uint Internal_ea2e766a6c9baae4ba4ce5024af94330_576228623474131969 = 19;
-        public const uint Internal_f4c6a95abc4bf5d42b04cf35bf8a81e9_4491590370692874945 = 20;
+        public const uint Internal_e8e7b239dff349e43b0021c76df20a39_8004030772680294737 = 19;
+        public const uint Internal_ea2e766a6c9baae4ba4ce5024af94330_576228623474131969 = 20;
+        public const uint Internal_f4c6a95abc4bf5d42b04cf35bf8a81e9_4491590370692874945 = 21;
         public const uint InternalAuthorityRequest = 0;
         public const uint InternalAuthorityTransfer = 1;
         public const uint InternalQuerySynced = 2;
@@ -71,8 +72,9 @@ namespace Coherence.Generated
             { 16, "AssetId" },
             { 17, "GenericScale" },
             { 18, "_6380a1e0e5aed524ebc2143e629bdf47_2436834872552189027" },
-            { 19, "_ea2e766a6c9baae4ba4ce5024af94330_576228623474131969" },
-            { 20, "_f4c6a95abc4bf5d42b04cf35bf8a81e9_4491590370692874945" },
+            { 19, "_e8e7b239dff349e43b0021c76df20a39_8004030772680294737" },
+            { 20, "_ea2e766a6c9baae4ba4ce5024af94330_576228623474131969" },
+            { 21, "_f4c6a95abc4bf5d42b04cf35bf8a81e9_4491590370692874945" },
         };
 
         public static string ComponentNameForTypeId(uint typeId)
@@ -142,6 +144,8 @@ namespace Coherence.Generated
                     return GenericScale.Deserialize(referenceSimulationFrame, inProtocolStream);
                 case Internal_6380a1e0e5aed524ebc2143e629bdf47_2436834872552189027:
                     return _6380a1e0e5aed524ebc2143e629bdf47_2436834872552189027.Deserialize(referenceSimulationFrame, inProtocolStream);
+                case Internal_e8e7b239dff349e43b0021c76df20a39_8004030772680294737:
+                    return _e8e7b239dff349e43b0021c76df20a39_8004030772680294737.Deserialize(referenceSimulationFrame, inProtocolStream);
                 case Internal_ea2e766a6c9baae4ba4ce5024af94330_576228623474131969:
                     return _ea2e766a6c9baae4ba4ce5024af94330_576228623474131969.Deserialize(referenceSimulationFrame, inProtocolStream);
                 case Internal_f4c6a95abc4bf5d42b04cf35bf8a81e9_4491590370692874945:
@@ -195,6 +199,8 @@ namespace Coherence.Generated
                     return GenericScale.Serialize((GenericScale)data, isRefSimFrameValid, referenceSimulationFrame, protocolStream, logger);
                 case Internal_6380a1e0e5aed524ebc2143e629bdf47_2436834872552189027:
                     return _6380a1e0e5aed524ebc2143e629bdf47_2436834872552189027.Serialize((_6380a1e0e5aed524ebc2143e629bdf47_2436834872552189027)data, isRefSimFrameValid, referenceSimulationFrame, protocolStream, logger);
+                case Internal_e8e7b239dff349e43b0021c76df20a39_8004030772680294737:
+                    return _e8e7b239dff349e43b0021c76df20a39_8004030772680294737.Serialize((_e8e7b239dff349e43b0021c76df20a39_8004030772680294737)data, isRefSimFrameValid, referenceSimulationFrame, protocolStream, logger);
                 case Internal_ea2e766a6c9baae4ba4ce5024af94330_576228623474131969:
                     return _ea2e766a6c9baae4ba4ce5024af94330_576228623474131969.Serialize((_ea2e766a6c9baae4ba4ce5024af94330_576228623474131969)data, isRefSimFrameValid, referenceSimulationFrame, protocolStream, logger);
                 case Internal_f4c6a95abc4bf5d42b04cf35bf8a81e9_4491590370692874945:

@@ -506,12 +506,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4802ee747b118cd47aff48efcc71e55b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3417129839858166751}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4802ee747b118cd47aff48efcc71e55b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8335731962079881733}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4802ee747b118cd47aff48efcc71e55b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8758242551979254345}
   m_SourcePrefab: {fileID: 100100000, guid: 4802ee747b118cd47aff48efcc71e55b, type: 3}
 --- !u!4 &2035032942178170367 stripped
 Transform:
@@ -565,38 +559,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8335731962079881733
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5304095918542113504}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab73fa6c4c2b4e63a8c9ae8f434d2b37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Components.CharacterComponents.IKComponent
-  ikTarget: {fileID: 584947666175856168}
-  ikHint: {fileID: 151336167613098974}
-  rig: {fileID: 1913335320653498357}
-  rigWeightSpeed: 8
---- !u!114 &8758242551979254345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5304095918542113504}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fff0960ef4ea6e04eac66b4a7fd2189d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Animation.Rigging::UnityEngine.Animations.Rigging.RigBuilder
-  m_RigLayers:
-  - m_Rig: {fileID: 1913335320653498357}
-    m_Active: 1
-  m_Effectors: []
 --- !u!4 &7894727865336495886 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2942314938800146623, guid: 4802ee747b118cd47aff48efcc71e55b, type: 3}

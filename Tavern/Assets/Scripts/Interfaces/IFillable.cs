@@ -1,4 +1,6 @@
-﻿namespace Interfaces
+﻿using Interactables.WorldInteractable;
+
+namespace Interfaces
 {
     public interface IFillable
     {
@@ -7,7 +9,7 @@
         float AcceptableRange { get; }
         float MaxCapacity { get; }
         bool IsOverflowing { get; }
-
-        void Fill(float amount);
+        LiquidMixer GetLiquidMixer();
+        void Fill(float amount, string liquidId);
     }
 }

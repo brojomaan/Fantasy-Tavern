@@ -13,6 +13,7 @@ namespace Interactables.WorldInteractable
         [SerializeField] private float maxAngle = 45f;
         [SerializeField] private float driveSpeed = 15f;
         [SerializeField] private float springSpeed = 4f;
+        [SerializeField] private string liquidId = "beer";
 
         [SerializeField] private TapSpout spout;
         [SerializeField] private BeerTapVisual visual;
@@ -72,7 +73,7 @@ namespace Interactables.WorldInteractable
             syncedAngle = currentAngle;
     
             visual.OnUpdate(currentAngle, true, syncedActive);
-            spout.OnUpdate(currentAngle, maxAngle);
+            spout.OnUpdate(currentAngle, maxAngle, liquidId);
         }
 
         public override bool CanInteractWith(IHoldable heldItem) => heldItem == null;

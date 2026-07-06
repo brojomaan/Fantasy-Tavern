@@ -1,4 +1,5 @@
 ﻿using Coherence.Toolkit;
+using Interactables.WorldInteractable;
 using Interfaces;
 using UnityEngine;
 
@@ -12,6 +13,8 @@ namespace Interactables.ItemInteractables.Mug
         [SerializeField] private float maxCapacity = 1f;
         [SerializeField] private MugVisual mugVisual;
 
+        [SerializeField] private LiquidMixer liquidMixer = new LiquidMixer();
+
         private float currentFillRate;
 
         [Sync] public float fillLevel;
@@ -22,6 +25,7 @@ namespace Interactables.ItemInteractables.Mug
         public float AcceptableRange => acceptableRange;
         public float MaxCapacity => maxCapacity;
         public bool IsOverflowing => fillLevel > maxCapacity;
+        public LiquidMixer GetLiquidMixer() => liquidMixer;
 
         public bool IsInSweetSpot => fillLevel <= targetFillLevel + acceptableRange &&
                                      fillLevel <= maxCapacity + acceptableRange;
@@ -58,11 +62,13 @@ namespace Interactables.ItemInteractables.Mug
             mugVisual.OnUpdate(fillLevel, currentFillRate, maxCapacity);
         }
         
-        public void Fill(float amount)
+        public void Fill(float amount, string liquidId)
         {
             if (!sync.HasStateAuthority) return;
             currentFillRate = amount * 10;
             fillLevel = Mathf.Clamp(fillLevel + amount * fillSpeed * Time.deltaTime, 0f, maxCapacity + 0.2f);
+            liquidMixer.Add(liquidId, amount * fillSpeed * Time.deltaTime);
+            Debug.Log($"LiquidMixer contents: {liquidId} = {liquidMixer.GetAmount(liquidId):F3} / Total = {liquidMixer.GetTotal():F3}");
         }
     }
 }

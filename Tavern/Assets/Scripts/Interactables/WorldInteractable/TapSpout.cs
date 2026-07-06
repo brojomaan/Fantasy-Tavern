@@ -27,12 +27,12 @@ namespace Interactables.WorldInteractable
                 currentFillable = null;
         }
 
-        public void OnUpdate(float handleAngle, float maxAngle)
+        public void OnUpdate(float handleAngle, float maxAngle, string liquidId)
         {
             if (currentFillable == null) return;
             
             float fillRate = handleAngle / maxAngle;
-            currentFillable.Fill(fillRate);
+            currentFillable.Fill(fillRate, liquidId);
         }
     }
 }

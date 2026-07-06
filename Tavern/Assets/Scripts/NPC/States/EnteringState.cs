@@ -25,9 +25,11 @@ namespace NPC.States
         {
             if (targetSeat == null) return;
 
-            bool arrived = controller.Movement.MoveTowards(targetSeat.position);
-
+            bool arrived = controller.Movement.MoveTowards(controller.testSeatTransform.position);
+            Debug.Log($"Arrived: {arrived}");
+            
             Vector2 moveInput = arrived ? Vector2.zero : new Vector2(0f, 1f);
+            controller.SetMoveInput(moveInput);
 
             controller.Visual.OnUpdate(moveInput,
                 controller.Movement.GetCurrentSpeed(),

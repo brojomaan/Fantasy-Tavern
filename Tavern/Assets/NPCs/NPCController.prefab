@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 8004030772680294737}
   - component: {fileID: 8855955446973901426}
   - component: {fileID: 6408251903181567674}
+  - component: {fileID: 577717003019609511}
+  - component: {fileID: 2250477186657890537}
   - component: {fileID: 7681543418694382424}
   - component: {fileID: 4783133508898962840}
   m_Layer: 3
@@ -51,14 +53,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37b569dd313b4670a573d2e4b73137ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPC.NpcController
-  brain: {fileID: 8855955446973901426}
-  npcMovement: {fileID: 6408251903181567674}
-  characterController: {fileID: 7681543418694382424}
-  testTransform: {fileID: 0}
-  hoverSocket: {fileID: 5493014060507517595}
   visual: {fileID: 1034175279574126608}
   ui: {fileID: 0}
   sync: {fileID: 4783133508898962840}
+  brain: {fileID: 8855955446973901426}
+  npcMovement: {fileID: 6408251903181567674}
+  characterController: {fileID: 7681543418694382424}
+  needsComponent: {fileID: 577717003019609511}
+  orderComponent: {fileID: 2250477186657890537}
+  hoverSocket: {fileID: 5493014060507517595}
+  testSeatTransform: {fileID: 0}
+  testExitTransform: {fileID: 0}
+  syncedMoveDirection: {x: 0, y: 0}
+  syncedVelocity: 0
+  syncedIsGrounded: 0
 --- !u!114 &8855955446973901426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,6 +94,36 @@ MonoBehaviour:
   moveSpeed: 2
   rotationSpeed: 8
   arrivalDistance: 0.2
+--- !u!114 &577717003019609511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1395588535547787622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f41cf5e1e8c04efb9f3025e304cbeeac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Components.NPCComponents.NpcNeedsComponent
+  maxPatience: 60
+  patienceDecayRate: 1
+--- !u!114 &2250477186657890537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1395588535547787622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4651702ebc64a78ac4277f9edab6a7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Components.NPCComponents.NpcOrderComponent
+  speechBubble: {fileID: 6894506422072013679}
+  orderText: {fileID: 2893439759764117847}
+  bubbleDisplayTime: 5
+  matchTolerance: 0.2
 --- !u!143 &7681543418694382424
 CharacterController:
   m_ObjectHideFlags: 0
@@ -185,8 +223,6 @@ MonoBehaviour:
     - component: {fileID: 5817643829142138123}
       lodStepsActive: 1
     - component: {fileID: 4395591093133874830}
-      lodStepsActive: 1
-    - component: {fileID: 7775416935471161112}
       lodStepsActive: 1
     - component: {fileID: 802712304593307776}
       lodStepsActive: 1
@@ -602,9 +638,11 @@ MonoBehaviour:
       lodStepsActive: 1
     - component: {fileID: 6408251903181567674}
       lodStepsActive: 1
-    - component: {fileID: 7044240859698272084}
-      lodStepsActive: 1
     - component: {fileID: 1688379914160505516}
+      lodStepsActive: 1
+    - component: {fileID: 577717003019609511}
+      lodStepsActive: 1
+    - component: {fileID: 2250477186657890537}
       lodStepsActive: 1
     GeneratesArchetypeDefinition: 0
   interpolationLocation: 1
@@ -618,12 +656,16 @@ MonoBehaviour:
   authorityTransferConfig: -1
   orphanedBehavior: 0
   lifetimeType: 0
-  uniquenessType: 0
+  uniquenessType: 1
   replacementStrategy: 0
   unsyncedNetworkEntityPriority: 0
   preserveChildren: 0
   bindings:
   - rid: 4280311436114133170
+  - rid: 8289098400603832449
+  - rid: 8289098400603832509
+  - rid: 8289098400603832510
+  - rid: 8289098400603832511
   scenePrefabInstanceUUID: 
   coherenceUUID: 
   assetVersion: 
@@ -679,6 +721,186 @@ MonoBehaviour:
           rid: -2
         bindingType:
           assemblyQualifiedName: Coherence.Toolkit.Bindings.TransformBindings.PositionBinding,
+            Coherence.Toolkit, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        oldName: 
+        oldParameterAssemblyTypes: []
+    - rid: 8289098400603832449
+      type: {class: RotationBinding, ns: Coherence.Toolkit.Bindings.TransformBindings, asm: Coherence.Toolkit}
+      data:
+        descriptor:
+          rid: 8289098400603832450
+        routing: 0
+        syncMode: 0
+        isPredicted: 0
+        predictionMode: 0
+        guid: 1f845f4214584c91ba8eed529da70c65
+        archetypeData:
+          type: 8
+          minRange: 0
+          maxRange: 0
+          sampleRate: 20
+          floatCompression: 0
+          fields:
+          - type: 8
+            bits: 32
+            precision: 0.00000008381903171539307
+            floatCompression: 0
+        unityComponent: {fileID: 6856230667866548464}
+        coherenceSync: {fileID: 4783133508898962840}
+        _interpolationSettings: {fileID: 11400000, guid: ae4419d1d9a8643709bf5f6b90c584a5, type: 2}
+    - rid: 8289098400603832450
+      type: {class: Descriptor, ns: Coherence.Toolkit.Bindings, asm: Coherence.Toolkit}
+      data:
+        name: rotation
+        monoAssemblyType: UnityEngine.Quaternion, UnityEngine
+        required: 0
+        enforcesLODingWhenFieldsOverriden: 1
+        valueSyncCallbackName: 
+        memberType: 64
+        parameterAssemblyTypes: []
+        ownerType:
+          assemblyQualifiedName: UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        defaultSyncMode: 0
+        CustomData:
+          rid: -2
+        bindingType:
+          assemblyQualifiedName: Coherence.Toolkit.Bindings.TransformBindings.RotationBinding,
+            Coherence.Toolkit, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        oldName: 
+        oldParameterAssemblyTypes: []
+    - rid: 8289098400603832509
+      type: {class: Vector2Binding, ns: Coherence.Toolkit.Bindings.ValueBindings, asm: Coherence.Toolkit}
+      data:
+        descriptor:
+          rid: 8289098400603832512
+        routing: 0
+        syncMode: 0
+        isPredicted: 0
+        predictionMode: 0
+        guid: 32aa27f64ab749579d40a995fabd8ad3
+        archetypeData:
+          type: 6
+          minRange: 0
+          maxRange: 0
+          sampleRate: 20
+          floatCompression: 0
+          fields:
+          - type: 6
+            bits: 32
+            precision: 0.001
+            floatCompression: 0
+        unityComponent: {fileID: 8004030772680294737}
+        coherenceSync: {fileID: 4783133508898962840}
+        _interpolationSettings: {fileID: 0}
+    - rid: 8289098400603832510
+      type: {class: FloatBinding, ns: Coherence.Toolkit.Bindings.ValueBindings, asm: Coherence.Toolkit}
+      data:
+        descriptor:
+          rid: 8289098400603832513
+        routing: 0
+        syncMode: 0
+        isPredicted: 0
+        predictionMode: 0
+        guid: eacbba0d163140a3940ad399049a91c4
+        archetypeData:
+          type: 4
+          minRange: -9223372036854775808
+          maxRange: -9223372036854775808
+          sampleRate: 20
+          floatCompression: 0
+          fields:
+          - type: 4
+            bits: 32
+            precision: 0.001
+            floatCompression: 0
+        unityComponent: {fileID: 8004030772680294737}
+        coherenceSync: {fileID: 4783133508898962840}
+        _interpolationSettings: {fileID: 0}
+    - rid: 8289098400603832511
+      type: {class: BoolBinding, ns: Coherence.Toolkit.Bindings.ValueBindings, asm: Coherence.Toolkit}
+      data:
+        descriptor:
+          rid: 8289098400603832514
+        routing: 0
+        syncMode: 0
+        isPredicted: 0
+        predictionMode: 0
+        guid: c44f34312f3d495f837326bf1e6a09d7
+        archetypeData:
+          type: 3
+          minRange: 0
+          maxRange: 0
+          sampleRate: 20
+          floatCompression: 0
+          fields:
+          - type: 3
+            bits: 1
+            precision: 0
+            floatCompression: 0
+        unityComponent: {fileID: 8004030772680294737}
+        coherenceSync: {fileID: 4783133508898962840}
+        _interpolationSettings: {fileID: 0}
+    - rid: 8289098400603832512
+      type: {class: Descriptor, ns: Coherence.Toolkit.Bindings, asm: Coherence.Toolkit}
+      data:
+        name: syncedMoveDirection
+        monoAssemblyType: UnityEngine.Vector2, UnityEngine
+        required: 1
+        enforcesLODingWhenFieldsOverriden: 1
+        valueSyncCallbackName: OnMoveDirectionSynced
+        memberType: 4
+        parameterAssemblyTypes: []
+        ownerType:
+          assemblyQualifiedName: NPC.NpcController, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        defaultSyncMode: 0
+        CustomData:
+          rid: -2
+        bindingType:
+          assemblyQualifiedName: Coherence.Toolkit.Bindings.ValueBindings.Vector2Binding,
+            Coherence.Toolkit, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        oldName: 
+        oldParameterAssemblyTypes: []
+    - rid: 8289098400603832513
+      type: {class: Descriptor, ns: Coherence.Toolkit.Bindings, asm: Coherence.Toolkit}
+      data:
+        name: syncedVelocity
+        monoAssemblyType: System.Single, mscorlib
+        required: 1
+        enforcesLODingWhenFieldsOverriden: 1
+        valueSyncCallbackName: OnVelocitySynced
+        memberType: 4
+        parameterAssemblyTypes: []
+        ownerType:
+          assemblyQualifiedName: NPC.NpcController, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        defaultSyncMode: 0
+        CustomData:
+          rid: -2
+        bindingType:
+          assemblyQualifiedName: Coherence.Toolkit.Bindings.ValueBindings.FloatBinding,
+            Coherence.Toolkit, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        oldName: 
+        oldParameterAssemblyTypes: []
+    - rid: 8289098400603832514
+      type: {class: Descriptor, ns: Coherence.Toolkit.Bindings, asm: Coherence.Toolkit}
+      data:
+        name: syncedIsGrounded
+        monoAssemblyType: System.Boolean, mscorlib
+        required: 1
+        enforcesLODingWhenFieldsOverriden: 1
+        valueSyncCallbackName: OnIsGroundedSynced
+        memberType: 4
+        parameterAssemblyTypes: []
+        ownerType:
+          assemblyQualifiedName: NPC.NpcController, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        defaultSyncMode: 0
+        CustomData:
+          rid: -2
+        bindingType:
+          assemblyQualifiedName: Coherence.Toolkit.Bindings.ValueBindings.BoolBinding,
             Coherence.Toolkit, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
         oldName: 
         oldParameterAssemblyTypes: []
@@ -2260,17 +2482,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8349335482384278307, guid: a383ec73bd944664d89968f7800a1788, type: 3}
   m_PrefabInstance: {fileID: 1327528020113603921}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7044240859698272084 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8335731962079881733, guid: a383ec73bd944664d89968f7800a1788, type: 3}
-  m_PrefabInstance: {fileID: 1327528020113603921}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6626972711202781105}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab73fa6c4c2b4e63a8c9ae8f434d2b37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Components.CharacterComponents.IKComponent
 --- !u!33 &7062319708534321494 stripped
 MeshFilter:
   m_CorrespondingSourceObject: {fileID: 8101472050391157767, guid: a383ec73bd944664d89968f7800a1788, type: 3}
@@ -2346,17 +2557,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8726540553390948876, guid: a383ec73bd944664d89968f7800a1788, type: 3}
   m_PrefabInstance: {fileID: 1327528020113603921}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7775416935471161112 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8758242551979254345, guid: a383ec73bd944664d89968f7800a1788, type: 3}
-  m_PrefabInstance: {fileID: 1327528020113603921}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6626972711202781105}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fff0960ef4ea6e04eac66b4a7fd2189d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Animation.Rigging::UnityEngine.Animations.Rigging.RigBuilder
 --- !u!4 &7789131203354096297 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9112152299398713336, guid: a383ec73bd944664d89968f7800a1788, type: 3}
