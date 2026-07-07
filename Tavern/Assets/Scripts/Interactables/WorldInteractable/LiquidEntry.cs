@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Interactables.WorldInteractable
 {
@@ -14,6 +15,12 @@ namespace Interactables.WorldInteractable
             liquidId = id;
             amount = amt;
         }
+    }
+
+    [System.Serializable]
+    public class LiquidMixerData
+    {
+        public List<LiquidEntry> entries = new List<LiquidEntry>();
     }
 
     public class LiquidMixer
@@ -75,6 +82,19 @@ namespace Interactables.WorldInteractable
         public void Clear()
         {
             contents.Clear();
+        }
+
+        public string Serialize()
+        {
+            List<LiquidEntry> rounded = contents.Select(e => new LiquidEntry(e.liquidId, Mathf.Round(e.amount * 1000f) / 1000f)).ToList();
+            return JsonUtility.ToJson(new LiquidMixerData { entries = rounded });
+        }
+
+        public void Deserialize(string json)
+        {
+            if (string.IsNullOrEmpty(json)) return;
+            LiquidMixerData data = JsonUtility.FromJson<LiquidMixerData>(json);
+            contents = data.entries;
         }
     }
 }

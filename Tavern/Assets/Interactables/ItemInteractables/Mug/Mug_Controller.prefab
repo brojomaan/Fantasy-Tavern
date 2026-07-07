@@ -5034,6 +5034,7 @@ MonoBehaviour:
   mugVisual: {fileID: 3804677607673308288}
   fillLevel: 0
   syncedActive: 0
+  syncedLiquidContents: 
 --- !u!114 &3694011320011255253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5231,6 +5232,7 @@ MonoBehaviour:
   - rid: 4280311231339561623
   - rid: 4280311231339561624
   - rid: 4280311300590403714
+  - rid: 8289098468824449209
   scenePrefabInstanceUUID: 
   coherenceUUID: 
   assetVersion: 
@@ -5563,6 +5565,51 @@ MonoBehaviour:
           rid: -2
         bindingType:
           assemblyQualifiedName: Coherence.Toolkit.Bindings.TransformBindings.ScaleBinding,
+            Coherence.Toolkit, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        oldName: 
+        oldParameterAssemblyTypes: []
+    - rid: 8289098468824449209
+      type: {class: StringBinding, ns: Coherence.Toolkit.Bindings.ValueBindings, asm: Coherence.Toolkit}
+      data:
+        descriptor:
+          rid: 8289098468824449210
+        routing: 0
+        syncMode: 0
+        isPredicted: 0
+        predictionMode: 0
+        guid: c2501897d14943bd82932b88735a9399
+        archetypeData:
+          type: 5
+          minRange: 0
+          maxRange: 0
+          sampleRate: 20
+          floatCompression: 0
+          fields:
+          - type: 5
+            bits: 37
+            precision: 0
+            floatCompression: 0
+        unityComponent: {fileID: 4491590370692874945}
+        coherenceSync: {fileID: 9132006842074257809}
+        _interpolationSettings: {fileID: 0}
+    - rid: 8289098468824449210
+      type: {class: Descriptor, ns: Coherence.Toolkit.Bindings, asm: Coherence.Toolkit}
+      data:
+        name: syncedLiquidContents
+        monoAssemblyType: System.String, mscorlib
+        required: 1
+        enforcesLODingWhenFieldsOverriden: 1
+        valueSyncCallbackName: OnLiquidContentsSynced
+        memberType: 4
+        parameterAssemblyTypes: []
+        ownerType:
+          assemblyQualifiedName: Interactables.ItemInteractables.Mug.MugController,
+            Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        defaultSyncMode: 0
+        CustomData:
+          rid: -2
+        bindingType:
+          assemblyQualifiedName: Coherence.Toolkit.Bindings.ValueBindings.StringBinding,
             Coherence.Toolkit, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
         oldName: 
         oldParameterAssemblyTypes: []

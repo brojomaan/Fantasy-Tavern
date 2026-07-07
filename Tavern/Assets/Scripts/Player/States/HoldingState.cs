@@ -1,4 +1,5 @@
-﻿using Interactables.ItemInteractables.Mug;
+﻿using Coherence;
+using Interactables.ItemInteractables.Mug;
 using NPC;
 using UnityEditor;
 using UnityEngine;
@@ -44,23 +45,26 @@ namespace Player.States
 
             if (controller.Input.GetInteractPressed() && controller.HoldComponent.IsHolding())
             {
-                Debug.Log($"Interact Pressed");
                 NpcController npc = controller.InteractComponent.GetCurrentNpcController();
                 if (npc == null)
                     Debug.LogError($"Cant find Npc");
-                Debug.Log($"Npc Interacted With {npc}");
                 MugController mug = controller.HoldComponent.GetHeldItem() as MugController;
-                Debug.Log($"Mug in Hand {mug}");
 
                 if (npc != null && mug != null)
                 {
-                    if (npc.TryDeliverOrder(mug))
-                    {
-                        Debug.Log($"Ive got here!");
-                        controller.HoldComponent.Drop();
-                        GameObject.Destroy((mug as MonoBehaviour).gameObject);
-                        controller.StateMachine.ChangeState(controller.FreeState);
-                    }
+                    npc.CoherenceSync.SendCommand<NpcController>(
+                        nameof(NpcController.CmdDeliverOrder),
+                        MessageTarget.StateAuthorityOnly,
+                        mug.GetLiquidMixer().Serialize(),
+                        mug.FillLevel,
+                        mug.TargetFillLevel,
+                        mug.AcceptableRange);
+
+                    controller.HoldComponent.Drop();
+                    GameObject.Destroy((mug).gameObject);
+
+                    controller.StateMachine.ChangeState(controller.FreeState);
+
                 }
             }
         }

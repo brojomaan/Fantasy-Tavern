@@ -83,8 +83,5 @@ namespace Components.CharacterComponents
             heldItem = null;
         }
         
-        
-
-
     }
 }

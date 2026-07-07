@@ -22,4 +22,11 @@ component _f4c6a95abc4bf5d42b04cf35bf8a81e9_4491590370692874945 [id "21"]
   isHeld Bool [bits "1"]
   holderId String [bits "37"]
   syncedActive Float [compression "None"]
+  syncedLiquidContents String [bits "37"]
+
+command _e8e7b239dff349e43b0021c76df20a39_4d95e3223b694cc5899ce1acafb6279f [id "6", routing "StateAuthorityOnly"]
+  liquidContents String 
+  fillLevel Float [compression "None"]
+  targetFill Float [compression "None"]
+  acceptableRange Float [compression "None"]
 

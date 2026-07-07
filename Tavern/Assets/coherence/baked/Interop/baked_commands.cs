@@ -516,5 +516,109 @@ namespace Coherence.Generated
                 };   
             }
         }
+        public struct _e8e7b239dff349e43b0021c76df20a39_4d95e3223b694cc5899ce1acafb6279f : IEntityCommand
+        {
+                public System.String liquidContents;
+                public System.Single fillLevel;
+                public System.Single targetFill;
+                public System.Single acceptableRange;
+            
+            public Entity Entity { get; set; }
+            public Coherence.ChannelID ChannelID { get; set; }
+            public MessageTarget Target { get; set; }
+            public MessageTarget Routing { get; set; }
+            public uint SenderParticipant { get; set; }
+            public ClientID SenderClientID { get; set; }
+            public long Frame { get; set; }
+            public uint GetComponentType() => 6;
+            
+            public bool UsesMeta { get; set; }
+            
+            public IEntityMessage Clone()
+            {
+                // This is a struct, so we can safely return
+                // a struct copy.
+                return this;
+            }
+            
+            public IEntityMapper.Error MapToAbsolute(IEntityMapper mapper, Coherence.Log.Logger logger)
+            {
+                var err = mapper.MapToAbsoluteEntity(Entity, false, out var absoluteEntity);
+                if (err != IEntityMapper.Error.None)
+                {
+                    return err;
+                }
+                Entity = absoluteEntity;
+                return IEntityMapper.Error.None;
+            }
+            
+            public IEntityMapper.Error MapToRelative(IEntityMapper mapper, Coherence.Log.Logger logger)
+            {
+                var err = mapper.MapToRelativeEntity(Entity, false, out var relativeEntity);
+                if (err != IEntityMapper.Error.None)
+                {
+                    return err;
+                }
+                Entity = relativeEntity;
+                return IEntityMapper.Error.None;
+            }
+    
+            public HashSet<Entity> GetEntityRefs() {
+                return default;
+            }
+    
+            public void NullEntityRefs(Entity entity) {
+            }
+            
+            public _e8e7b239dff349e43b0021c76df20a39_4d95e3223b694cc5899ce1acafb6279f(
+                Entity entity,
+                System.String liquidContents,
+                System.Single fillLevel,
+                System.Single targetFill,
+                System.Single acceptableRange
+            )
+            {
+                Entity = entity;
+                ChannelID = Coherence.ChannelID.Default;
+                Target = default;
+                Routing = MessageTarget.StateAuthorityOnly;
+                SenderParticipant = 0;
+                SenderClientID = default;
+                Frame = 0;
+                UsesMeta = false;
+                
+                this.liquidContents = liquidContents; 
+                this.fillLevel = fillLevel; 
+                this.targetFill = targetFill; 
+                this.acceptableRange = acceptableRange; 
+            }
+            
+            public static void Serialize(_e8e7b239dff349e43b0021c76df20a39_4d95e3223b694cc5899ce1acafb6279f commandData, IOutProtocolBitStream bitStream)
+            {
+                bitStream.WriteString(commandData.liquidContents);
+                bitStream.WriteFloat(commandData.fillLevel, FloatMeta.NoCompression());
+                bitStream.WriteFloat(commandData.targetFill, FloatMeta.NoCompression());
+                bitStream.WriteFloat(commandData.acceptableRange, FloatMeta.NoCompression());
+            }
+            
+            public static _e8e7b239dff349e43b0021c76df20a39_4d95e3223b694cc5899ce1acafb6279f Deserialize(IInProtocolBitStream bitStream, Entity entity, MessageTarget target)
+            {
+                var dataliquidContents = bitStream.ReadString();
+                var datafillLevel = bitStream.ReadFloat(FloatMeta.NoCompression());
+                var datatargetFill = bitStream.ReadFloat(FloatMeta.NoCompression());
+                var dataacceptableRange = bitStream.ReadFloat(FloatMeta.NoCompression());
+        
+                return new _e8e7b239dff349e43b0021c76df20a39_4d95e3223b694cc5899ce1acafb6279f()
+                {
+                    Entity = entity,
+                    Routing = target,
+                    Target = target,
+                    liquidContents = dataliquidContents,
+                    fillLevel = datafillLevel,
+                    targetFill = datatargetFill,
+                    acceptableRange = dataacceptableRange
+                };   
+            }
+        }
 
 }

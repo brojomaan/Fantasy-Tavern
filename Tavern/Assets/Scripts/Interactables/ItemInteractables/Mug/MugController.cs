@@ -20,6 +20,9 @@ namespace Interactables.ItemInteractables.Mug
         [Sync] public float fillLevel;
         [Sync] public float syncedActive;
 
+        [OnValueSynced(nameof(OnLiquidContentsSynced))] [Sync]
+        public string syncedLiquidContents;
+
         public float FillLevel => fillLevel;
         public float TargetFillLevel => targetFillLevel;
         public float AcceptableRange => acceptableRange;
@@ -69,6 +72,15 @@ namespace Interactables.ItemInteractables.Mug
             fillLevel = Mathf.Clamp(fillLevel + amount * fillSpeed * Time.deltaTime, 0f, maxCapacity + 0.2f);
             liquidMixer.Add(liquidId, amount * fillSpeed * Time.deltaTime);
             Debug.Log($"LiquidMixer contents: {liquidId} = {liquidMixer.GetAmount(liquidId):F3} / Total = {liquidMixer.GetTotal():F3}");
+            syncedLiquidContents = liquidMixer.Serialize();
         }
+
+        public void OnLiquidContentsSynced(string previous, string current)
+        {
+            liquidMixer.Deserialize(current);
+            Debug.Log($"liquidMixer contents: {current}");
+        }
+        
+        
     }
 }

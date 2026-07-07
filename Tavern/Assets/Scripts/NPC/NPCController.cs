@@ -1,6 +1,8 @@
-﻿using Coherence.Toolkit;
+﻿using Coherence;
+using Coherence.Toolkit;
 using Components.NPCComponents;
 using Interactables.ItemInteractables.Mug;
+using Interactables.WorldInteractable;
 using Interfaces;
 using NPC.States;
 using UnityEngine;
@@ -25,6 +27,7 @@ namespace NPC
         [SerializeField] private Transform hoverSocket;
         public Transform testSeatTransform;
         public Transform testExitTransform;
+        public CoherenceSync CoherenceSync => sync;
         
         [OnValueSynced(nameof(OnMoveDirectionSynced))]
         [Sync] public Vector2 syncedMoveDirection;
@@ -103,7 +106,8 @@ namespace NPC
             if (!sync.HasStateAuthority) return;
 
             StateMachine.OnUpdate();
-
+            orderComponent.OnUpdate();
+            
             syncedMoveDirection = CurrentMoveInput;
             syncedVelocity = npcMovement.GetCurrentSpeed();
             syncedIsGrounded = characterController.isGrounded;
@@ -131,24 +135,6 @@ namespace NPC
         {
             
         }
-
-        public bool TryDeliverOrder(MugController mug)
-        {
-            if (mug == null)
-            {
-                Debug.Log($"No Mug");
-                return false;
-            }
-            if (!orderComponent.TryFulfillOrder(
-                    mug.GetLiquidMixer(),
-                    mug.FillLevel,
-                    mug.TargetFillLevel,
-                    mug.AcceptableRange)) return false;
-            
-            
-            StateMachine.ChangeState(ServedState);
-            return true;
-        }
         
         public bool CanInteractWith(IHoldable heldItem) => heldItem != null;
 
@@ -170,6 +156,22 @@ namespace NPC
         public void SetMoveInput(Vector2 input)
         {
             CurrentMoveInput = input;
+        }
+
+        public void CmdDeliverOrder(string liquidContents, float fillLevel, 
+            float targetFill, float acceptableRange)
+        {
+            Debug.Log("CmdDeliverOrder received on authority");
+            LiquidMixer deliveredMixer = new LiquidMixer();
+            deliveredMixer.Deserialize(liquidContents);
+
+            if (!orderComponent.TryFulfillOrder(deliveredMixer, fillLevel, targetFill, acceptableRange))
+            {
+                Debug.Log($"OrderRejected: {liquidContents}");
+                return;
+            }
+
+            StateMachine.ChangeState(ServedState);
         }
     }
 }

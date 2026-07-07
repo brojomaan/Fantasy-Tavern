@@ -666,6 +666,7 @@ MonoBehaviour:
   - rid: 8289098400603832509
   - rid: 8289098400603832510
   - rid: 8289098400603832511
+  - rid: 8289098468824449307
   scenePrefabInstanceUUID: 
   coherenceUUID: 
   assetVersion: 
@@ -902,6 +903,51 @@ MonoBehaviour:
         bindingType:
           assemblyQualifiedName: Coherence.Toolkit.Bindings.ValueBindings.BoolBinding,
             Coherence.Toolkit, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        oldName: 
+        oldParameterAssemblyTypes: []
+    - rid: 8289098468824449307
+      type: {class: CommandBinding, ns: Coherence.Toolkit.Bindings, asm: Coherence.Toolkit}
+      data:
+        descriptor:
+          rid: 8289098468824449308
+        routing: 0
+        syncMode: 0
+        isPredicted: 0
+        predictionMode: 0
+        guid: 4d95e3223b694cc5899ce1acafb6279f
+        archetypeData:
+          type: 0
+          minRange: 0
+          maxRange: 0
+          sampleRate: 20
+          floatCompression: 0
+          fields: []
+        unityComponent: {fileID: 8004030772680294737}
+        coherenceSync: {fileID: 4783133508898962840}
+        _interpolationSettings: {fileID: 0}
+    - rid: 8289098468824449308
+      type: {class: Descriptor, ns: Coherence.Toolkit.Bindings, asm: Coherence.Toolkit}
+      data:
+        name: CmdDeliverOrder
+        monoAssemblyType: 
+        required: 0
+        enforcesLODingWhenFieldsOverriden: 0
+        valueSyncCallbackName: 
+        memberType: 8
+        parameterAssemblyTypes:
+        - System.String, mscorlib
+        - System.Single, mscorlib
+        - System.Single, mscorlib
+        - System.Single, mscorlib
+        ownerType:
+          assemblyQualifiedName: NPC.NpcController, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        defaultSyncMode: 0
+        CustomData:
+          rid: -2
+        bindingType:
+          assemblyQualifiedName: Coherence.Toolkit.Bindings.CommandBinding, Coherence.Toolkit,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
         oldName: 
         oldParameterAssemblyTypes: []
 --- !u!1 &1947322270018269481

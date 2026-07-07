@@ -286,6 +286,7 @@ namespace Coherence.Generated
         private Entity entityId;
         private Logger logger = Coherence.Log.Log.GetLogger<CoherenceSync_e8e7b239dff349e43b0021c76df20a39>();
         
+        private global::NPC.NpcController _e8e7b239dff349e43b0021c76df20a39_4d95e3223b694cc5899ce1acafb6279f_CommandTarget;
         
         
         private IClient client;
@@ -304,6 +305,7 @@ namespace Coherence.Generated
         
         public CoherenceSync_e8e7b239dff349e43b0021c76df20a39()
         {
+            bakedCommandBindings.Add("4d95e3223b694cc5899ce1acafb6279f", BakeCommandBinding__e8e7b239dff349e43b0021c76df20a39_4d95e3223b694cc5899ce1acafb6279f);
         }
         
         public override Binding BakeValueBinding(Binding valueBinding)
@@ -324,11 +326,63 @@ namespace Coherence.Generated
                 commandBindingBaker.Invoke(commandBinding, commandsHandler);
             }
         }
+        private void BakeCommandBinding__e8e7b239dff349e43b0021c76df20a39_4d95e3223b694cc5899ce1acafb6279f(CommandBinding commandBinding, CommandsHandler commandsHandler)
+        {
+            _e8e7b239dff349e43b0021c76df20a39_4d95e3223b694cc5899ce1acafb6279f_CommandTarget = (global::NPC.NpcController)commandBinding.UnityComponent;
+            commandsHandler.AddBakedCommand(
+				"NPC.NpcController.CmdDeliverOrder",
+            	"(System.StringSystem.SingleSystem.SingleSystem.Single)",
+            	SendCommand__e8e7b239dff349e43b0021c76df20a39_4d95e3223b694cc5899ce1acafb6279f,
+            	ReceiveLocalCommand__e8e7b239dff349e43b0021c76df20a39_4d95e3223b694cc5899ce1acafb6279f,
+            	MessageTarget.StateAuthorityOnly,
+            	_e8e7b239dff349e43b0021c76df20a39_4d95e3223b694cc5899ce1acafb6279f_CommandTarget,
+            	commandBinding.UsesMeta());
+        }
+        
+        private void SendCommand__e8e7b239dff349e43b0021c76df20a39_4d95e3223b694cc5899ce1acafb6279f(GenericCommandRequestArgs requestArgs)
+        {
+            var command = new _e8e7b239dff349e43b0021c76df20a39_4d95e3223b694cc5899ce1acafb6279f();
+            command.Frame = requestArgs.Frame;
+            command.SenderClientID = requestArgs.Sender;
+            command.UsesMeta = requestArgs.UsesMeta;
+            command.Target = requestArgs.Target;
+            command.Entity = entityId;
+
+            command.liquidContents = (System.String)requestArgs.Args[0];
+            command.fillLevel = (System.Single)requestArgs.Args[1];
+            command.targetFill = (System.Single)requestArgs.Args[2];
+            command.acceptableRange = (System.Single)requestArgs.Args[3];
+
+            client.SendCommand(command, requestArgs.ChannelID);
+        }
+        
+        private void ReceiveLocalCommand__e8e7b239dff349e43b0021c76df20a39_4d95e3223b694cc5899ce1acafb6279f(GenericCommandRequestArgs requestArgs)
+        {
+            var command = new _e8e7b239dff349e43b0021c76df20a39_4d95e3223b694cc5899ce1acafb6279f();
+            command.Frame = requestArgs.Frame;
+            command.SenderClientID = requestArgs.Sender;
+
+            command.liquidContents = (System.String)requestArgs.Args[0];
+            command.fillLevel = (System.Single)requestArgs.Args[1];
+            command.targetFill = (System.Single)requestArgs.Args[2];
+            command.acceptableRange = (System.Single)requestArgs.Args[3];
+
+            ReceiveCommand__e8e7b239dff349e43b0021c76df20a39_4d95e3223b694cc5899ce1acafb6279f(command);
+        }
+
+        private void ReceiveCommand__e8e7b239dff349e43b0021c76df20a39_4d95e3223b694cc5899ce1acafb6279f(_e8e7b239dff349e43b0021c76df20a39_4d95e3223b694cc5899ce1acafb6279f command)
+        {
+			var target = _e8e7b239dff349e43b0021c76df20a39_4d95e3223b694cc5899ce1acafb6279f_CommandTarget;
+			target.CmdDeliverOrder((System.String)(command.liquidContents),(System.Single)(command.fillLevel),(System.Single)(command.targetFill),(System.Single)(command.acceptableRange));
+        }
         
         public override void ReceiveCommand(IEntityCommand command)
         {
             switch (command)
             {
+                case _e8e7b239dff349e43b0021c76df20a39_4d95e3223b694cc5899ce1acafb6279f castedCommand:
+                    ReceiveCommand__e8e7b239dff349e43b0021c76df20a39_4d95e3223b694cc5899ce1acafb6279f(castedCommand);
+                    break;
                 default:
                     logger.Warning(Coherence.Log.Warning.ToolkitBakedSyncReceiveCommandUnhandled,
                         $"CoherenceSync_e8e7b239dff349e43b0021c76df20a39 Unhandled command: {command.GetType()}.");
