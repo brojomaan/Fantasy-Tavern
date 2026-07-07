@@ -22,6 +22,9 @@ namespace NPC.States
                 controller.Movement.GetCurrentSpeed(),
                 true);
             
+            controller.Visual.FaceAnimationComponent.SetEmotion(controller.NeedsComponent.GetPatienceNormalized());
+            controller.Visual.FaceAnimationComponent.SetBlink();
+            
             if (arrived)
                 Object.Destroy(controller.gameObject);
         }

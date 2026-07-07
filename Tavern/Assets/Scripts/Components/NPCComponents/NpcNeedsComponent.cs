@@ -11,7 +11,7 @@ namespace Components.NPCComponents
         private bool isDecaying = false;
 
         public float GetPatience() => patienceCurrent;
-        public float GetPatienceNormalized() => patienceCurrent / patienceDecayRate;
+        public float GetPatienceNormalized() => patienceCurrent / maxPatience;
         public bool HasPatience() => patienceCurrent > 0f;
 
         public bool Initialize()

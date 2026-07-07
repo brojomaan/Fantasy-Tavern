@@ -1,4 +1,5 @@
 using Components.CharacterComponents;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 
 namespace Player
@@ -11,6 +12,10 @@ namespace Player
         [SerializeField] private Transform headAddons;
         [SerializeField] private SkinnedMeshRenderer thirdPerson;
         [SerializeField] private SkinnedMeshRenderer firstPerson;
+        
+        [SerializeField] private MicrophoneComponent microphoneComponent;
+        [SerializeField] private ExpressionComponent expressionComponent;
+
 
         private float headPitch;
 
@@ -24,6 +29,8 @@ namespace Player
             if (headAddons == null) {Debug.LogError($"Head Addons is null"); return false; }
             if (thirdPerson == null) {Debug.LogError($"Third Person is null"); return false; }
             if (firstPerson == null) {Debug.LogError($"First Person is null"); return false; }
+            if (microphoneComponent == null) {Debug.LogError($"MicrophoneComponent is null"); return false; }
+            if (expressionComponent == null) {Debug.LogError($"ExpressionComponent is null"); return false; }
             
             if (!animComponent.Initialize())  
             {
@@ -37,10 +44,22 @@ namespace Player
                 return false;
             }
 
+            if (!microphoneComponent.Initialize())
+            {
+                Debug.LogError("PlayerVisual::Initialize(): MicrophoneComponent failed.");
+                return false;
+            }
+
+            if (!expressionComponent.Initialize())
+            {
+                Debug.LogError($"PlayerVisual::Initialize(): ExpressionComponent failed.");
+                return false;
+            }
+
             if (isPlayer)
             {
                 thirdPerson.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
-                headAddons.gameObject.SetActive(false);
+                headAddons.gameObject.SetActive(true);
             }
             else
             {
@@ -64,6 +83,10 @@ namespace Player
             animComponent.SetGrounded(isGrounded);
             
             ikComponent.OnUpdate(isAuthority);
+
+            if (!isAuthority) return;
+            microphoneComponent.OnUpdate();
+            expressionComponent.IsTalking(microphoneComponent.IsTalking);
         }
 
         public void SetIKTarget(Transform target)
@@ -102,8 +125,14 @@ namespace Player
             ikComponent.OnUpdate(isAuthority);
         }
 
+        public void SetTalking(bool talking)
+        {
+            expressionComponent.IsTalking(talking);
+        }
+
         public float GetIKWeight() => ikComponent.GetWeight();
         public Vector3 GetIKTargetPosition() => ikComponent.GetIKTargetPosition();
         public Quaternion GetIKTargetRotation() => ikComponent.GetIKTargetRotation();
+        public bool IsTalking() => microphoneComponent.IsTalking;
     }
 }

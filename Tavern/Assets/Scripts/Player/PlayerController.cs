@@ -1,4 +1,3 @@
-using Coherence;
 using Coherence.Toolkit;
 using Components.CharacterComponents;
 using Player.States;
@@ -9,8 +8,8 @@ namespace Player
     public class PlayerController : MonoBehaviour
     {
         //Data
-        
-        
+
+
         //Components
         [SerializeField] private PlayerInput input;
         [SerializeField] private CharacterController characterController;
@@ -18,35 +17,34 @@ namespace Player
         [SerializeField] private LookComponent lookComponent;
         [SerializeField] private InteractComponent interactComponent;
         [SerializeField] private HoldComponent holdComponent;
-        
+
         //
         [SerializeField] private CoherenceSync sync;
         [SerializeField] private PlayerVisual visual;
         [SerializeField] private PlayerUI playerUI;
         [SerializeField] private CameraController cameraController;
-        
+
         //States
         private PlayerStateMachine stateMachine = new PlayerStateMachine();
         public FreeState FreeState { get; private set; }
         public HoldingState HoldingState { get; private set; }
         public InteractingState InteractingState { get; private set; }
-        
-        
+
+
         //Synced Variables
-        [OnValueSynced(nameof(OnVelocitySynced))]
+        [OnValueSynced(nameof(OnVelocitySynced))] 
         [Sync] public float velocity;
 
         [OnValueSynced(nameof(OnMoveDirectionSynced))] 
-        [Sync]
-        public Vector2 moveDirection;
+        [Sync] public Vector2 moveDirection;
 
         [OnValueSynced(nameof(OnHeadPitchSynced))] 
         [Sync] public float headPitch;
 
         [OnValueSynced(nameof(OnIsGroundedSynced))] 
         [Sync] public bool isGrounded;
-        
-        [OnValueSynced(nameof(OnVerticalVelocitySynced))]
+
+        [OnValueSynced(nameof(OnVerticalVelocitySynced))] 
         [Sync] public float verticalVelocity;
 
         [OnValueSynced(nameof(OnIKPositionSynced))] 
@@ -54,11 +52,14 @@ namespace Player
 
         [OnValueSynced(nameof(OnIKRotationSynced))] 
         [Sync] public Quaternion ikTargetRotation;
-        
-        [OnValueSynced(nameof(OnIKWeightSynced))]
+
+        [OnValueSynced(nameof(OnIKWeightSynced))] 
         [Sync] public float ikWeight;
-        
-        public PlayerInput Input => input;
+
+        [OnValueSynced(nameof(OnIsTalkingSynced))] 
+        [Sync] public bool isTalking;
+
+    public PlayerInput Input => input;
         public CharacterController CharacterController => characterController;
         public MovementComponent MovementComponent => movementComponent;
         public LookComponent LookComponent => lookComponent;
@@ -128,6 +129,7 @@ namespace Player
                 input.OnUpdate();
                 stateMachine.OnUpdate();
             
+                //Setting all synced parameters
                 moveDirection = input.GetMoveDirection();
                 velocity = movementComponent.GetVelocity();
                 isGrounded = characterController.isGrounded;
@@ -135,6 +137,9 @@ namespace Player
                 ikTargetPosition = visual.GetIKTargetPosition();
                 ikTargetRotation = visual.GetIKTargetRotation();
                 ikWeight = visual.GetIKWeight();
+                isTalking = visual.IsTalking();
+                
+                Debug.Log($"isTalking: {isTalking} from player controller Update");
 
                 visual.OnUpdate(input.GetMoveDirection(),
                     velocity,
@@ -146,6 +151,7 @@ namespace Player
             else
             {
                 visual.UpdateIK(false);
+                visual.SetTalking(isTalking);
             }
             
         }
@@ -199,6 +205,12 @@ namespace Player
         public void OnHeadPitchSynced(float previous, float current)
         {
             visual.SetHeadPitch(current);
+        }
+
+        public void OnIsTalkingSynced(bool previous, bool current)
+        {
+            Debug.Log($"isTalking: {isTalking} from OnPlayerSynced");
+            visual.SetTalking(current);
         }
     }
 }

@@ -279,6 +279,57 @@ namespace Coherence.Generated
             return new _e8e7b239dff349e43b0021c76df20a39_8004030772680294737();
         }    
     }
+    [UnityEngine.Scripting.Preserve, System.Serializable]
+    public class Binding_e8e7b239dff349e43b0021c76df20a39_bfd26df1ed5544e6849275d87ba4a7e4 : FloatBinding
+    {   
+        private global::NPC.NpcController CastedUnityComponent;
+
+        protected override void OnBindingCloned()
+        {
+    	    CastedUnityComponent = (global::NPC.NpcController)UnityComponent;
+        }
+
+        public override global::System.Type CoherenceComponentType => typeof(_e8e7b239dff349e43b0021c76df20a39_8004030772680294737);
+        public override string CoherenceComponentName => "_e8e7b239dff349e43b0021c76df20a39_8004030772680294737";
+        public override uint FieldMask => 0b00000000000000000000000000001000;
+
+        public override System.Single Value
+        {
+            get { return (System.Single)(CastedUnityComponent.patience); }
+            set { CastedUnityComponent.patience = (System.Single)(value); }
+        }
+
+        protected override (System.Single value, AbsoluteSimulationFrame simFrame) ReadComponentData(ICoherenceComponentData coherenceComponent, Vector3 floatingOriginDelta)
+        {
+            var value = ((_e8e7b239dff349e43b0021c76df20a39_8004030772680294737)coherenceComponent).patience;
+
+            var simFrame = ((_e8e7b239dff349e43b0021c76df20a39_8004030772680294737)coherenceComponent).patienceSimulationFrame;
+            
+            return (value, simFrame);
+        }
+
+        public override ICoherenceComponentData WriteComponentData(ICoherenceComponentData coherenceComponent, AbsoluteSimulationFrame simFrame)
+        {
+            var update = (_e8e7b239dff349e43b0021c76df20a39_8004030772680294737)coherenceComponent;
+            if (Interpolator.IsInterpolationNone || SyncMode == SyncMode.Manual)
+            {
+                update.patience = Value;
+            }
+            else
+            {
+                update.patience = GetInterpolatedAt(simFrame / InterpolationSettings.SimulationFramesPerSecond);
+            }
+
+            update.patienceSimulationFrame = simFrame;
+            
+            return update;
+        }
+
+        public override ICoherenceComponentData CreateComponentData()
+        {
+            return new _e8e7b239dff349e43b0021c76df20a39_8004030772680294737();
+        }    
+    }
 
     [UnityEngine.Scripting.Preserve]
     public class CoherenceSync_e8e7b239dff349e43b0021c76df20a39 : CoherenceSyncBaked
@@ -299,6 +350,7 @@ namespace Coherence.Generated
 			["32aa27f64ab749579d40a995fabd8ad3"] = new Binding_e8e7b239dff349e43b0021c76df20a39_32aa27f64ab749579d40a995fabd8ad3(),
 			["eacbba0d163140a3940ad399049a91c4"] = new Binding_e8e7b239dff349e43b0021c76df20a39_eacbba0d163140a3940ad399049a91c4(),
 			["c44f34312f3d495f837326bf1e6a09d7"] = new Binding_e8e7b239dff349e43b0021c76df20a39_c44f34312f3d495f837326bf1e6a09d7(),
+			["bfd26df1ed5544e6849275d87ba4a7e4"] = new Binding_e8e7b239dff349e43b0021c76df20a39_bfd26df1ed5544e6849275d87ba4a7e4(),
         };
         
         private Dictionary<string, Action<CommandBinding, CommandsHandler>> bakedCommandBindings = new Dictionary<string, Action<CommandBinding, CommandsHandler>>();

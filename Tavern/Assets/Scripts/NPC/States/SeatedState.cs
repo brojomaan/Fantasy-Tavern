@@ -19,7 +19,8 @@ namespace NPC.States
         {
             controller.NeedsComponent.OnUpdate();
             
-
+            controller.Visual.FaceAnimationComponent.SetEmotion(controller.NeedsComponent.GetPatienceNormalized());
+            controller.Visual.FaceAnimationComponent.SetBlink();
 
             if (!controller.NeedsComponent.HasPatience())
             {

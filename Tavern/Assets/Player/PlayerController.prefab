@@ -62,6 +62,10 @@ MonoBehaviour:
   sprintFOVIncrease: 5
   landingFOVDip: 5
   fovSpeed: 8
+  interactionTiltAngle: 2
+  interactionTiltSpeed: 6
+  interactionTiltEaseOut: 3
+  maxInteractionTilt: 5
 --- !u!1 &1085668720919452273
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,6 +138,7 @@ MonoBehaviour:
   ikTargetPosition: {x: 0, y: 0, z: 0}
   ikTargetRotation: {x: 0, y: 0, z: 0, w: 0}
   ikWeight: 0
+  isTalking: 0
 --- !u!114 &6041155433701082468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -735,6 +740,14 @@ MonoBehaviour:
       lodStepsActive: 1
     - component: {fileID: 7124245031016646651}
       lodStepsActive: 1
+    - component: {fileID: 3383392993014847937}
+      lodStepsActive: 1
+    - component: {fileID: 3961087013912686944}
+      lodStepsActive: 1
+    - component: {fileID: 1865688391334077202}
+      lodStepsActive: 1
+    - component: {fileID: 7018780141597351678}
+      lodStepsActive: 1
     GeneratesArchetypeDefinition: 0
   interpolationLocation: 1
   RigidbodyUpdateMode: 0
@@ -762,6 +775,7 @@ MonoBehaviour:
   - rid: 5416689475977216248
   - rid: 5416689475977216268
   - rid: 5416689475977216269
+  - rid: 6248159713241334157
   scenePrefabInstanceUUID: 
   coherenceUUID: 
   assetVersion: 
@@ -1235,6 +1249,51 @@ MonoBehaviour:
             Coherence.Toolkit, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
         oldName: 
         oldParameterAssemblyTypes: []
+    - rid: 6248159713241334157
+      type: {class: BoolBinding, ns: Coherence.Toolkit.Bindings.ValueBindings, asm: Coherence.Toolkit}
+      data:
+        descriptor:
+          rid: 6248159713241334158
+        routing: 0
+        syncMode: 0
+        isPredicted: 0
+        predictionMode: 0
+        guid: 39c355a90e474ec89dd4380388d2cad5
+        archetypeData:
+          type: 3
+          minRange: 0
+          maxRange: 0
+          sampleRate: 20
+          floatCompression: 0
+          fields:
+          - type: 3
+            bits: 1
+            precision: 0
+            floatCompression: 0
+        unityComponent: {fileID: 576228623474131969}
+        coherenceSync: {fileID: 5724582651266364070}
+        _interpolationSettings: {fileID: 0}
+    - rid: 6248159713241334158
+      type: {class: Descriptor, ns: Coherence.Toolkit.Bindings, asm: Coherence.Toolkit}
+      data:
+        name: isTalking
+        monoAssemblyType: System.Boolean, mscorlib
+        required: 1
+        enforcesLODingWhenFieldsOverriden: 1
+        valueSyncCallbackName: OnIsTalkingSynced
+        memberType: 4
+        parameterAssemblyTypes: []
+        ownerType:
+          assemblyQualifiedName: Player.PlayerController, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        defaultSyncMode: 0
+        CustomData:
+          rid: -2
+        bindingType:
+          assemblyQualifiedName: Coherence.Toolkit.Bindings.ValueBindings.BoolBinding,
+            Coherence.Toolkit, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        oldName: 
+        oldParameterAssemblyTypes: []
 --- !u!1 &7522018681163236679
 GameObject:
   m_ObjectHideFlags: 0
@@ -1391,21 +1450,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4461855323377455271}
     m_Modifications:
-    - target: {fileID: 2687611414804978651, guid: b4261c6efb028fe499b71b22284b2ca5, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.33
-      objectReference: {fileID: 0}
-    - target: {fileID: 2687611414804978651, guid: b4261c6efb028fe499b71b22284b2ca5, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2687611414804978651, guid: b4261c6efb028fe499b71b22284b2ca5, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.46
-      objectReference: {fileID: 0}
     - target: {fileID: 5908825506935815901, guid: b4261c6efb028fe499b71b22284b2ca5, type: 3}
       propertyPath: m_Name
       value: PlayerVisualBase
+      objectReference: {fileID: 0}
+    - target: {fileID: 6401625653443500704, guid: b4261c6efb028fe499b71b22284b2ca5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7253286959905972821, guid: b4261c6efb028fe499b71b22284b2ca5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1446,6 +1497,18 @@ PrefabInstance:
     - target: {fileID: 7253286959905972821, guid: b4261c6efb028fe499b71b22284b2ca5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7446783816644877554, guid: b4261c6efb028fe499b71b22284b2ca5, type: 3}
+      propertyPath: cycleSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8015654475841332544, guid: b4261c6efb028fe499b71b22284b2ca5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9175217595398321235, guid: b4261c6efb028fe499b71b22284b2ca5, type: 3}
+      propertyPath: talkingThreshold
+      value: 0.01
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1642,6 +1705,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5821737628020604569, guid: b4261c6efb028fe499b71b22284b2ca5, type: 3}
   m_PrefabInstance: {fileID: 5308741675861722419}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1865688391334077202 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5784928526767842849, guid: b4261c6efb028fe499b71b22284b2ca5, type: 3}
+  m_PrefabInstance: {fileID: 5308741675861722419}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1888570765070635963 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6024124667134334600, guid: b4261c6efb028fe499b71b22284b2ca5, type: 3}
@@ -1834,6 +1902,17 @@ MeshFilter:
   m_CorrespondingSourceObject: {fileID: 7435898686123704427, guid: b4261c6efb028fe499b71b22284b2ca5, type: 3}
   m_PrefabInstance: {fileID: 5308741675861722419}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3383392993014847937 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7446783816644877554, guid: b4261c6efb028fe499b71b22284b2ca5, type: 3}
+  m_PrefabInstance: {fileID: 5308741675861722419}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c2eeb8127f54e9eac834fd170f9484c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Components.CharacterComponents.ExpressionComponent
 --- !u!23 &3402884686008947649 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 7391825336421504754, guid: b4261c6efb028fe499b71b22284b2ca5, type: 3}
@@ -1880,6 +1959,17 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 8944011406673888611, guid: b4261c6efb028fe499b71b22284b2ca5, type: 3}
   m_PrefabInstance: {fileID: 5308741675861722419}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3961087013912686944 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9175217595398321235, guid: b4261c6efb028fe499b71b22284b2ca5, type: 3}
+  m_PrefabInstance: {fileID: 5308741675861722419}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59cdd208f9924ebdb7d330099875f8f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Components.CharacterComponents.MicrophoneComponent
 --- !u!4 &4024157932435770059 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9112152299398713336, guid: b4261c6efb028fe499b71b22284b2ca5, type: 3}
@@ -2225,6 +2315,11 @@ Transform:
 --- !u!137 &6993753149483850906 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 2928110525035174313, guid: b4261c6efb028fe499b71b22284b2ca5, type: 3}
+  m_PrefabInstance: {fileID: 5308741675861722419}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7018780141597351678 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2939662222612569037, guid: b4261c6efb028fe499b71b22284b2ca5, type: 3}
   m_PrefabInstance: {fileID: 5308741675861722419}
   m_PrefabAsset: {fileID: 0}
 --- !u!23 &7039786778283999762 stripped

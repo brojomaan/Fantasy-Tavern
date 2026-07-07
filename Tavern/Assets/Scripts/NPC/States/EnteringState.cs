@@ -34,6 +34,9 @@ namespace NPC.States
             controller.Visual.OnUpdate(moveInput,
                 controller.Movement.GetCurrentSpeed(),
                 controller.CharacterController.isGrounded);
+            
+            controller.Visual.FaceAnimationComponent.SetEmotion(0f);
+            controller.Visual.FaceAnimationComponent.SetBlink();
 
             if (arrived)
                 controller.StateMachine.ChangeState(controller.SeatedState);

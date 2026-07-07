@@ -38,6 +38,9 @@ namespace NPC
         [OnValueSynced(nameof(OnIsGroundedSynced))]
         [Sync] public bool syncedIsGrounded;
 
+        [OnValueSynced(nameof(OnPatienceSynced))] 
+        [Sync] public float patience;
+
         
         //States
         public NpcStateMachine StateMachine { get; private set; }
@@ -111,6 +114,8 @@ namespace NPC
             syncedMoveDirection = CurrentMoveInput;
             syncedVelocity = npcMovement.GetCurrentSpeed();
             syncedIsGrounded = characterController.isGrounded;
+            patience = needsComponent.GetPatienceNormalized();
+            Debug.Log($"SyncedPatience: {patience}, NCPaitence : {needsComponent.GetPatienceNormalized()}");
 
 
         }
@@ -172,6 +177,12 @@ namespace NPC
             }
 
             StateMachine.ChangeState(ServedState);
+        }
+
+        public void OnPatienceSynced(float previous, float current)
+        {
+            Visual.FaceAnimationComponent.SetEmotion(current);
+            Visual.FaceAnimationComponent.SetBlink();
         }
     }
 }
