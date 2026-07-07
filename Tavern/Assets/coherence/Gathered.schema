@@ -1,14 +1,24 @@
-component _6380a1e0e5aed524ebc2143e629bdf47_2436834872552189027 [id "18"]
+enum GameManagement_GameStateType [bits "1", range-min "0", range-max "1"] 
+  Lobby 0
+  Playing 1
+
+component _0542e96b2fd52ce4db07b87b953de2b0_7135182174108008529 [id "18"]
+  currentGameState GameManagement_GameStateType 
+
+component _6380a1e0e5aed524ebc2143e629bdf47_2436834872552189027 [id "19"]
   syncedAngle Float [compression "None"]
   syncedActive Float [compression "None"]
 
-component _e8e7b239dff349e43b0021c76df20a39_8004030772680294737 [id "19"]
+component _954ac5fef88aeab43b2618913fd4047c_5683633741132514444 [id "20"]
+  isTrigger Bool [bits "1"]
+
+component _e8e7b239dff349e43b0021c76df20a39_8004030772680294737 [id "21"]
   syncedMoveDirection Vector2 [compression "None"]
   syncedVelocity Float [compression "None"]
   syncedIsGrounded Bool [bits "1"]
   patience Float [compression "None"]
 
-component _ea2e766a6c9baae4ba4ce5024af94330_576228623474131969 [id "20"]
+component _ea2e766a6c9baae4ba4ce5024af94330_576228623474131969 [id "22"]
   velocity Float [sim-frames "true", compression "None"]
   headPitch Float [sim-frames "true", compression "None"]
   moveDirection Vector2 [sim-frames "true", compression "None"]
@@ -19,14 +29,16 @@ component _ea2e766a6c9baae4ba4ce5024af94330_576228623474131969 [id "20"]
   ikTargetRotation Quaternion [bits "32"]
   isTalking Bool [bits "1"]
 
-component _f4c6a95abc4bf5d42b04cf35bf8a81e9_4491590370692874945 [id "21"]
+component _f4c6a95abc4bf5d42b04cf35bf8a81e9_4491590370692874945 [id "23"]
   fillLevel Float [compression "None"]
   isHeld Bool [bits "1"]
   holderId String [bits "37"]
   syncedActive Float [compression "None"]
   syncedLiquidContents String [bits "37"]
 
-command _e8e7b239dff349e43b0021c76df20a39_4d95e3223b694cc5899ce1acafb6279f [id "6", routing "StateAuthorityOnly"]
+command _0542e96b2fd52ce4db07b87b953de2b0_95b745d6f6ab4c5c9fac254cce1e1181 [id "6", routing "StateAuthorityOnly"]
+
+command _e8e7b239dff349e43b0021c76df20a39_4d95e3223b694cc5899ce1acafb6279f [id "7", routing "StateAuthorityOnly"]
   liquidContents String 
   fillLevel Float [compression "None"]
   targetFill Float [compression "None"]

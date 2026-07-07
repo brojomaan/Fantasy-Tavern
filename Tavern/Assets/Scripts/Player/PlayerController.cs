@@ -139,7 +139,6 @@ namespace Player
                 ikWeight = visual.GetIKWeight();
                 isTalking = visual.IsTalking();
                 
-                Debug.Log($"isTalking: {isTalking} from player controller Update");
 
                 visual.OnUpdate(input.GetMoveDirection(),
                     velocity,

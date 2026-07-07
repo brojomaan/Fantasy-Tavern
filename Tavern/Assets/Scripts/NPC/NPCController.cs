@@ -63,14 +63,8 @@ namespace NPC
         public Transform GetHoverSocket() => hoverSocket;
 
         public Transform GetGripSocket() => hoverSocket;
-
-
-        private void Start()
-        {
-            Initialize();
-        }
-
-        public void Initialize()
+        
+        public void Initialize(Transform chairTransform, Transform exitTransform)
         {
             if (npcMovement == null) Debug.LogError($"NpcController::Initialize(): NpcMovement is null");
             if (visual == null) Debug.LogError($"NpcController::Initialize(): visual = null");
@@ -90,13 +84,14 @@ namespace NPC
             if (!orderComponent.Initialize())
                 Debug.LogError($"NpcController::Initialize(): orderComponent failed");
             
-
+            testSeatTransform = chairTransform;
+            testExitTransform = exitTransform;
+            
             StateMachine = new NpcStateMachine();
             EnteringState = new EnteringState(this);
             SeatedState = new SeatedState(this);
             LeavingState = new LeavingState(this);
             ServedState = new ServedState(this);
-            
             
             StateMachine.ChangeState(EnteringState);
     
