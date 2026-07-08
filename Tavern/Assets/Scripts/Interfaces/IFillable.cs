@@ -1,4 +1,5 @@
 ﻿using Interactables.WorldInteractable;
+using Liquids;
 
 namespace Interfaces
 {
@@ -10,6 +11,6 @@ namespace Interfaces
         float MaxCapacity { get; }
         bool IsOverflowing { get; }
         LiquidMixer GetLiquidMixer();
-        void Fill(float amount, string liquidId);
+        void Fill(float amount, LiquidData liquidId);
     }
 }

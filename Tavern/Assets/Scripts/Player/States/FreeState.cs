@@ -27,8 +27,19 @@ namespace Player.States
 
             if (controller.Input.GetPickupPressed() && controller.InteractComponent.HasHover())
             {
-                controller.InteractComponent.TryPickup();
-                controller.StateMachine.ChangeState(controller.HoldingState);
+                GlassContainerController glassContainer = controller.InteractComponent.GetCurrentWorldInteractable() as
+                    GlassContainerController;
+                if (glassContainer != null && glassContainer.IsOpen)
+                {
+                    glassContainer.SpawnGlass(controller.HoldComponent);
+                    controller.StateMachine.ChangeState(controller.HoldingState);
+                }
+                else
+                {
+                    controller.InteractComponent.TryPickup();
+                    controller.StateMachine.ChangeState(controller.HoldingState);
+                }
+
             }
 
             if (controller.Input.GetInteractPressed())

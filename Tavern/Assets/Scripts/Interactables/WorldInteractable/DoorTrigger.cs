@@ -1,4 +1,5 @@
-﻿using GameManagement;
+﻿using Coherence;
+using GameManagement;
 using UnityEngine;
 
 namespace Interactables.WorldInteractable
@@ -13,7 +14,13 @@ namespace Interactables.WorldInteractable
             Debug.Log($"Door Triggered");
             hasTriggered = true;
             
-            GameManager.Instance.CmdRequestStartGame();
+            //This doesnt work
+            //GameManager.Instance.CmdRequestStartGame();
+            
+            //This does but i dont understand why
+            GameManager.Instance.CoherenceSync.SendCommand<GameManager>(
+                nameof(GameManager.CmdRequestStartGame),
+                MessageTarget.StateAuthorityOnly);
         }
 
         public override void OnInteractRelease()

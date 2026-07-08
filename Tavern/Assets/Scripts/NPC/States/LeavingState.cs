@@ -9,6 +9,7 @@ namespace NPC.States
         public override void OnEnter()
         {
             Debug.Log($"Npc Enter State: LeavingState");
+            controller.ClaimedSeat?.Release();
         }
 
         public override void OnUpdate()
@@ -31,6 +32,7 @@ namespace NPC.States
 
         public override void OnExit()
         {
+
             Debug.Log($"Npc Exit State: LeavingState");
         }
     }

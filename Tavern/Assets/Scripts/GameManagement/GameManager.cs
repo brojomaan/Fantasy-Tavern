@@ -59,6 +59,7 @@ namespace GameManagement
 
         public void CmdRequestStartGame()
         {
+            Debug.Log($"CmdRequestStartGame called - HasStateAuthority: {sync.HasStateAuthority}");
             if (currentGameState == GameStateType.Playing) return;
             
             Debug.Log($"CmdGettingThisFar");

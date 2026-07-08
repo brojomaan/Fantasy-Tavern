@@ -1,4 +1,5 @@
 ﻿using Interactables.WorldInteractable;
+using Liquids;
 using TMPro;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ namespace Components.NPCComponents
         private LiquidMixer targetRecipe;
         private float bubbleTimer;
         private bool bubbleVisible;
+        private string orderName = "beer";
         
         public bool Initialize()
         {
@@ -21,13 +23,18 @@ namespace Components.NPCComponents
             if (orderText == null) { Debug.LogError($"NpcOrderComponent::Initialize(): orderText is null."); return false; }
 
             targetRecipe = new LiquidMixer();
-            targetRecipe.Add("beer", 1.0f);
-            orderText.text = "Beer!";
-            
-            speechBubble.SetActive(false);
+            targetRecipe.Add(orderName, 0.8f);
+            orderText.text = orderName;
+
+            HideBubble();
             return true;
         }
 
+
+        public void SetOrder(string order)
+        {
+            orderText.text = order;
+        }
         public void OnUpdate()
         {
             if (!bubbleVisible) return;
@@ -54,5 +61,8 @@ namespace Components.NPCComponents
             if (fillLevel < targetFillLevel - acceptableRange) return false;
             return contents.Matches(targetRecipe, matchTolerance);
         }
+
+        public string GetOrderName() => orderName;
+        public bool IsBubbleVisible() => bubbleVisible;
     }
 }

@@ -4,6 +4,7 @@ using Components.NPCComponents;
 using Interactables.ItemInteractables.Mug;
 using Interactables.WorldInteractable;
 using Interfaces;
+using Liquids;
 using NPC.States;
 using UnityEngine;
 
@@ -41,6 +42,13 @@ namespace NPC
         [OnValueSynced(nameof(OnPatienceSynced))] 
         [Sync] public float patience;
 
+        [OnValueSynced(nameof(OnBubbleActiveSynced))] 
+        [Sync] public bool syncedBubbleActive;
+
+        [OnValueSynced(nameof(OnOrderTypeSynced))] 
+        [Sync] public string syncedOrder;
+        
+
         
         //States
         public NpcStateMachine StateMachine { get; private set; }
@@ -48,6 +56,8 @@ namespace NPC
         public SeatedState SeatedState { get; private set; }
         public LeavingState LeavingState { get; private set; }
         public ServedState ServedState { get; private set; }
+        
+        public SeatController ClaimedSeat { get; private set; }
 
         public NpcBrain Brain => brain;
         public NpcMovement Movement => npcMovement;
@@ -59,10 +69,10 @@ namespace NPC
         //Logic
         public Vector2 CurrentMoveInput { get; private set; }
         private bool hasInitialized = false;
-        
         public Transform GetHoverSocket() => hoverSocket;
-
         public Transform GetGripSocket() => hoverSocket;
+
+
         
         public void Initialize(Transform chairTransform, Transform exitTransform)
         {
@@ -94,6 +104,12 @@ namespace NPC
             ServedState = new ServedState(this);
             
             StateMachine.ChangeState(EnteringState);
+            
+            if (sync.HasStateAuthority)
+            {
+                syncedBubbleActive = false;
+                syncedOrder = orderComponent.GetOrderName();
+            }
     
             hasInitialized = true;
         }
@@ -108,11 +124,10 @@ namespace NPC
             
             syncedMoveDirection = CurrentMoveInput;
             syncedVelocity = npcMovement.GetCurrentSpeed();
-            syncedIsGrounded = characterController.isGrounded;
+            syncedIsGrounded = true;
             patience = needsComponent.GetPatienceNormalized();
-            Debug.Log($"SyncedPatience: {patience}, NCPaitence : {needsComponent.GetPatienceNormalized()}");
-
-
+            syncedBubbleActive = orderComponent.IsBubbleVisible();
+            syncedOrder = orderComponent.GetOrderName();
         }
         
         public void OnHoverEnter()
@@ -136,11 +151,12 @@ namespace NPC
             
         }
         
-        public bool CanInteractWith(IHoldable heldItem) => heldItem != null;
+        public bool CanInteractWith(IHoldable heldItem) => heldItem as MugController;
 
         public void OnMoveDirectionSynced(Vector2 previous, Vector2 current)
         {
             visual.AnimationComponent.SetWalking(current);
+            Debug.Log($"MoveDirection Synced: {current}");
         }
 
         public void OnVelocitySynced(float previous, float current)
@@ -151,6 +167,7 @@ namespace NPC
         public void OnIsGroundedSynced(bool previous, bool current)
         {
             visual.AnimationComponent.SetGrounded(current);
+            Debug.Log($"IsGroundedSynced: {current}");
         }
 
         public void SetMoveInput(Vector2 input)
@@ -158,6 +175,7 @@ namespace NPC
             CurrentMoveInput = input;
         }
 
+        [Command(defaultRouting = MessageTarget.AuthorityOnly)]
         public void CmdDeliverOrder(string liquidContents, float fillLevel, 
             float targetFill, float acceptableRange)
         {
@@ -178,6 +196,24 @@ namespace NPC
         {
             Visual.FaceAnimationComponent.SetEmotion(current);
             Visual.FaceAnimationComponent.SetBlink();
+        }
+
+        public void OnBubbleActiveSynced(bool previous, bool current)
+        {
+            Debug.Log($"bubbleActiveSynced: {current}");
+            if (current) orderComponent.ShowBubble();
+            else orderComponent.HideBubble();
+        }
+
+        public void OnOrderTypeSynced(string previous, string current)
+        {
+            orderComponent.SetOrder(current);
+        }
+
+        public void SetClaimedSeat(SeatController seat)
+        {
+            ClaimedSeat = seat;
+            Debug.Log($"ClaimedSeat = {seat}");
         }
     }
 }

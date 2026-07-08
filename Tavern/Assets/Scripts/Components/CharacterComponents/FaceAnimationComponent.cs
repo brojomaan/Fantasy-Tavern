@@ -44,8 +44,7 @@ namespace Components.CharacterComponents
         {
             float random = UnityEngine.Random.value;
 
-            bool isBlinking = random > 0.99f;
-            Debug.Log($"random: {isBlinking}");
+            bool isBlinking = random > 0.996f;
             blinkAnimator.SetBool(IsBlinking, isBlinking);
         }
     }

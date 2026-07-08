@@ -1,4 +1,5 @@
 using Interfaces;
+using Liquids;
 using UnityEngine;
 
 namespace Interactables.WorldInteractable
@@ -27,7 +28,7 @@ namespace Interactables.WorldInteractable
                 currentFillable = null;
         }
 
-        public void OnUpdate(float handleAngle, float maxAngle, string liquidId)
+        public void OnUpdate(float handleAngle, float maxAngle, LiquidData liquidId)
         {
             if (currentFillable == null) return;
             

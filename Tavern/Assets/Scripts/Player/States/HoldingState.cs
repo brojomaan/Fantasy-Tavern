@@ -47,7 +47,7 @@ namespace Player.States
             {
                 NpcController npc = controller.InteractComponent.GetCurrentNpcController();
                 if (npc == null)
-                    Debug.LogError($"Cant find Npc");
+                    Debug.Log($"Cant find Npc");
                 MugController mug = controller.HoldComponent.GetHeldItem() as MugController;
 
                 if (npc != null && mug != null)

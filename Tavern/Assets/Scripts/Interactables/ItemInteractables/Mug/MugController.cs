@@ -1,6 +1,7 @@
 ﻿using Coherence.Toolkit;
 using Interactables.WorldInteractable;
 using Interfaces;
+using Liquids;
 using UnityEngine;
 
 namespace Interactables.ItemInteractables.Mug
@@ -65,13 +66,12 @@ namespace Interactables.ItemInteractables.Mug
             mugVisual.OnUpdate(fillLevel, currentFillRate, maxCapacity);
         }
         
-        public void Fill(float amount, string liquidId)
+        public void Fill(float amount, LiquidData liquidId)
         {
             if (!sync.HasStateAuthority) return;
             currentFillRate = amount * 10;
             fillLevel = Mathf.Clamp(fillLevel + amount * fillSpeed * Time.deltaTime, 0f, maxCapacity + 0.2f);
             liquidMixer.Add(liquidId, amount * fillSpeed * Time.deltaTime);
-            Debug.Log($"LiquidMixer contents: {liquidId} = {liquidMixer.GetAmount(liquidId):F3} / Total = {liquidMixer.GetTotal():F3}");
             syncedLiquidContents = liquidMixer.Serialize();
         }
 

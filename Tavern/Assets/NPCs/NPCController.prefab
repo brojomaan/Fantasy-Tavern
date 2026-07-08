@@ -68,6 +68,8 @@ MonoBehaviour:
   syncedVelocity: 0
   syncedIsGrounded: 0
   patience: 0
+  syncedBubbleActive: 0
+  syncedOrder: 
 --- !u!114 &8855955446973901426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,7 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f41cf5e1e8c04efb9f3025e304cbeeac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Components.NPCComponents.NpcNeedsComponent
-  maxPatience: 20
+  maxPatience: 35
   patienceDecayRate: 1
 --- !u!114 &2250477186657890537
 MonoBehaviour:
@@ -681,6 +683,8 @@ MonoBehaviour:
   - rid: 8289098400603832511
   - rid: 8289098468824449307
   - rid: 6248159713241334214
+  - rid: 6248159734785638643
+  - rid: 6248159734785638644
   scenePrefabInstanceUUID: 
   coherenceUUID: 
   assetVersion: 
@@ -781,6 +785,96 @@ MonoBehaviour:
           rid: -2
         bindingType:
           assemblyQualifiedName: Coherence.Toolkit.Bindings.ValueBindings.FloatBinding,
+            Coherence.Toolkit, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        oldName: 
+        oldParameterAssemblyTypes: []
+    - rid: 6248159734785638643
+      type: {class: BoolBinding, ns: Coherence.Toolkit.Bindings.ValueBindings, asm: Coherence.Toolkit}
+      data:
+        descriptor:
+          rid: 6248159734785638645
+        routing: 0
+        syncMode: 0
+        isPredicted: 0
+        predictionMode: 0
+        guid: 1aadf5b13cc04ca7be2c5a32e4389e96
+        archetypeData:
+          type: 3
+          minRange: 0
+          maxRange: 0
+          sampleRate: 20
+          floatCompression: 0
+          fields:
+          - type: 3
+            bits: 1
+            precision: 0
+            floatCompression: 0
+        unityComponent: {fileID: 8004030772680294737}
+        coherenceSync: {fileID: 4783133508898962840}
+        _interpolationSettings: {fileID: 0}
+    - rid: 6248159734785638644
+      type: {class: StringBinding, ns: Coherence.Toolkit.Bindings.ValueBindings, asm: Coherence.Toolkit}
+      data:
+        descriptor:
+          rid: 6248159734785638646
+        routing: 0
+        syncMode: 0
+        isPredicted: 0
+        predictionMode: 0
+        guid: 215755d3210a429a948a528329fb371f
+        archetypeData:
+          type: 5
+          minRange: 0
+          maxRange: 0
+          sampleRate: 20
+          floatCompression: 0
+          fields:
+          - type: 5
+            bits: 37
+            precision: 0
+            floatCompression: 0
+        unityComponent: {fileID: 8004030772680294737}
+        coherenceSync: {fileID: 4783133508898962840}
+        _interpolationSettings: {fileID: 0}
+    - rid: 6248159734785638645
+      type: {class: Descriptor, ns: Coherence.Toolkit.Bindings, asm: Coherence.Toolkit}
+      data:
+        name: syncedBubbleActive
+        monoAssemblyType: System.Boolean, mscorlib
+        required: 1
+        enforcesLODingWhenFieldsOverriden: 1
+        valueSyncCallbackName: OnBubbleActiveSynced
+        memberType: 4
+        parameterAssemblyTypes: []
+        ownerType:
+          assemblyQualifiedName: NPC.NpcController, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        defaultSyncMode: 0
+        CustomData:
+          rid: -2
+        bindingType:
+          assemblyQualifiedName: Coherence.Toolkit.Bindings.ValueBindings.BoolBinding,
+            Coherence.Toolkit, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        oldName: 
+        oldParameterAssemblyTypes: []
+    - rid: 6248159734785638646
+      type: {class: Descriptor, ns: Coherence.Toolkit.Bindings, asm: Coherence.Toolkit}
+      data:
+        name: syncedOrder
+        monoAssemblyType: System.String, mscorlib
+        required: 1
+        enforcesLODingWhenFieldsOverriden: 1
+        valueSyncCallbackName: OnOrderTypeSynced
+        memberType: 4
+        parameterAssemblyTypes: []
+        ownerType:
+          assemblyQualifiedName: NPC.NpcController, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        defaultSyncMode: 0
+        CustomData:
+          rid: -2
+        bindingType:
+          assemblyQualifiedName: Coherence.Toolkit.Bindings.ValueBindings.StringBinding,
             Coherence.Toolkit, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
         oldName: 
         oldParameterAssemblyTypes: []

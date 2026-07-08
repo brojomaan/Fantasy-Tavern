@@ -1,6 +1,7 @@
 ﻿using Coherence;
 using Coherence.Toolkit;
 using Interfaces;
+using Liquids;
 using UnityEngine;
 
 namespace Interactables.WorldInteractable
@@ -13,7 +14,7 @@ namespace Interactables.WorldInteractable
         [SerializeField] private float maxAngle = 45f;
         [SerializeField] private float driveSpeed = 15f;
         [SerializeField] private float springSpeed = 4f;
-        [SerializeField] private string liquidId = "beer";
+        [SerializeField] private LiquidData liquidId;
 
         [SerializeField] private TapSpout spout;
         [SerializeField] private BeerTapVisual visual;

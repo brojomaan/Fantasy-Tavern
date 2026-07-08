@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GameManagement;
+using UnityEngine;
 
 namespace NPC
 {
@@ -22,7 +23,7 @@ namespace NPC
         private void Update()
         {
             if (!isActive) return;
-
+            
             spawnTimer += Time.deltaTime;
             if (spawnTimer >= spawnInterval)
             {
@@ -34,6 +35,13 @@ namespace NPC
         private void SpawnNpc()
         {
             if (npcPrefab == null || spawnPoint == null || exitPoint == null) return;
+
+            if (!SeatingManager.Instance.HasAvailableSeat())
+            {
+                Debug.Log($"NpcSpawner: No Avaliable Seats, skipping spawn.");
+                return;
+            }
+            
             NpcController npc = Instantiate(npcPrefab, spawnPoint.position, spawnPoint.rotation);
             npc.Initialize(chairPoint, exitPoint);
 
