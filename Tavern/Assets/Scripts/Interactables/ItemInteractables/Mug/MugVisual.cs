@@ -27,6 +27,7 @@ namespace Interactables.ItemInteractables.Mug
         private static readonly int WobbleX = Shader.PropertyToID("_WobbleX");
         private static readonly int WobbleZ = Shader.PropertyToID("_WobbleZ");
         private static readonly int WobbleAmount = Shader.PropertyToID("_WobbleAmount");
+        private static readonly int LiquidColor = Shader.PropertyToID("_Color");
         
         //liquid Stream Shader
         private static readonly int Active = Shader.PropertyToID("_Active");
@@ -52,7 +53,7 @@ namespace Interactables.ItemInteractables.Mug
             return true;
         }
 
-        public void OnUpdate(float fillLevel, float fillRate, float maxCapacity)
+        public void OnUpdate(float fillLevel, float fillRate, float maxCapacity, Color color)
         {
             // Fill rate drives amplitude, clamped to max
             wobbleAmplitude = Mathf.Lerp(wobbleAmplitude, fillRate * maxWobbleAmount, Time.deltaTime * 5f);
@@ -69,6 +70,7 @@ namespace Interactables.ItemInteractables.Mug
             activeLiquidMaterial.SetFloat(WobbleX, wobbleX);
             activeLiquidMaterial.SetFloat(WobbleZ, wobbleZ);
             activeLiquidMaterial.SetFloat(WobbleAmount, wobbleAmplitude);
+            activeLiquidMaterial.SetColor(LiquidColor, color);
 
             HandleStreamVFX(fillRate);
             
@@ -104,6 +106,11 @@ namespace Interactables.ItemInteractables.Mug
             {
                 activeOverflowMaterial.SetFloat(Active, 0f);
             }
+        }
+
+        public void SetLiquidColor(Color color)
+        {
+            activeLiquidMaterial.SetColor(LiquidColor, color);
         }
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Liquids
 {
-    [CreateAssetMenu(fileName = "LiquidData", menuName = "Tavern/LiquidData")]
+    [CreateAssetMenu(fileName = "LiquidData", menuName = "Tavern/Liquid/LiquidData")]
     public class LiquidData : ScriptableObject
     {
         [SerializeField] private string liquidId;

@@ -56,6 +56,7 @@ MonoBehaviour:
   visual: {fileID: 3690016320588935312}
   ui: {fileID: 0}
   sync: {fileID: 4783133508898962840}
+  beerRecipe: {fileID: 11400000, guid: a64fd80466a0c184a93215fbac532cd7, type: 2}
   brain: {fileID: 8855955446973901426}
   npcMovement: {fileID: 6408251903181567674}
   characterController: {fileID: 7681543418694382424}
@@ -127,6 +128,7 @@ MonoBehaviour:
   orderText: {fileID: 2893439759764117847}
   bubbleDisplayTime: 5
   matchTolerance: 0.2
+  currentRecipe: {fileID: 0}
 --- !u!143 &7681543418694382424
 CharacterController:
   m_ObjectHideFlags: 0

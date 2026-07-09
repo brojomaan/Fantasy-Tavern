@@ -1,3 +1,4 @@
+using Liquids;
 using UnityEngine;
 
 namespace Interactables.WorldInteractable
@@ -12,12 +13,14 @@ namespace Interactables.WorldInteractable
         private Material activeStreamMaterial;
 
         private static readonly int Active = Shader.PropertyToID("_Active");
+        private static readonly int Color = Shader.PropertyToID("_Color");
 
-        public void Initialize()
+        public void Initialize(LiquidData liquidData)
         {
             activeStreamMaterial = new Material(liquidStream.material);
             liquidStream.material = activeStreamMaterial;
             activeStreamMaterial.SetFloat(Active, 0f);
+            activeStreamMaterial.SetColor(Color, liquidData.LiquidColor);
         }
 
         public void OnUpdate(float currentAngle, bool isAuthority, float syncedActive)

@@ -5027,14 +5027,15 @@ MonoBehaviour:
   gripSocket: {fileID: 7505602765222920298}
   isHeld: 0
   holderId: 
-  fillSpeed: 0.1
+  fillSpeed: 0.25
   targetFillLevel: 0.8
-  acceptableRange: 0.15
+  acceptableRange: 0.2
   maxCapacity: 1
   mugVisual: {fileID: 3804677607673308288}
   fillLevel: 0
   syncedActive: 0
   syncedLiquidContents: 
+  syncedLiquidColor: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &3694011320011255253
 MonoBehaviour:
   m_ObjectHideFlags: 0

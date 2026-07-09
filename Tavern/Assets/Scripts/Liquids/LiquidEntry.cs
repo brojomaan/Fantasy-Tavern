@@ -17,16 +17,9 @@ namespace Liquids
         }
     }
 
-    [System.Serializable]
-    public class LiquidMixerData
-    {
-        public List<LiquidEntry> entries = new List<LiquidEntry>();
-    }
-
-  public class LiquidMixer
+    public class LiquidMixer
     {
         private List<LiquidEntry> contents = new List<LiquidEntry>();
-
         public IReadOnlyList<LiquidEntry> Contents => contents;
 
         public void Add(LiquidData liquid, float amount)
@@ -40,57 +33,74 @@ namespace Liquids
 
         public float GetTotal() => contents.Sum(e => e.amount);
 
-        public float GetAmount(LiquidData liquid)
-        {
-            LiquidEntry entry = contents.FirstOrDefault(e => e.liquidData == liquid);
-            return entry?.amount ?? 0f;
-        }
-
         public float GetNormalisedAmount(LiquidData liquid)
         {
             float total = GetTotal();
             if (total <= 0f) return 0f;
-            return GetAmount(liquid) / total;
+            LiquidEntry entry = contents.FirstOrDefault(e => e.liquidData == liquid);
+            return entry == null ? 0f : entry.amount / total;
         }
 
         public bool Matches(LiquidMixer recipe, float tolerance)
         {
-            if (recipe == null) return false;
-            float total = GetTotal();
-            if (total <= 0f) return false;
+            if (recipe == null || GetTotal() <= 0f) return false;
 
             foreach (LiquidEntry entry in recipe.Contents)
             {
-                float normalisedAmount = GetNormalisedAmount(entry.liquidData);
-                float normalisedTarget = entry.amount;
-
-                if (System.Math.Abs(normalisedAmount - normalisedTarget) > tolerance)
-                    return false;
+                float diff = Mathf.Abs(GetNormalisedAmount(entry.liquidData) - entry.amount);
+                if (diff > tolerance) return false;
             }
-
             return true;
         }
 
         public void Clear() => contents.Clear();
 
+        public Color GetMixedColor()
+        {
+            if (contents.Count == 0) return Color.clear;
+
+            float total = GetTotal();
+            Color mixed = Color.black;
+
+            foreach (LiquidEntry entry in contents)
+            {
+                float weight = entry.amount / total;
+                mixed += entry.liquidData.LiquidColor * weight;
+            }
+
+            mixed.a = 1f;
+            
+            return mixed;
+        }
+
+        // Serialize by ID string for networking
         public string Serialize()
         {
-            List<LiquidEntry> rounded = contents.Select(e => 
-                new LiquidEntry(e.liquidData, Mathf.Round(e.amount * 1000f) / 1000f)).ToList();
-            return JsonUtility.ToJson(new LiquidMixerData { entries = rounded });
+            string result = "";
+            foreach (LiquidEntry entry in contents)
+            {
+                float rounded = Mathf.Round(entry.amount * 1000f) / 1000f;
+                result += $"{entry.liquidData.LiquidId}:{rounded};";
+            }
+            return result;
         }
 
-        public void Deserialize(string json)
+        // Deserialize needs LiquidRegistry to look up LiquidData by ID
+        public void Deserialize(string data, LiquidRegistry registry)
         {
-            if (string.IsNullOrEmpty(json)) return;
-            LiquidMixerData data = JsonUtility.FromJson<LiquidMixerData>(json);
-            contents = data.entries;
-        }
+            contents.Clear();
+            if (string.IsNullOrEmpty(data)) return;
 
-        [System.Serializable]
-        private class LiquidMixerData
-        {
-            public List<LiquidEntry> entries;
+            foreach (string entry in data.Split(';'))
+            {
+                if (string.IsNullOrEmpty(entry)) continue;
+                string[] parts = entry.Split(':');
+                if (parts.Length != 2) continue;
+
+                LiquidData liquid = registry.GetLiquid(parts[0]);
+                if (liquid != null && float.TryParse(parts[1], out float amount))
+                    contents.Add(new LiquidEntry(liquid, amount));
+            }
         }
     }
 }

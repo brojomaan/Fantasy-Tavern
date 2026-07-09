@@ -12,7 +12,7 @@ EditorUserSettings:
       value: 15091a564b04
       flags: 0
     Coherence.CoherenceSyncSchemasDirty:
-      value: 53
+      value: 52
       flags: 0
     Coherence.Package.LastInstallation:
       value: 511f054856
@@ -21,10 +21,10 @@ EditorUserSettings:
       value: 1813671204410c484f54371f0d
       flags: 0
     Coherence.Settings.ActiveSchemas.Hash:
-      value: 5157035151015f0f0c5f557740725916441341732e7a72692f704d65e6b8313a
+      value: 53055007000d0b5f5e5d5a2612715e124212497d787023627e2b4f36b3e1376b
       flags: 0
     Coherence.Simulator.Endpoint:
-      value: 0b5e47125f1558095a405c6c406d0e5c56071738387266647f794d62aea0263de5ee39e7bd7a33333a03e370442c0e30ff230d51b65a5f475119f21c1dfb39174b8548895add1115da0c19fcc212dccad18c94bb8ebbb78f8a8cf6a7a1bcaeebf6f9a0f6ab81f89aeafbf8e9f89bc3c593cbee949d93c89ebbd1d084ba84818481d7d581898180d9808cf689f292f3a097
+      value: 0b5e47125f1558095a405c6c406d0e5c56071738387266647f794d62aea0263de5ee39e7bd7a33333a03e370442c0e30ff230d51b65a58475119f21c1dfb39174b8548895add1115da0c19fcc212dccad18c94bf8ab3b2898f88f4a7b8b0fdfbfdf4a8fa83aca680fcfaa8b3fac4929195c9ee919e91cc9eed83d387e88684d088d5d1d78bde8b8cdbdba5d8a193fea6
       flags: 0
     RecentlyUsedSceneGuid-0:
       value: 5a08575f5207595a0f5d59741173094444164f7d7d2a23317c7a4465bbe1646d

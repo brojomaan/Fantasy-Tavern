@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Liquids
 {
-    [CreateAssetMenu(fileName = "DrinkRecipe", menuName = "Tavern/DrinkRecipe")]
+    [CreateAssetMenu(fileName = "DrinkRecipe", menuName = "Tavern/Recipe/DrinkRecipe")]
     public class DrinkRecipe : ScriptableObject
     {
         [SerializeField] private string displayName;

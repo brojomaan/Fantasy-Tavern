@@ -1,4 +1,5 @@
 ﻿using GameManagement;
+using Interactables.WorldInteractable;
 using UnityEngine;
 
 namespace NPC
@@ -8,7 +9,6 @@ namespace NPC
         [SerializeField] private NpcController npcPrefab;
         [SerializeField] private Transform spawnPoint;
         [SerializeField] private Transform exitPoint;
-        [SerializeField] private Transform chairPoint;
         [SerializeField] private float spawnInterval = 10f;
 
         private float spawnTimer;
@@ -43,7 +43,8 @@ namespace NPC
             }
             
             NpcController npc = Instantiate(npcPrefab, spawnPoint.position, spawnPoint.rotation);
-            npc.Initialize(chairPoint, exitPoint);
+            if (npc == null) { Debug.LogError("NpcSpawner: NPC prefab missing NpcController."); return; }
+            npc.Initialize(exitPoint);
 
         }
     }

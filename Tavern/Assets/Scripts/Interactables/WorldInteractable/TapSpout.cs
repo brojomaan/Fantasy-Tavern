@@ -6,14 +6,8 @@ namespace Interactables.WorldInteractable
 {
     public class TapSpout : MonoBehaviour
     {
-        private BeerTapController tap;
         private IFillable currentFillable;
-
-        private void Start()
-        {
-            tap = GetComponentInParent<BeerTapController>();
-        }
-
+        
         private void OnTriggerStay(Collider other)
         {
             IFillable fillable = other.GetComponent<IFillable>();

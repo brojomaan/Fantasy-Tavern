@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Liquids
 {
-    [CreateAssetMenu(fileName = "LiquidRegistry", menuName = "Tavern/LiquidRegistry")]
+    [CreateAssetMenu(fileName = "LiquidRegistry", menuName = "Tavern/Liquid/LiquidRegistry")]
     public class LiquidRegistry : ScriptableObject
     {
         public static LiquidRegistry Instance { get; private set; }

@@ -74,14 +74,16 @@ namespace NPC
 
 
         
-        public void Initialize(Transform chairTransform, Transform exitTransform)
+        public void Initialize(Transform exitTransform)
         {
             if (npcMovement == null) Debug.LogError($"NpcController::Initialize(): NpcMovement is null");
             if (visual == null) Debug.LogError($"NpcController::Initialize(): visual = null");
             if (brain == null) Debug.LogError($"NpcController::Initialize(): brain = null");
             if (needsComponent == null) Debug.LogError($"NpcController::Initialize(): needsComponent = null");
             if (orderComponent == null) Debug.LogError($"NpcController::Initialize(): orderComponent = null");
-            
+
+            DrinkRecipe recipe = DrinkRecipeBook.Instance.GetRandomRecipe();
+            if (recipe == null) Debug.LogError($"NpcController::Initialize(): recipe = null");
             
             if (!npcMovement.Initialize(characterController))
                 Debug.LogError($"NpcController::Initialize(): NpcMovement failed.");
@@ -91,10 +93,9 @@ namespace NPC
                 Debug.LogError($"NpcController::Initialize(): brain failed");
             if (!needsComponent.Initialize())
                 Debug.LogError($"NpcController::Initialize(): needsComponent failed");
-            if (!orderComponent.Initialize())
+            if (!orderComponent.Initialize(recipe))
                 Debug.LogError($"NpcController::Initialize(): orderComponent failed");
             
-            testSeatTransform = chairTransform;
             testExitTransform = exitTransform;
             
             StateMachine = new NpcStateMachine();
@@ -181,7 +182,7 @@ namespace NPC
         {
             Debug.Log("CmdDeliverOrder received on authority");
             LiquidMixer deliveredMixer = new LiquidMixer();
-            deliveredMixer.Deserialize(liquidContents);
+            deliveredMixer.Deserialize(liquidContents, LiquidRegistry.Instance);
 
             if (!orderComponent.TryFulfillOrder(deliveredMixer, fillLevel, targetFill, acceptableRange))
             {

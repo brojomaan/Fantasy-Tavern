@@ -12,18 +12,22 @@ namespace Components.NPCComponents
         [SerializeField] private float bubbleDisplayTime = 5f;
         [SerializeField] private float matchTolerance = 0.2f;
 
+        [SerializeField] private DrinkRecipe currentRecipe;
+
         private LiquidMixer targetRecipe;
         private float bubbleTimer;
         private bool bubbleVisible;
         private string orderName = "beer";
         
-        public bool Initialize()
+        public bool Initialize(DrinkRecipe drinkRecipe)
         {
             if (speechBubble == null) { Debug.LogError($"NpcOrderComponent::Initialize(): speechBubble is null."); return false; }
             if (orderText == null) { Debug.LogError($"NpcOrderComponent::Initialize(): orderText is null."); return false; }
 
-            targetRecipe = new LiquidMixer();
-            targetRecipe.Add(orderName, 0.8f);
+            currentRecipe = drinkRecipe;
+
+            targetRecipe = drinkRecipe.ToLiquidMixer();
+            orderName = drinkRecipe.DisplayName;
             orderText.text = orderName;
 
             HideBubble();

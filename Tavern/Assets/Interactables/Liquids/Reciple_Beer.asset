@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Liquids.DrinkRecipe
   displayName: Beer
   ingredients:
-  - liquidId: beer
+  - liquidData: {fileID: 11400000, guid: 1bbac193204e1cd4aad5b8b07a252bc5, type: 2}
     amount: 1
